@@ -1,0 +1,622 @@
+{
+    "Sentinel Synthetic Life Insurance": {
+        "0": [
+            {
+                "competency_question": "What is the name of the event when a policy's coverage is terminated at the owner's request?",
+                "expected_answer": "Cancellation"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Cancellation' event?",
+                "expected_answer": "the Policy Owner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Cancellation' event?",
+                "expected_answer": "the Policy"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Cancellation' event?",
+                "expected_answer": "written notice"
+            },
+            {
+                "competency_question": "What is the numeric value of the death benefit?",
+                "expected_answer": "500000"
+            },
+            {
+                "competency_question": "What is the currency unit of the death benefit?",
+                "expected_answer": "USD"
+            },
+            {
+                "competency_question": "What is the duration of the reinstatement period?",
+                "expected_answer": "5 years"
+            },
+            {
+                "competency_question": "What event marks the beginning of the reinstatement period interval?",
+                "expected_answer": "the date of lapse"
+            },
+            {
+                "competency_question": "What event causes a transition from the 'Active' state to the 'In Grace Period' state?",
+                "expected_answer": "a missed premium payment"
+            },
+            {
+                "competency_question": "What is the maximum duration a policy can be in the 'In Grace Period' state?",
+                "expected_answer": "31 days"
+            },
+            {
+                "competency_question": "What state does the policy enter if a premium is not paid by the end of the Grace Period?",
+                "expected_answer": "Lapsed"
+            }
+        ],
+        "1": [
+            {
+                "competency_question": "What is the name of the event when a policy's coverage is terminated at the end of the term?",
+                "expected_answer": "Coverage Termination"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Coverage Termination' event?",
+                "expected_answer": "the Policy"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Coverage Termination' event?",
+                "expected_answer": "the Policy"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Coverage Termination' event?",
+                "expected_answer": "end of the term"
+            },
+            {
+                "competency_question": "What is the numeric value of the Face Amount?",
+                "expected_answer": "500000"
+            },
+            {
+                "competency_question": "What is the currency unit of the Face Amount?",
+                "expected_answer": "USD"
+            },
+            {
+                "competency_question": "What is the duration of the Coverage Term?",
+                "expected_answer": "20 years"
+            },
+            {
+                "competency_question": "What event marks the beginning of the Coverage Term interval?",
+                "expected_answer": "August 7, 2025"
+            },
+            {
+                "competency_question": "What event marks the end of the Coverage Term interval?",
+                "expected_answer": "August 7, 2045"
+            },
+            {
+                "competency_question": "What is the maximum duration of the Reinstatement Period?",
+                "expected_answer": "5 Years"
+            },
+            {
+                "competency_question": "What event marks the beginning of the Reinstatement Period interval?",
+                "expected_answer": "the date of lapse"
+            },
+            {
+                "competency_question": "What state does the policy enter if a premium is not paid by the end of the Grace Period?",
+                "expected_answer": "Lapsed"
+            }
+        ],
+        "2": [
+            {
+                "competency_question": "What is the name of the event when a policy's coverage is terminated at the owner's request?",
+                "expected_answer": "Cancellation"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Cancellation' event?",
+                "expected_answer": "the Policy Owner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Cancellation' event?",
+                "expected_answer": "the Policy"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Cancellation' event?",
+                "expected_answer": "written notice"
+            },
+            {
+                "competency_question": "What is the numeric value of the Death Benefit?",
+                "expected_answer": "500000"
+            },
+            {
+                "competency_question": "What is the currency unit of the Death Benefit?",
+                "expected_answer": "USD"
+            },
+            {
+                "competency_question": "What is the duration of the Grace Period?",
+                "expected_answer": "31-day"
+            },
+            {
+                "competency_question": "What event marks the beginning of the Grace Period interval?",
+                "expected_answer": "a missed premium"
+            },
+            {
+                "competency_question": "What event causes a transition from the 'Active' state to the 'In Grace Period' state?",
+                "expected_answer": "a missed premium payment"
+            },
+            {
+                "competency_question": "What is the maximum duration a policy can be in the 'In Grace Period' state?",
+                "expected_answer": "31 days"
+            },
+            {
+                "competency_question": "What state does the policy enter if a premium is not paid by the end of the Grace Period?",
+                "expected_answer": "Lapsed"
+            },
+            {
+                "competency_question": "What is the duration of the Incontestability Period?",
+                "expected_answer": "two-year"
+            },
+            {
+                "competency_question": "What event allows the Company to contest the validity of the policy?",
+                "expected_answer": "material misrepresentations"
+            }
+        ],
+        "3": [
+            {
+                "competency_question": "What is the name of the event when the policy is terminated by the Policy Owner's request?",
+                "expected_answer": "Cancellation"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Cancellation' event?",
+                "expected_answer": "the Policy Owner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Cancellation' event?",
+                "expected_answer": "the Policy"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Cancellation' event?",
+                "expected_answer": "written notice"
+            },
+            {
+                "competency_question": "What is the numeric value of the death benefit?",
+                "expected_answer": "500000"
+            },
+            {
+                "competency_question": "What is the currency unit of the death benefit?",
+                "expected_answer": "USD"
+            },
+            {
+                "competency_question": "What is the duration of the reinstatement period?",
+                "expected_answer": "5 years"
+            },
+            {
+                "competency_question": "What event marks the beginning of the reinstatement period interval?",
+                "expected_answer": "the date of lapse"
+            },
+            {
+                "competency_question": "What event causes a transition from the 'Active' state to the 'In Grace Period' state?",
+                "expected_answer": "a missed premium payment"
+            },
+            {
+                "competency_question": "What is the maximum duration a policy can be in the 'In Grace Period' state?",
+                "expected_answer": "31 days"
+            },
+            {
+                "competency_question": "What state does the policy enter if a premium is not paid by the end of the Grace Period?",
+                "expected_answer": "Lapsed"
+            },
+            {
+                "competency_question": "What is the name of the event when the policy is examined by the Owner?",
+                "expected_answer": "Right to Examine Policy"
+            },
+            {
+                "competency_question": "What is the duration of the examination period?",
+                "expected_answer": "20 days"
+            },
+            {
+                "competency_question": "What is the consequence of returning the policy within the examination period?",
+                "expected_answer": "full refund of any premium paid"
+            },
+            {
+                "competency_question": "What is the effect of returning the policy within the examination period?",
+                "expected_answer": "the policy shall be void from inception and treated as if never issued"
+            },
+            {
+                "competency_question": "What is the required manner for a valid contract modification?",
+                "expected_answer": "in writing and signed by an authorized officer of the Company"
+            },
+            {
+                "competency_question": "Who is authorized to make a contract modification?",
+                "expected_answer": "an authorized officer of the Company"
+            }
+        ],
+        "4": [
+            {
+                "competency_question": "What is the name of the event when the policy becomes incontestable after two years?",
+                "expected_answer": "Incontestability"
+            },
+            {
+                "competency_question": "What is the duration of the incontestability period?",
+                "expected_answer": "two years"
+            },
+            {
+                "competency_question": "What is the condition for the policy to become incontestable?",
+                "expected_answer": "after it has been in force during the lifetime of the Insured"
+            },
+            {
+                "competency_question": "What is the event that triggers the suicide exclusion?",
+                "expected_answer": "the Insured dies by suicide"
+            },
+            {
+                "competency_question": "What is the duration of the suicide exclusion period?",
+                "expected_answer": "two years from the Effective Date"
+            },
+            {
+                "competency_question": "What is the company's liability during the suicide exclusion period?",
+                "expected_answer": "limited to a refund of premiums paid, without interest, less any indebtedness"
+            },
+            {
+                "competency_question": "What is the event that triggers the misstatement of age or gender provision?",
+                "expected_answer": "the age or gender of the Insured has been misstated"
+            },
+            {
+                "competency_question": "What is the adjustment rule for the amount of insurance due to misstatement of age or gender?",
+                "expected_answer": "the amount of insurance shall be adjusted to the amount that the premium paid would have purchased at the correct age or gender"
+            },
+            {
+                "competency_question": "What is the duration of the grace period for premium payment?",
+                "expected_answer": "31 days"
+            },
+            {
+                "competency_question": "What is the condition for the grace period to be granted?",
+                "expected_answer": "after the first premium"
+            },
+            {
+                "competency_question": "What is the state of the policy during the grace period?",
+                "expected_answer": "the policy remains in force"
+            },
+            {
+                "competency_question": "What is the event that triggers the lapse of the policy?",
+                "expected_answer": "a premium is not paid before the end of the grace period"
+            },
+            {
+                "competency_question": "What is the effective date of the lapse?",
+                "expected_answer": "as of the due date of the unpaid premium"
+            },
+            {
+                "competency_question": "What is the state of the policy after lapse?",
+                "expected_answer": "coverage shall terminate with no further benefits payable"
+            }
+        ],
+        "5": [
+            {
+                "competency_question": "What is the duration of the reinstatement period for a lapsed policy?",
+                "expected_answer": "five (5) years"
+            },
+            {
+                "competency_question": "What is the required evidence for reinstating a lapsed policy?",
+                "expected_answer": "evidence of insurability satisfactory to the Company"
+            },
+            {
+                "competency_question": "What must be paid to reinstate a lapsed policy?",
+                "expected_answer": "all past due premiums with interest"
+            },
+            {
+                "competency_question": "What determines the interest amount for reinstating a lapsed policy?",
+                "expected_answer": "the Company at the time of reinstatement"
+            },
+            {
+                "competency_question": "What is the due date for the first premium payment?",
+                "expected_answer": "the Effective Date of the policy"
+            },
+            {
+                "competency_question": "What payment modes are available for premiums?",
+                "expected_answer": "monthly, quarterly, semi-annual, or annual"
+            },
+            {
+                "competency_question": "Who must approve a change in premium payment mode?",
+                "expected_answer": "the Company"
+            },
+            {
+                "competency_question": "What triggers the lapse of a policy due to non-payment of premium?",
+                "expected_answer": "Failure to pay the premium by the end of the grace period"
+            },
+            {
+                "competency_question": "What happens to coverage if a policy lapses due to non-payment?",
+                "expected_answer": "coverage will terminate without value except as provided under the Reinstatement provision"
+            },
+            {
+                "competency_question": "Does this policy include an Automatic Premium Loan provision by default?",
+                "expected_answer": "This policy does not include an Automatic Premium Loan provision unless endorsed or added by rider"
+            },
+            {
+                "competency_question": "Under what condition will an Automatic Premium Loan pay unpaid premiums at the end of the grace period?",
+                "expected_answer": "provided there is sufficient loan value available"
+            }
+        ],
+        "6": [
+            {
+                "competency_question": "What is the name of the event when the Death Benefit is paid to the Beneficiary?",
+                "expected_answer": "Death Benefit Payment"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Death Benefit Payment' event?",
+                "expected_answer": "the Company"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Death Benefit Payment' event?",
+                "expected_answer": "the Death Benefit"
+            },
+            {
+                "competency_question": "Who is the recipient participant in a 'Death Benefit Payment' event?",
+                "expected_answer": "the designated Beneficiary"
+            },
+            {
+                "competency_question": "What is the required condition for initiating a 'Death Benefit Payment' event?",
+                "expected_answer": "receipt of due proof of the Insured\u2019s death while this policy is in force"
+            },
+            {
+                "competency_question": "What is the numeric value of the Death Benefit?",
+                "expected_answer": "N/A"
+            },
+            {
+                "competency_question": "What is the currency unit of the Death Benefit?",
+                "expected_answer": "N/A"
+            },
+            {
+                "competency_question": "What is the duration of the time period for payment of the Death Benefit?",
+                "expected_answer": "promptly upon receipt of satisfactory proof of death"
+            },
+            {
+                "competency_question": "What event marks the beginning of the time period for Death Benefit payment?",
+                "expected_answer": "receipt of satisfactory proof of death"
+            },
+            {
+                "competency_question": "What is the required form of proof for the Insured's death?",
+                "expected_answer": "a certified copy of the death certificate and any other documentation the Company may reasonably require"
+            },
+            {
+                "competency_question": "What is the name of the event when proof of death is provided?",
+                "expected_answer": "Proof of Death"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Proof of Death' event?",
+                "expected_answer": "the Company"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Proof of Death' event?",
+                "expected_answer": "the Insured\u2019s death"
+            },
+            {
+                "competency_question": "What is the required manner for providing proof of death?",
+                "expected_answer": "in a form satisfactory to the Company"
+            },
+            {
+                "competency_question": "What is the name of the event when the Death Benefit is paid to the Policy Owner or estate?",
+                "expected_answer": "Death Benefit Payment"
+            },
+            {
+                "competency_question": "Who is the recipient participant in a 'Death Benefit Payment' event when no Beneficiary survives the Insured?",
+                "expected_answer": "the Policy Owner, if living, or to the Owner\u2019s estate"
+            },
+            {
+                "competency_question": "What is the name of the event when interest accrues on the Death Benefit?",
+                "expected_answer": "Interest Accrual"
+            },
+            {
+                "competency_question": "What is the time period for interest accrual on the Death Benefit?",
+                "expected_answer": "from the date of death until the date of payment"
+            },
+            {
+                "competency_question": "What is the name of the event when the Beneficiary is designated?",
+                "expected_answer": "Beneficiary Designation"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Beneficiary Designation' event?",
+                "expected_answer": "the Policy Owner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Beneficiary Designation' event?",
+                "expected_answer": "the Beneficiary"
+            },
+            {
+                "competency_question": "What is the required form of Beneficiary designation?",
+                "expected_answer": "the person or entity named in the application or most recent written designation on file with the Company"
+            }
+        ],
+        "7": [
+            {
+                "competency_question": "What is the name of the event when a policy's beneficiary designation is altered by the Policy Owner?",
+                "expected_answer": "Change of Beneficiary"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Change of Beneficiary' event?",
+                "expected_answer": "the Policy Owner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Change of Beneficiary' event?",
+                "expected_answer": "the Beneficiary designation"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Change of Beneficiary' event?",
+                "expected_answer": "written request"
+            },
+            {
+                "competency_question": "What is the time instant when a 'Change of Beneficiary' event takes effect?",
+                "expected_answer": "the date the request is signed"
+            },
+            {
+                "competency_question": "What is the condition regarding the Insured's living status for a 'Change of Beneficiary' event to take effect?",
+                "expected_answer": "regardless of whether the Insured is living at the time of the Company\u2019s receipt"
+            },
+            {
+                "competency_question": "What is the name of the event when a policy's coverage is terminated by the Policy Owner?",
+                "expected_answer": "Cancellation"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Cancellation' event?",
+                "expected_answer": "the Policyowner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Cancellation' event?",
+                "expected_answer": "this policy"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Cancellation' event?",
+                "expected_answer": "written request"
+            },
+            {
+                "competency_question": "What happens to insurance coverage upon a 'Cancellation' event?",
+                "expected_answer": "insurance coverage will terminate and no further benefits will be payable"
+            },
+            {
+                "competency_question": "What happens to unearned premiums upon a 'Cancellation' event?",
+                "expected_answer": "they will be refunded as specified under applicable law"
+            },
+            {
+                "competency_question": "What is the name of the event when a policy is transferred to another party by the Policy Owner?",
+                "expected_answer": "Assignment"
+            },
+            {
+                "competency_question": "Who is the agent participant in an 'Assignment' event?",
+                "expected_answer": "the Policyowner"
+            },
+            {
+                "competency_question": "What is the object participant in an 'Assignment' event?",
+                "expected_answer": "this policy or any interest in it"
+            },
+            {
+                "competency_question": "What is the required manner for initiating an 'Assignment' event?",
+                "expected_answer": "written assignment acceptable to the Company"
+            },
+            {
+                "competency_question": "What is the Company's responsibility regarding the validity of an 'Assignment' event?",
+                "expected_answer": "The Company shall not be responsible for the validity or tax consequences of any assignment"
+            },
+            {
+                "competency_question": "What is the condition regarding the rights of the Owner and Beneficiary after an 'Assignment' event?",
+                "expected_answer": "the rights of the Owner and Beneficiary will be subject to the terms of the assignment"
+            }
+        ],
+        "8": [
+            {
+                "competency_question": "What is the name of the event when the Policyowner requests a copy of the policy, premium payment history, beneficiary designations, or applicable riders or endorsements?",
+                "expected_answer": "Request for Information"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Request for Information' event?",
+                "expected_answer": "the Policyowner"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Request for Information' event?",
+                "expected_answer": "the policy, premium payment history, beneficiary designations, and applicable riders or endorsements"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Request for Information' event?",
+                "expected_answer": "written request"
+            },
+            {
+                "competency_question": "What is the name of the event when the Policyowner elects or changes the method by which the Death Benefit is paid to the Beneficiary?",
+                "expected_answer": "Election of Settlement Options"
+            },
+            {
+                "competency_question": "Who is the agent participant in an 'Election of Settlement Options' event?",
+                "expected_answer": "the Policyowner"
+            },
+            {
+                "competency_question": "What is the object participant in an 'Election of Settlement Options' event?",
+                "expected_answer": "the Death Benefit"
+            },
+            {
+                "competency_question": "What is the required manner for initiating an 'Election of Settlement Options' event?",
+                "expected_answer": "subject to approval by the Company and the terms of the settlement options offered"
+            },
+            {
+                "competency_question": "What is the name of the event when the Insured is diagnosed with a terminal illness with a life expectancy of 12 months or less, as certified by a licensed physician?",
+                "expected_answer": "Accelerated Death Benefit"
+            },
+            {
+                "competency_question": "Who is the agent participant in an 'Accelerated Death Benefit' event?",
+                "expected_answer": "the Policyowner"
+            },
+            {
+                "competency_question": "What is the object participant in an 'Accelerated Death Benefit' event?",
+                "expected_answer": "the Death Benefit"
+            },
+            {
+                "competency_question": "What is the numeric value of the maximum percentage of the policy\u2019s Face Amount that can be paid under the Accelerated Death Benefit Rider?",
+                "expected_answer": "50"
+            },
+            {
+                "competency_question": "What is the currency unit of the maximum percentage of the policy\u2019s Face Amount that can be paid under the Accelerated Death Benefit Rider?",
+                "expected_answer": "percent"
+            },
+            {
+                "competency_question": "What is the required manner for initiating an 'Accelerated Death Benefit' event?",
+                "expected_answer": "submit a written request and provide medical documentation acceptable to the Company"
+            },
+            {
+                "competency_question": "What is the name of the event when the Death Benefit is reduced by the amount paid, including any applicable administrative charges and interest?",
+                "expected_answer": "Reduction of Death Benefit"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Reduction of Death Benefit' event?",
+                "expected_answer": "the Company"
+            },
+            {
+                "competency_question": "What is the object participant in a 'Reduction of Death Benefit' event?",
+                "expected_answer": "the Death Benefit"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Reduction of Death Benefit' event?",
+                "expected_answer": "Upon payment of an accelerated benefit"
+            }
+        ],
+        "9": [
+            {
+                "competency_question": "What is the name of the event when a policyholder's request for accelerated benefits is terminated by the policyholder?",
+                "expected_answer": "Revocation"
+            },
+            {
+                "competency_question": "Who is the agent participant in a 'Revocation' event?",
+                "expected_answer": "The Policyowner"
+            },
+            {
+                "competency_question": "What is the required manner for initiating a 'Revocation' event?",
+                "expected_answer": "written notice"
+            },
+            {
+                "competency_question": "What is the name of the event when a policy is executed by the company?",
+                "expected_answer": "Execution of Policy"
+            },
+            {
+                "competency_question": "Where does the 'Execution of Policy' event occur?",
+                "expected_answer": "at its Home Office in Hartford, Connecticut"
+            },
+            {
+                "competency_question": "What is the condition for the 'Execution of Policy' event to become effective?",
+                "expected_answer": "provided the first premium has been paid and the Insured is living on that date"
+            },
+            {
+                "competency_question": "What is the policy form number associated with this policy?",
+                "expected_answer": "SLAC-TL2025-20YR"
+            },
+            {
+                "competency_question": "What is the name of the exclusion event when a terminal illness is the result of intentional self-inflicted injury?",
+                "expected_answer": "Exclusions"
+            },
+            {
+                "competency_question": "What is the object participant in an 'Exclusions' event?",
+                "expected_answer": "No accelerated benefit"
+            },
+            {
+                "competency_question": "What are the causes that prevent accelerated benefit payment in an 'Exclusions' event?",
+                "expected_answer": "intentional self-inflicted injury, the participation in a felony, or war-related activities"
+            },
+            {
+                "competency_question": "What is the name of the warning event related to fraudulent activity?",
+                "expected_answer": "Fraud Warning"
+            },
+            {
+                "competency_question": "What is the condition for a person to be considered in violation of the 'Fraud Warning' event?",
+                "expected_answer": "knowingly and with intent to defraud any insurance company or other person files an application for insurance or statement of claim containing any materially false information or conceals, for the purpose of misleading, information concerning any fact"
+            }
+        ],
+        "10": [
+            {
+                "competency_question": "What is the name of the event when a policyholder commits a fraudulent insurance act?",
+                "expected_answer": "fraudulent insurance act"
+            }
+        ]
+    }
+}
