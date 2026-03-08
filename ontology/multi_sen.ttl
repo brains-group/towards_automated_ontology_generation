@@ -1,0 +1,1063 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# Pivot Classes for Reification
+:Cl_PropertyReification a owl:Class ;
+    rdfs:label "Property Reification" ;
+    rdfs:comment "Reifies a property between two entities with additional metadata such as trigger, guard, or condition." .
+
+:Cl_StateTransition a owl:Class ;
+    rdfs:label "State Transition" ;
+    rdfs:comment "Represents a transition between two states in a state machine, with trigger and guard conditions." .
+
+:Cl_TemporalExtent a owl:Class ;
+    rdfs:label "Temporal Extent" ;
+    rdfs:comment "Represents a time interval or point in time." .
+
+:Cl_Identifier a owl:Class ;
+    rdfs:label "Identifier" ;
+    rdfs:comment "Represents a unique identifier for an entity." .
+
+:Cl_NameStub a owl:Class ;
+    rdfs:label "Name Stub" ;
+    rdfs:comment "Represents a name as a string literal." .
+
+:Cl_AgentRole a owl:Class ;
+    rdfs:label "Agent Role" ;
+    rdfs:comment "Represents a role played by an agent in a context." .
+
+# Reusable Base Classes
+:Cl_Policy a owl:Class ;
+    rdfs:label "Policy" ;
+    rdfs:comment "A legal contract between the Policy Owner and the Insurer providing life insurance coverage." .
+
+:Cl_Insured a owl:Class ;
+    rdfs:label "Insured" ;
+    rdfs:comment "The individual whose life is covered by the policy." .
+
+:Cl_Beneficiary a owl:Class ;
+    rdfs:label "Beneficiary" ;
+    rdfs:comment "The individual designated to receive the Death Benefit upon the Insured's death." .
+
+:Cl_PolicyOwner a owl:Class ;
+    rdfs:label "Policy Owner" ;
+    rdfs:comment "The individual who owns the policy and may be the same as the Insured." .
+
+:Cl_Insurer a owl:Class ;
+    rdfs:label "Insurer" ;
+    rdfs:comment "The company providing the insurance coverage." .
+
+:Cl_Premium a owl:Class ;
+    rdfs:label "Premium" ;
+    rdfs:comment "A payment made by the Policy Owner to maintain coverage." .
+
+:Cl_GracePeriod a owl:Class ;
+    rdfs:label "Grace Period" ;
+    rdfs:comment "A period after a premium due date during which coverage remains active." .
+
+:Cl_Lapse a owl:Class ;
+    rdfs:label "Lapse" ;
+    rdfs:comment "An event where coverage terminates due to non-payment of premium." .
+
+:Cl_Reinstatement a owl:Class ;
+    rdfs:label "Reinstatement" ;
+    rdfs:comment "An event where a lapsed policy is restored to active status." .
+
+:Cl_ContestabilityPeriod a owl:Class ;
+    rdfs:label "Contestability Period" ;
+    rdfs:comment "A period during which the insurer may contest the validity of the policy." .
+
+:Cl_SuicideExclusion a owl:Class ;
+    rdfs:label "Suicide Exclusion" ;
+    rdfs:comment "An event where the Death Benefit is not paid if the Insured dies by suicide within the contestability period." .
+
+:Cl_EffectiveDate a owl:Class ;
+    rdfs:label "Effective Date" ;
+    rdfs:comment "The date on which the policy becomes effective." .
+
+:Cl_GoverningLaw a owl:Class ;
+    rdfs:label "Governing Law" ;
+    rdfs:comment "The legal jurisdiction that governs the contract." .
+
+:Cl_PolicyType a owl:Class ;
+    rdfs:label "Policy Type" ;
+    rdfs:comment "The type of life insurance policy, such as term or whole life." .
+
+# New Classes to Create
+:Cl_PolicyState a owl:Class ;
+    rdfs:label "Policy State" ;
+    rdfs:comment "Represents the current state of a policy in its lifecycle." .
+
+:Cl_PolicyState_Active a owl:Class ;
+    rdfs:subClassOf :Cl_PolicyState ;
+    rdfs:label "Active" ;
+    rdfs:comment "The policy is currently in force and coverage is active." .
+
+:Cl_PolicyState_GracePeriod a owl:Class ;
+    rdfs:subClassOf :Cl_PolicyState ;
+    rdfs:label "Grace Period" ;
+    rdfs:comment "The policy is in a grace period after a premium due date." .
+
+:Cl_PolicyState_Lapse a owl:Class ;
+    rdfs:subClassOf :Cl_PolicyState ;
+    rdfs:label "Lapse" ;
+    rdfs:comment "The policy has lapsed due to non-payment of premium." .
+
+:Cl_PolicyState_Reinstated a owl:Class ;
+    rdfs:subClassOf :Cl_PolicyState ;
+    rdfs:label "Reinstated" ;
+    rdfs:comment "The policy has been reinstated after lapsing." .
+
+# Object Properties
+:hasOwner a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyOwner ;
+    rdfs:label "has owner" ;
+    rdfs:comment "Relates a policy to its owner." .
+
+:covers a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Insured ;
+    rdfs:label "covers" ;
+    rdfs:comment "Relates a policy to the individual it covers." .
+
+:pays a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Beneficiary ;
+    rdfs:label "pays" ;
+    rdfs:comment "Relates a policy to the beneficiary it pays upon death." .
+
+:isGovernedBy a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_GoverningLaw ;
+    rdfs:label "is governed by" ;
+    rdfs:comment "Relates a policy to the governing law." .
+
+:hasDuration a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has duration" ;
+    rdfs:comment "Relates a policy to its duration." .
+
+:hasContestabilityPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ContestabilityPeriod ;
+    rdfs:label "has contestability period" ;
+    rdfs:comment "Relates a policy to its contestability period." .
+
+:hasState a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyState ;
+    rdfs:label "has state" ;
+    rdfs:comment "Relates a policy to its current state." .
+
+:hasEffectiveDate a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_EffectiveDate ;
+    rdfs:label "has effective date" ;
+    rdfs:comment "Relates a policy to its effective date." .
+
+:hasPolicyType a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyType ;
+    rdfs:label "has policy type" ;
+    rdfs:comment "Relates a policy to its type." .
+
+:hasInsurer a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Insurer ;
+    rdfs:label "has insurer" ;
+    rdfs:comment "Relates a policy to the insurer." .
+
+:hasIdentifier a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Identifier ;
+    rdfs:label "has identifier" ;
+    rdfs:comment "Relates a policy to its unique identifier." .
+
+:hasTrigger a owl:ObjectProperty ;
+    rdfs:domain :Cl_StateTransition ;
+    rdfs:range :Cl_PropertyReification ;
+    rdfs:label "has trigger" ;
+    rdfs:comment "Relates a state transition to the property reification that triggers it." .
+
+:hasGuard a owl:ObjectProperty ;
+    rdfs:domain :Cl_StateTransition ;
+    rdfs:range :Cl_PropertyReification ;
+    rdfs:label "has guard" ;
+    rdfs:comment "Relates a state transition to the property reification that acts as a guard." .
+
+:hasFromState a owl:ObjectProperty ;
+    rdfs:domain :Cl_StateTransition ;
+    rdfs:range :Cl_PolicyState ;
+    rdfs:label "has from state" ;
+    rdfs:comment "Relates a state transition to its starting state." .
+
+:hasToState a owl:ObjectProperty ;
+    rdfs:domain :Cl_StateTransition ;
+    rdfs:range :Cl_PolicyState ;
+    rdfs:label "has to state" ;
+    rdfs:comment "Relates a state transition to its target state." .
+
+# Data Properties
+:hasName a owl:DatatypeProperty ;
+    rdfs:domain :Cl_NameStub ;
+    rdfs:range xsd:string ;
+    rdfs:label "has name" ;
+    rdfs:comment "Represents the name of an entity as a string." .
+
+:hasValue a owl:DatatypeProperty ;
+    rdfs:domain :Cl_TemporalExtent ;
+    rdfs:range xsd:string ;
+    rdfs:label "has value" ;
+    rdfs:comment "Represents the value of a temporal extent, such as a date or duration." .
+
+:hasDurationValue a owl:DatatypeProperty ;
+    rdfs:domain :Cl_TemporalExtent ;
+    rdfs:range xsd:string ;
+    rdfs:label "has duration value" ;
+    rdfs:comment "Represents the duration of a time interval in ISO 8601 format." .
+
+:hasLawText a owl:DatatypeProperty ;
+    rdfs:domain :Cl_GoverningLaw ;
+    rdfs:range xsd:string ;
+    rdfs:label "has law text" ;
+    rdfs:comment "Represents the text of the governing law." .
+
+:hasPolicyNumber a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Identifier ;
+    rdfs:range xsd:string ;
+    rdfs:label "has policy number" ;
+    rdfs:comment "Represents the unique policy number." .
+
+:hasPremiumAmount a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Premium ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has premium amount" ;
+    rdfs:comment "Represents the amount of a premium payment." .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:domain :Cl_EffectiveDate ;
+    rdfs:range xsd:date ;
+    rdfs:label "has date" ;
+    rdfs:comment "Represents the date of an event or point in time." .
+
+:hasType a owl:DatatypeProperty ;
+    rdfs:domain :Cl_PolicyType ;
+    rdfs:range xsd:string ;
+    rdfs:label "has type" ;
+    rdfs:comment "Represents the type of policy." .
+
+# Instantiation of Facts from Contract
+:Policy_001 a :Cl_Policy ;
+    :hasIdentifier :Identifier_001 ;
+    :hasOwner :PolicyOwner_001 ;
+    :covers :Insured_001 ;
+    :pays :Beneficiary_001 ;
+    :isGovernedBy :GoverningLaw_001 ;
+    :hasDuration :Duration_001 ;
+    :hasContestabilityPeriod :ContestabilityPeriod_001 ;
+    :hasState :Cl_PolicyState_Active ;
+    :hasEffectiveDate :EffectiveDate_001 ;
+    :hasPolicyType :PolicyType_001 ;
+    :hasInsurer :Insurer_001 .
+
+:Identifier_001 a :Cl_Identifier ;
+    :hasPolicyNumber "SLAC-2025-001" .
+
+:PolicyOwner_001 a :Cl_PolicyOwner ;
+    :hasName "Jordan Everett Hughes" .
+
+:Insured_001 a :Cl_Insured ;
+    :hasName "Jordan Everett Hughes" .
+
+:Beneficiary_001 a :Cl_Beneficiary ;
+    :hasName "Jordan Everett Hughes" .
+
+:GoverningLaw_001 a :Cl_GoverningLaw ;
+    :hasLawText "The contract shall be governed by and construed in accordance with the laws of the State of Colorado." .
+
+:Duration_001 a :Cl_TemporalExtent ;
+    :hasValue "20 years" ;
+    :hasDurationValue "P20Y" .
+
+:ContestabilityPeriod_001 a :Cl_ContestabilityPeriod ;
+    :hasDurationValue "P2Y" .
+
+:EffectiveDate_001 a :Cl_EffectiveDate ;
+    :hasDate "2025-08-07"^^xsd:date .
+
+:PolicyType_001 a :Cl_PolicyType ;
+    :hasType "Level Term Life Insurance – 20 Years" .
+
+:Insurer_001 a :Cl_Insurer ;
+    :hasName "Sentinel Life Assurance Company" .
+
+# State Transition for Lapse
+:Transition_Lapse a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Active ;
+    :hasToState :Cl_PolicyState_Lapse ;
+    :hasTrigger :Reification_LapseTrigger ;
+    :hasGuard :Reification_LapseGuard .
+
+:Reification_LapseTrigger a :Cl_PropertyReification ;
+    :hasName "Premium not paid" ;
+    :hasCondition "Premium payment overdue" .
+
+:Reification_LapseGuard a :Cl_PropertyReification ;
+    :hasName "Grace period expired" ;
+    :hasCondition "Grace period has ended without payment" .
+
+# Suicide Exclusion Event
+:SuicideExclusion_001 a :Cl_SuicideExclusion ;
+    :hasCondition "Insured dies by suicide within contestability period" ;
+    :appliesWhen :ContestabilityPeriod_001 .
+
+# Reification for Contestability Period
+:Reification_Contestability a :Cl_PropertyReification ;
+    :hasName "Contestability Period" ;
+    :hasDurationValue "P2Y" .
+### New Classes to Create
+:Cl_CoverageTermination a owl:Class ;
+    rdfs:label "Coverage Termination" ;
+    rdfs:comment "An event marking the end of the policy's coverage term." .
+
+:Cl_Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "A general class for events in the policy lifecycle." .
+
+:Cl_PolicyState_Reinstated a owl:Class ;
+    rdfs:subClassOf :Cl_PolicyState ;
+    rdfs:label "Reinstated" ;
+    rdfs:comment "The policy has been reinstated after lapsing." .
+
+:Cl_PolicyState_GracePeriod a owl:Class ;
+    rdfs:subClassOf :Cl_PolicyState ;
+    rdfs:label "Grace Period" ;
+    rdfs:comment "The policy is in a grace period after a premium due date." .
+
+:Cl_TemporalExtent a owl:Class ;
+    rdfs:subClassOf :Cl_TemporalExtent ;
+    rdfs:label "Temporal Extent" ;
+    rdfs:comment "Represents a time interval or point in time." .
+
+# Object Properties
+:hasEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_Event ;
+    rdfs:label "has event" ;
+    rdfs:comment "Relates a coverage termination to its event." .
+
+:hasAgentRole a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_AgentRole ;
+    rdfs:label "has agent role" ;
+    rdfs:comment "Relates a coverage termination to the agent participant." .
+
+:hasObjectRole a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_AgentRole ;
+    rdfs:label "has object role" ;
+    rdfs:comment "Relates a coverage termination to the object participant." .
+
+:hasManner a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has manner" ;
+    rdfs:comment "Relates a coverage termination to the condition that triggers it." .
+
+:hasReinstatementPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has reinstatement period" ;
+    rdfs:comment "Relates a policy to its reinstatement period." .
+
+:hasGracePeriodDuration a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has grace period duration" ;
+    rdfs:comment "Relates a policy to its grace period duration." .
+
+# Data Properties
+:hasFaceAmount a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has face amount" ;
+    rdfs:comment "Represents the monetary value of the policy's death benefit." .
+
+:hasCurrencyUnit a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:string ;
+    rdfs:label "has currency unit" ;
+    rdfs:comment "Represents the currency of the face amount." .
+
+:hasCoverageTermStart a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:date ;
+    rdfs:label "has coverage term start" ;
+    rdfs:comment "Represents the start date of the coverage term." .
+
+:hasCoverageTermEnd a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:date ;
+    rdfs:label "has coverage term end" ;
+    rdfs:comment "Represents the end date of the coverage term." .
+
+# Instantiation of Facts from Contract
+:Policy_001 a :Cl_Policy ;
+    :hasFaceAmount 500000 ;
+    :hasCurrencyUnit "USD" ;
+    :hasCoverageTermStart "2025-08-07"^^xsd:date ;
+    :hasCoverageTermEnd "2045-08-07"^^xsd:date ;
+    :hasReinstatementPeriod :ReinstatementPeriod_001 ;
+    :hasGracePeriodDuration :GracePeriodDuration_001 .
+
+:CoverageTermination_001 a :Cl_CoverageTermination ;
+    :hasEvent :Event_CoverageTermination ;
+    :hasAgentRole :AgentRole_Policy ;
+    :hasObjectRole :ObjectRole_Policy ;
+    :hasManner :CoverageTerm_001 .
+
+:Event_CoverageTermination a :Cl_Event ;
+    :hasName "Coverage Termination" .
+
+:AgentRole_Policy a :Cl_AgentRole ;
+    :hasName "Policy" .
+
+:ObjectRole_Policy a :Cl_AgentRole ;
+    :hasName "Policy" .
+
+:CoverageTerm_001 a :Cl_TemporalExtent ;
+    :hasValue "20 years" ;
+    :hasDurationValue "P20Y" .
+
+:ReinstatementPeriod_001 a :Cl_TemporalExtent ;
+    :hasValue "5 years" ;
+    :hasDurationValue "P5Y" .
+
+:GracePeriodDuration_001 a :Cl_TemporalExtent ;
+    :hasValue "31 days" ;
+    :hasDurationValue "P31D" .
+
+# State Transition for Grace Period
+:Transition_GracePeriod a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Active ;
+    :hasToState :Cl_PolicyState_GracePeriod ;
+    :hasTrigger :Reification_GracePeriodTrigger ;
+    :hasGuard :Reification_GracePeriodGuard .
+
+:Reification_GracePeriodTrigger a :Cl_PropertyReification ;
+    :hasName "Missed premium payment" ;
+    :hasCondition "Premium payment is overdue" .
+
+:Reification_GracePeriodGuard a :Cl_PropertyReification ;
+    :hasName "Grace period not expired" ;
+    :hasCondition "Grace period has not ended" .
+
+# State Transition for Reinstatement
+:Transition_Reinstated a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Lapse ;
+    :hasToState :Cl_PolicyState_Reinstated ;
+    :hasTrigger :Reification_ReinstatementTrigger ;
+    :hasGuard :Reification_ReinstatementGuard .
+
+:Reification_ReinstatementTrigger a :Cl_PropertyReification ;
+    :hasName "Reinstatement request submitted" ;
+    :hasCondition "Policyholder submits reinstatement request" .
+
+:Reification_ReinstatementGuard a :Cl_PropertyReification ;
+    :hasName "Within reinstatement period" ;
+    :hasCondition "Reinstatement request is made within 5 years of lapse" .
+### New Classes to Create
+:Cl_CoverageTermination a owl:Class ;
+    rdfs:label "Coverage Termination" ;
+    rdfs:comment "An event marking the end of the policy's coverage term." .
+
+:Cl_Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "A general class for events in the policy lifecycle." .
+
+:Cl_AgentRole a owl:Class ;
+    rdfs:label "Agent Role" ;
+    rdfs:comment "Represents a role played by an agent in a context." .
+
+:Cl_ObjectRole a owl:Class ;
+    rdfs:label "Object Role" ;
+    rdfs:comment "Represents a role played by an object in a context." .
+
+:Cl_PropertyReification a owl:Class ;
+    rdfs:label "Property Reification" ;
+    rdfs:comment "Reifies a property between two entities with additional metadata such as trigger, guard, or condition." .
+
+### Object Properties
+:hasEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_Event ;
+    rdfs:label "has event" ;
+    rdfs:comment "Relates a coverage termination to its event." .
+
+:hasAgentRole a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_AgentRole ;
+    rdfs:label "has agent role" ;
+    rdfs:comment "Relates a coverage termination to the agent participant." .
+
+:hasObjectRole a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_ObjectRole ;
+    rdfs:label "has object role" ;
+    rdfs:comment "Relates a coverage termination to the object participant." .
+
+:hasManner a owl:ObjectProperty ;
+    rdfs:domain :Cl_CoverageTermination ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has manner" ;
+    rdfs:comment "Relates a coverage termination to the condition that triggers it." .
+
+:hasReinstatementPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has reinstatement period" ;
+    rdfs:comment "Relates a policy to its reinstatement period." .
+
+:hasGracePeriodDuration a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_TemporalExtent ;
+    rdfs:label "has grace period duration" ;
+    rdfs:comment "Relates a policy to its grace period duration." .
+
+### Data Properties
+:hasFaceAmount a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has face amount" ;
+    rdfs:comment "Represents the monetary value of the policy's death benefit." .
+
+:hasCurrencyUnit a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:string ;
+    rdfs:label "has currency unit" ;
+    rdfs:comment "Represents the currency of the face amount." .
+
+:hasCoverageTermStart a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:date ;
+    rdfs:label "has coverage term start" ;
+    rdfs:comment "Represents the start date of the coverage term." .
+
+:hasCoverageTermEnd a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:date ;
+    rdfs:label "has coverage term end" ;
+    rdfs:comment "Represents the end date of the coverage term." .
+
+### Instantiation of Facts from Contract
+:Policy_001 a :Cl_Policy ;
+    :hasFaceAmount 500000 ;
+    :hasCurrencyUnit "USD" ;
+    :hasCoverageTermStart "2025-08-07"^^xsd:date ;
+    :hasCoverageTermEnd "2045-08-07"^^xsd:date ;
+    :hasReinstatementPeriod :ReinstatementPeriod_001 ;
+    :hasGracePeriodDuration :GracePeriodDuration_001 .
+
+:CoverageTermination_001 a :Cl_CoverageTermination ;
+    :hasEvent :Event_Cancellation ;
+    :hasAgentRole :AgentRole_PolicyOwner ;
+    :hasObjectRole :ObjectRole_Policy ;
+    :hasManner :CancellationManner .
+
+:Event_Cancellation a :Cl_Event ;
+    :hasName "Cancellation" .
+
+:AgentRole_PolicyOwner a :Cl_AgentRole ;
+    :hasName "Policy Owner" .
+
+:ObjectRole_Policy a :Cl_ObjectRole ;
+    :hasName "Policy" .
+
+:CancellationManner a :Cl_TemporalExtent ;
+    :hasValue "written notice" ;
+    :hasDurationValue "P0D" .
+
+:ReinstatementPeriod_001 a :Cl_TemporalExtent ;
+    :hasValue "5 years" ;
+    :hasDurationValue "P5Y" .
+
+:GracePeriodDuration_001 a :Cl_TemporalExtent ;
+    :hasValue "31 days" ;
+    :hasDurationValue "P31D" .
+
+### State Transition for Grace Period
+:Transition_GracePeriod a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Active ;
+    :hasToState :Cl_PolicyState_GracePeriod ;
+    :hasTrigger :Reification_GracePeriodTrigger ;
+    :hasGuard :Reification_GracePeriodGuard .
+
+:Reification_GracePeriodTrigger a :Cl_PropertyReification ;
+    :hasName "Missed premium payment" ;
+    :hasCondition "Premium payment is overdue" .
+
+:Reification_GracePeriodGuard a :Cl_PropertyReification ;
+    :hasName "Grace period not expired" ;
+    :hasCondition "Grace period has not ended" .
+
+### State Transition for Reinstatement
+:Transition_Reinstated a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Lapse ;
+    :hasToState :Cl_PolicyState_Reinstated ;
+    :hasTrigger :Reification_ReinstatementTrigger ;
+    :hasGuard :Reification_ReinstatementGuard .
+
+:Reification_ReinstatementTrigger a :Cl_PropertyReification ;
+    :hasName "Reinstatement request submitted" ;
+    :hasCondition "Policyholder submits reinstatement request" .
+
+:Reification_ReinstatementGuard a :Cl_PropertyReification ;
+    :hasName "Within reinstatement period" ;
+    :hasCondition "Reinstatement request is made within 5 years of lapse" .
+
+### State Transition for Cancellation
+:Transition_Cancellation a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Active ;
+    :hasToState :Cl_PolicyState_Lapse ;
+    :hasTrigger :Reification_CancellationTrigger ;
+    :hasGuard :Reification_CancellationGuard .
+
+:Reification_CancellationTrigger a :Cl_PropertyReification ;
+    :hasName "Cancellation request" ;
+    :hasCondition "Policy Owner submits written notice" .
+
+:Reification_CancellationGuard a :Cl_PropertyReification ;
+    :hasName "Policy is active" ;
+    :hasCondition "Policy is in Active state before cancellation" .
+
+### Right to Examine Policy
+:RightToExamine a :Cl_PropertyReification ;
+    :hasName "Right to Examine" ;
+    :hasCondition "Policyholder examines policy within 20 days of receipt" ;
+    :hasEffect "Policy is void from inception if returned within examination period" .
+
+:ExaminationPeriod a :Cl_TemporalExtent ;
+    :hasValue "20 days" ;
+    :hasDurationValue "P20D" .
+
+:ExaminationTrigger a :Cl_PropertyReification ;
+    :hasName "Receipt of policy" ;
+    :hasCondition "Policy is received by the Policy Owner" .
+
+:ExaminationEffect a :Cl_PropertyReification ;
+    :hasName "Void from inception" ;
+    :hasCondition "Policy is returned within 20 days" ;
+    :hasEffect "Policy is treated as if never issued" .
+### New Classes to Create
+:Cl_AcceleratedDeathBenefit a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Accelerated Death Benefit" ;
+    rdfs:comment "An early payment of a portion of the Death Benefit due to a terminal illness diagnosis with a life expectancy of 12 months or less, subject to medical documentation and Company approval." .
+
+:Cl_RequestForAcceleratedBenefit a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Request for Accelerated Benefit" ;
+    rdfs:comment "A written submission by the Policyowner to initiate the process for early payment of a portion of the Death Benefit." .
+
+:Cl_RevocationOfRequest a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Revocation of Request" ;
+    rdfs:comment "A written notice by the Policyowner to cancel a pending request for an accelerated benefit before payment is made." .
+
+:Cl_PaymentOfAcceleratedBenefit a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Payment of Accelerated Benefit" ;
+    rdfs:comment "The disbursement of the accelerated benefit amount to the Policyowner." .
+
+:Cl_ReducedDeathBenefit a owl:Class ;
+    rdfs:subClassOf :Cl_State ;
+    rdfs:label "Reduced Death Benefit" ;
+    rdfs:comment "The updated Death Benefit amount after deduction of the accelerated benefit, administrative charges, and outstanding loans." .
+
+:Cl_ExclusionEvent a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Exclusion Event" ;
+    rdfs:comment "An event that disqualifies the Insured from receiving an accelerated benefit, such as terminal illness due to intentional self-inflicted injury, felony participation, or war-related activities." .
+
+:Cl_TerminalIllness a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Terminal Illness" ;
+    rdfs:comment "A diagnosis of a condition with a life expectancy of 12 months or less, as certified by a licensed physician." .
+
+:Cl_SecondMedicalOpinion a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Second Medical Opinion" ;
+    rdfs:comment "An independent medical review conducted by the Company to verify the terminal illness diagnosis." .
+
+:Cl_MedicalDocumentation a owl:Class ;
+    rdfs:label "Medical Documentation" ;
+    rdfs:comment "Evidence acceptable to the Company to support a terminal illness diagnosis." .
+
+### Object Properties
+:requires a owl:ObjectProperty ;
+    rdfs:domain :Cl_AcceleratedDeathBenefit ;
+    rdfs:range :Cl_TerminalIllness ;
+    rdfs:label "requires" ;
+    rdfs:comment "Indicates that the Accelerated Death Benefit requires a Terminal Illness diagnosis." .
+
+:reduces a owl:ObjectProperty ;
+    rdfs:domain :Cl_AcceleratedDeathBenefit ;
+    rdfs:range :Cl_DeathBenefit ;
+    rdfs:label "reduces" ;
+    rdfs:comment "Indicates that the Accelerated Death Benefit reduces the Death Benefit." .
+
+:mayBeExcludedBy a owl:ObjectProperty ;
+    rdfs:domain :Cl_AcceleratedDeathBenefit ;
+    rdfs:range :Cl_ExclusionEvent ;
+    rdfs:label "may be excluded by" ;
+    rdfs:comment "Indicates that the Accelerated Death Benefit may be excluded if an Exclusion Event occurs." .
+
+:hasMedicalDocumentation a owl:ObjectProperty ;
+    rdfs:domain :Cl_RequestForAcceleratedBenefit ;
+    rdfs:range :Cl_MedicalDocumentation ;
+    rdfs:label "has medical documentation" ;
+    rdfs:comment "Relates a request to the medical documentation submitted." .
+
+:revokes a owl:ObjectProperty ;
+    rdfs:domain :Cl_RevocationOfRequest ;
+    rdfs:range :Cl_RequestForAcceleratedBenefit ;
+    rdfs:label "revokes" ;
+    rdfs:comment "Indicates that a revocation cancels a prior request." .
+
+:triggers a owl:ObjectProperty ;
+    rdfs:domain :Cl_RequestForAcceleratedBenefit ;
+    rdfs:range :Cl_StateTransition ;
+    rdfs:label "triggers" ;
+    rdfs:comment "Indicates that a request triggers a state transition." .
+
+:triggers a owl:ObjectProperty ;
+    rdfs:domain :Cl_RevocationOfRequest ;
+    rdfs:range :Cl_StateTransition ;
+    rdfs:label "triggers" ;
+    rdfs:comment "Indicates that a revocation triggers a state transition." .
+
+:isResultOf a owl:ObjectProperty ;
+    rdfs:domain :Cl_ReducedDeathBenefit ;
+    rdfs:range :Cl_PaymentOfAcceleratedBenefit ;
+    rdfs:label "is result of" ;
+    rdfs:comment "Indicates that the reduced death benefit is the result of a payment." .
+
+:reducedBy a owl:ObjectProperty ;
+    rdfs:domain :Cl_ReducedDeathBenefit ;
+    rdfs:range :Cl_DeathBenefit ;
+    rdfs:label "reduced by" ;
+    rdfs:comment "Indicates that the reduced death benefit is reduced from the original death benefit." .
+
+:hasAmountPaid a owl:ObjectProperty ;
+    rdfs:domain :Cl_PaymentOfAcceleratedBenefit ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has amount paid" ;
+    rdfs:comment "Relates the payment to the amount paid." .
+
+:hasAdministrativeCharges a owl:ObjectProperty ;
+    rdfs:domain :Cl_PaymentOfAcceleratedBenefit ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has administrative charges" ;
+    rdfs:comment "Relates the payment to the administrative charges applied." .
+
+:hasOutstandingLoans a owl:ObjectProperty ;
+    rdfs:domain :Cl_PaymentOfAcceleratedBenefit ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has outstanding loans" ;
+    rdfs:comment "Relates the payment to the outstanding loans deducted." .
+
+### Data Properties
+:hasMaximumPercentage a owl:DatatypeProperty ;
+    rdfs:domain :Cl_AcceleratedDeathBenefit ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has maximum percentage" ;
+    rdfs:comment "The maximum percentage of the policy’s Face Amount that can be paid under the Accelerated Death Benefit (50%)." .
+
+:hasMaximumLimit a owl:DatatypeProperty ;
+    rdfs:domain :Cl_AcceleratedDeathBenefit ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has maximum limit" ;
+    rdfs:comment "The maximum monetary limit for the Accelerated Death Benefit, determined by the Company." .
+
+:hasLifeExpectancy a owl:DatatypeProperty ;
+    rdfs:domain :Cl_TerminalIllness ;
+    rdfs:range xsd:string ;
+    rdfs:label "has life expectancy" ;
+    rdfs:comment "The life expectancy of the Insured at the time of terminal illness diagnosis (12 months or less)." .
+
+:hasMannerOfRequest a owl:DatatypeProperty ;
+    rdfs:domain :Cl_RequestForAcceleratedBenefit ;
+    rdfs:range xsd:string ;
+    rdfs:label "has manner of request" ;
+    rdfs:comment "The required manner for initiating a request (written request)." .
+
+:hasMannerOfRevocation a owl:DatatypeProperty ;
+    rdfs:domain :Cl_RevocationOfRequest ;
+    rdfs:range xsd:string ;
+    rdfs:label "has manner of revocation" ;
+    rdfs:comment "The required manner for revoking a request (written notice)." .
+
+:hasExclusionReason a owl:DatatypeProperty ;
+    rdfs:domain :Cl_ExclusionEvent ;
+    rdfs:range xsd:string ;
+    rdfs:label "has exclusion reason" ;
+    rdfs:comment "The reason for exclusion (e.g., intentional self-inflicted injury, felony, war-related activities)." .
+
+:hasDocumentationRequirement a owl:DatatypeProperty ;
+    rdfs:domain :Cl_MedicalDocumentation ;
+    rdfs:range xsd:string ;
+    rdfs:label "has documentation requirement" ;
+    rdfs:comment "The type of medical documentation required (acceptable to the Company)." .
+
+### Instantiation of Facts from Contract
+:AcceleratedDeathBenefit_001 a :Cl_AcceleratedDeathBenefit ;
+    :requires :TerminalIllness_001 ;
+    :reduces :DeathBenefit_001 ;
+    :mayBeExcludedBy :ExclusionEvent_001 ;
+    :hasMaximumPercentage 50.0 .
+
+:RequestForAcceleratedBenefit_001 a :Cl_RequestForAcceleratedBenefit ;
+    :hasMannerOfRequest "written request" ;
+    :hasMedicalDocumentation :MedicalDocumentation_001 ;
+    :triggers :Transition_RequestUnderReview .
+
+:RevocationOfRequest_001 a :Cl_RevocationOfRequest ;
+    :hasMannerOfRevocation "written notice" ;
+    :revokes :RequestForAcceleratedBenefit_001 ;
+    :triggers :Transition_RequestRevoked .
+
+:PaymentOfAcceleratedBenefit_001 a :Cl_PaymentOfAcceleratedBenefit ;
+    :hasAmountPaid :AmountPaid_001 ;
+    :hasAdministrativeCharges :AdministrativeCharges_001 ;
+    :hasOutstandingLoans :OutstandingLoans_001 .
+
+:ReducedDeathBenefit_001 a :Cl_ReducedDeathBenefit ;
+    :isResultOf :PaymentOfAcceleratedBenefit_001 ;
+    :reducedBy :DeathBenefit_001 .
+
+:TerminalIllness_001 a :Cl_TerminalIllness ;
+    :hasLifeExpectancy "12 months or less" .
+
+:ExclusionEvent_001 a :Cl_ExclusionEvent ;
+    :hasExclusionReason "terminal illness resulting from intentional self-inflicted injury, participation in a felony, or war-related activities" .
+
+:MedicalDocumentation_001 a :Cl_MedicalDocumentation ;
+    :hasDocumentationRequirement "medical documentation acceptable to the Company" .
+
+:AmountPaid_001 a :Cl_MonetaryAmount ;
+    :hasAmount 250000.0 ;
+    :hasCurrencyUnit "USD" .
+
+:AdministrativeCharges_001 a :Cl_MonetaryAmount ;
+    :hasAmount 1000.0 ;
+    :hasCurrencyUnit "USD" .
+
+:OutstandingLoans_001 a :Cl_MonetaryAmount ;
+    :hasAmount 5000.0 ;
+    :hasCurrencyUnit "USD" .
+
+:Transition_RequestUnderReview a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_Active ;
+    :hasToState :Cl_PolicyState_RequestUnderReview ;
+    :hasTrigger :Reification_RequestTrigger ;
+    :hasGuard :Reification_RequestGuard .
+
+:Transition_RequestRevoked a :Cl_StateTransition ;
+    :hasFromState :Cl_PolicyState_RequestUnderReview ;
+    :hasToState :Cl_PolicyState_Active ;
+    :hasTrigger :Reification_RevocationTrigger ;
+    :hasGuard :Reification_RevocationGuard .
+
+:Reification_RequestTrigger a :Cl_PropertyReification ;
+    :hasName "Request submitted" ;
+    :hasCondition "Policyowner submits written request" .
+
+:Reification_RequestGuard a :Cl_PropertyReification ;
+    :hasName "Request not yet paid" ;
+    :hasCondition "Accelerated benefit has not been paid" .
+
+:Reification_RevocationTrigger a :Cl_PropertyReification ;
+    :hasName "Revocation submitted" ;
+    :hasCondition "Policyowner submits written notice" .
+
+:Reification_RevocationGuard a :Cl_PropertyReification ;
+    :hasName "Request is pending" ;
+    :hasCondition "Request is in 'Under Review' state" .
+
+:Policy_001 a :Cl_Policy ;
+    :hasAcceleratedBenefitAmount :AmountPaid_001 ;
+    :hasReducedDeathBenefit :ReducedDeathBenefit_001 .
+### New Classes to Create
+:Cl_ExecutionOfPolicy a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Execution of Policy" ;
+    rdfs:comment "The formal signing of the policy by Sentinel Life Assurance Company at its Home Office." .
+
+:Cl_FraudWarning a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Fraud Warning" ;
+    rdfs:comment "A legal notice warning against fraudulent insurance acts." .
+
+:Cl_FraudulentInsuranceAct a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Fraudulent Insurance Act" ;
+    rdfs:comment "An act of knowingly filing a materially false insurance application or claim with intent to defraud." .
+
+:Cl_StateSpecificNotice a owl:Class ;
+    rdfs:subClassOf :Cl_Entity ;
+    rdfs:label "State Specific Notice" ;
+    rdfs:comment "A legal provision or notice required by a specific state's law." .
+
+:Cl_LivingOnEffectiveDate a owl:Class ;
+    rdfs:subClassOf :Cl_State ;
+    rdfs:label "Living on Effective Date" ;
+    rdfs:comment "The condition that the Insured must be alive on the effective date of the policy." .
+
+### Object Properties
+:hasLocation a owl:ObjectProperty ;
+    rdfs:domain :Cl_ExecutionOfPolicy ;
+    rdfs:range :Cl_Location ;
+    rdfs:label "has location" ;
+    rdfs:comment "Relates the execution of a policy to its physical location." .
+
+:hasConditionForEffectiveness a owl:ObjectProperty ;
+    rdfs:domain :Cl_ExecutionOfPolicy ;
+    rdfs:range :Cl_PropertyReification ;
+    rdfs:label "has condition for effectiveness" ;
+    rdfs:comment "Relates the execution event to the condition that must be met for the policy to become effective." .
+
+:hasFraudulentAct a owl:ObjectProperty ;
+    rdfs:domain :Cl_FraudWarning ;
+    rdfs:range :Cl_FraudulentInsuranceAct ;
+    rdfs:label "has fraudulent act" ;
+    rdfs:comment "Relates a fraud warning to the specific fraudulent act it defines." .
+
+:hasStateNotice a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_StateSpecificNotice ;
+    rdfs:label "has state notice" ;
+    rdfs:comment "Relates a policy to its state-specific legal notices or provisions." .
+
+:hasEndorsement a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Endorsement ;
+    rdfs:label "has endorsement" ;
+    rdfs:comment "Relates a policy to its attached endorsements." .
+
+:hasNoticePage a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_NoticePage ;
+    rdfs:label "has notice page" ;
+    rdfs:comment "Relates a policy to its attached state notice pages." .
+
+:hasChiefExecutiveOfficer a owl:ObjectProperty ;
+    rdfs:domain :Cl_Insurer ;
+    rdfs:range :Cl_ChiefExecutiveOfficer ;
+    rdfs:label "has chief executive officer" ;
+    rdfs:comment "Relates an insurer to its chief executive officer." .
+
+:hasTitle a owl:ObjectProperty ;
+    rdfs:domain :Cl_AgentRole ;
+    rdfs:range :Cl_NameStub ;
+    rdfs:label "has title" ;
+    rdfs:comment "Relates an agent role to its title." .
+
+### Data Properties
+:hasFormNumber a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:string ;
+    rdfs:label "has form number" ;
+    rdfs:comment "Represents the form number of the policy, such as SLAC-TL2025-20YR." .
+
+:hasFirstPremium a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has first premium" ;
+    rdfs:comment "Represents the amount of the first premium payment." .
+
+:hasNotice a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:string ;
+    rdfs:label "has notice" ;
+    rdfs:comment "Represents any additional notice included in the policy." .
+
+:hasLocationName a owl:DatatypeProperty ;
+    rdfs:domain :Cl_Location ;
+    rdfs:range xsd:string ;
+    rdfs:label "has location name" ;
+    rdfs:comment "Represents the name of a physical location, such as 'Hartford, Connecticut'." .
+
+:hasChiefExecutiveName a owl:DatatypeProperty ;
+    rdfs:domain :Cl_ChiefExecutiveOfficer ;
+    rdfs:range xsd:string ;
+    rdfs:label "has chief executive name" ;
+    rdfs:comment "Represents the name of the chief executive officer." .
+
+:hasAuthorizedRepresentativeTitle a owl:DatatypeProperty ;
+    rdfs:domain :Cl_AuthorizedRepresentative ;
+    rdfs:range xsd:string ;
+    rdfs:label "has authorized representative title" ;
+    rdfs:comment "Represents the title of the authorized representative." .
+
+### Instantiation of Facts from Contract
+:ExecutionOfPolicy_001 a :Cl_ExecutionOfPolicy ;
+    :hasLocation :Location_Hartford ;
+    :hasConditionForEffectiveness :Reification_EffectivenessCondition .
+
+:Location_Hartford a :Cl_Location ;
+    :hasLocationName "Hartford, Connecticut" .
+
+:Reification_EffectivenessCondition a :Cl_PropertyReification ;
+    :hasName "Policy Effectiveness Condition" ;
+    :hasCondition "First premium paid and Insured is living on effective date" ;
+    :hasTrigger :Reification_FirstPremiumPaid ;
+    :hasGuard :Reification_LivingOnEffectiveDate .
+
+:Reification_FirstPremiumPaid a :Cl_PropertyReification ;
+    :hasName "First premium paid" ;
+    :hasCondition "First premium has been paid" .
+
+:Reification_LivingOnEffectiveDate a :Cl_PropertyReification ;
+    :hasName "Insured is living on effective date" ;
+    :hasCondition "Insured is alive on the effective date" .
+
+:FraudWarning_001 a :Cl_FraudWarning ;
+    :hasFraudulentAct :FraudulentInsuranceAct_001 .
+
+:FraudulentInsuranceAct_001 a :Cl_FraudulentInsuranceAct ;
+    :hasCondition "Knowingly files application with materially false information or conceals material facts with intent to defraud" .
+
+:Policy_001 a :Cl_Policy ;
+    :hasFormNumber "SLAC-TL2025-20YR" ;
+    :hasFirstPremium 1000.0 ;
+    :hasNotice "Additional state-specific notices or provisions as required by law. Refer to attached endorsements or state notice pages, if any." ;
+    :hasStateNotice :StateNotice_001 ;
+    :hasEndorsement :Endorsement_001 ;
+    :hasNoticePage :NoticePage_001 .
+
+:StateNotice_001 a :Cl_StateSpecificNotice ;
+    :hasName "State Notice for New York" .
+
+:Endorsement_001 a :Cl_Endorsement ;
+    :hasName "Endorsement for California" .
+
+:NoticePage_001 a :Cl_NoticePage ;
+    :hasName "Notice Page for Texas" .
+
+:Insurer_001 a :Cl_Insurer ;
+    :hasChiefExecutiveOfficer :ChiefExecutiveOfficer_Raynor .
+
+:ChiefExecutiveOfficer_Raynor a :Cl_ChiefExecutiveOfficer ;
+    :hasChiefExecutiveName "Eleanor B. Raynor" .
+
+:AuthorizedRepresentative_001 a :Cl_AuthorizedRepresentative ;
+    :hasTitle :Title_AuthorizedRepresentative .
+
+:Title_AuthorizedRepresentative a :Cl_NameStub ;
+    :hasName "Authorized Representative" .

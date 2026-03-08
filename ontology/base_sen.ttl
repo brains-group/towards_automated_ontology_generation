@@ -1,0 +1,769 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:Policy a owl:Class ;
+    rdfs:label "Policy" ;
+    rdfs:comment "A life insurance policy with coverage and financial terms." .
+
+:CoverageTerm a owl:Class ;
+    rdfs:label "Coverage Term" ;
+    rdfs:comment "The period during which the policy provides coverage." .
+
+:ReinstatementPeriod a owl:Class ;
+    rdfs:label "Reinstatement Period" ;
+    rdfs:comment "The period during which a lapsed policy can be reinstated." .
+
+:GracePeriod a owl:Class ;
+    rdfs:label "Grace Period" ;
+    rdfs:comment "The period after a premium is due during which the policy remains active." .
+
+:PolicyState a owl:Class ;
+    rdfs:label "Policy State" ;
+    rdfs:comment "A state in the lifecycle of a policy." .
+
+:PolicyEvent a owl:Class ;
+    rdfs:label "Policy Event" ;
+    rdfs:comment "An event that occurs in the lifecycle of a policy." .
+
+:FaceAmount a owl:Class ;
+    rdfs:label "Face Amount" ;
+    rdfs:comment "The monetary value of the death benefit payable under the policy." .
+
+:Premium a owl:Class ;
+    rdfs:label "Premium" ;
+    rdfs:comment "A payment made by the policyholder to maintain coverage." .
+
+:Beneficiary a owl:Class ;
+    rdfs:label "Beneficiary" ;
+    rdfs:comment "A person or entity designated to receive benefits upon the insured's death." .
+
+:Rider a owl:Class ;
+    rdfs:label "Rider" ;
+    rdfs:comment "An additional provision attached to a policy that modifies benefits or terms." .
+
+:Insured a owl:Class ;
+    rdfs:label "Insured" ;
+    rdfs:comment "The person whose life is covered by the policy." .
+
+:Agent a owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:comment "A person or entity that acts on behalf of another in a transaction." .
+
+:TimeInterval a owl:Class ;
+    rdfs:label "Time Interval" ;
+    rdfs:comment "A period of time with a start and end point." .
+
+:Quantity a owl:Class ;
+    rdfs:label "Quantity" ;
+    rdfs:comment "A measurable amount with a value and unit." .
+
+:CurrencyUnit a owl:Class ;
+    rdfs:label "Currency Unit" ;
+    rdfs:comment "A unit of currency, such as USD, EUR." .
+
+:Date a owl:Class ;
+    rdfs:label "Date" ;
+    rdfs:comment "A specific day, month, and year." .
+
+
+:hasCoverageTerm a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :CoverageTerm ;
+    rdfs:label "has Coverage Term" ;
+    rdfs:comment "Relates a policy to its coverage term interval." .
+
+:hasReinstatementPeriod a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :ReinstatementPeriod ;
+    rdfs:label "has Reinstatement Period" ;
+    rdfs:comment "Relates a policy to its reinstatement period interval." .
+
+:hasGracePeriod a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :GracePeriod ;
+    rdfs:label "has Grace Period" ;
+    rdfs:comment "Relates a policy to its grace period interval." .
+
+:hasFaceAmount a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :FaceAmount ;
+    rdfs:label "has Face Amount" ;
+    rdfs:comment "Relates a policy to its face amount quantity." .
+
+:hasPremium a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :Premium ;
+    rdfs:label "has Premium" ;
+    rdfs:comment "Relates a policy to its premium payment." .
+
+:hasBeneficiary a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :Beneficiary ;
+    rdfs:label "has Beneficiary" ;
+    rdfs:comment "Relates a policy to its primary beneficiary." .
+
+:hasContingentBeneficiary a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :Beneficiary ;
+    rdfs:label "has Contingent Beneficiary" ;
+    rdfs:comment "Relates a policy to its contingent beneficiary." .
+
+:hasRider a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :Rider ;
+    rdfs:label "has Rider" ;
+    rdfs:comment "Relates a policy to an attached rider." .
+
+:hasInsured a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :Insured ;
+    rdfs:label "has Insured" ;
+    rdfs:comment "Relates a policy to the insured person." .
+
+:hasAgent a owl:ObjectProperty ;
+    rdfs:domain :PolicyEvent ;
+    rdfs:range :Agent ;
+    rdfs:label "has Agent" ;
+    rdfs:comment "Relates a policy event to the agent involved." .
+
+:hasObjectParticipant a owl:ObjectProperty ;
+    rdfs:domain :PolicyEvent ;
+    rdfs:range :Policy ;
+    rdfs:label "has Object Participant" ;
+    rdfs:comment "Relates a policy event to the policy it affects." .
+
+:hasManner a owl:ObjectProperty ;
+    rdfs:domain :PolicyEvent ;
+    rdfs:range :PolicyEvent ;
+    rdfs:label "has Manner" ;
+    rdfs:comment "Relates a policy event to the manner in which it is initiated." .
+
+:hasState a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :PolicyState ;
+    rdfs:label "has State" ;
+    rdfs:comment "Relates a policy to its current state." .
+
+:hasStartTime a owl:ObjectProperty ;
+    rdfs:domain :TimeInterval ;
+    rdfs:range :Date ;
+    rdfs:label "has Start Time" ;
+    rdfs:comment "Relates a time interval to its start date." .
+
+:hasEndTime a owl:ObjectProperty ;
+    rdfs:domain :TimeInterval ;
+    rdfs:range :Date ;
+    rdfs:label "has End Time" ;
+    rdfs:comment "Relates a time interval to its end date." .
+
+:hasValue a owl:ObjectProperty ;
+    rdfs:domain :Quantity ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has Value" ;
+    rdfs:comment "Relates a quantity to its numeric value." .
+
+:hasUnit a owl:ObjectProperty ;
+    rdfs:domain :Quantity ;
+    rdfs:range :CurrencyUnit ;
+    rdfs:label "has Unit" ;
+    rdfs:comment "Relates a quantity to its unit of measurement." .
+
+:hasDuration a owl:ObjectProperty ;
+    rdfs:domain :TimeInterval ;
+    rdfs:range xsd:integer ;
+    rdfs:label "has Duration" ;
+    rdfs:comment "Relates a time interval to its duration in days, months, or years." .
+
+:isEventOf a owl:ObjectProperty ;
+    rdfs:domain :PolicyEvent ;
+    rdfs:range :Policy ;
+    rdfs:label "is Event Of" ;
+    rdfs:comment "Relates a policy event to the policy it belongs to." .
+
+
+:CoverageTermination a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Coverage Termination" ;
+    rdfs:comment "An event marking the end of a policy's coverage term." .
+
+:CoverageStart a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Coverage Start" ;
+    rdfs:comment "An event marking the beginning of a policy's coverage term." .
+
+:CoverageEnd a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Coverage End" ;
+    rdfs:comment "An event marking the end of a policy's coverage term." .
+
+:ReinstatementStart a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Reinstatement Start" ;
+    rdfs:comment "An event marking the beginning of the reinstatement period." .
+
+:GracePeriodStart a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Grace Period Start" ;
+    rdfs:comment "An event marking the beginning of the grace period." .
+
+:GracePeriodEnd a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Grace Period End" ;
+    rdfs:comment "An event marking the end of the grace period." .
+
+:PolicyActive a owl:Class ;
+    rdfs:subClassOf :PolicyState ;
+    rdfs:label "Active" ;
+    rdfs:comment "The state in which the policy is active and coverage is in force." .
+
+:PolicyInGracePeriod a owl:Class ;
+    rdfs:subClassOf :PolicyState ;
+    rdfs:label "In Grace Period" ;
+    rdfs:comment "The state in which the policy is in grace period after a missed premium." .
+
+:PolicyLapsed a owl:Class ;
+    rdfs:subClassOf :PolicyState ;
+    rdfs:label "Lapsed" ;
+    rdfs:comment "The state in which the policy has lapsed due to non-payment." .
+
+:USD a owl:Class ;
+    rdfs:subClassOf :CurrencyUnit ;
+    rdfs:label "USD" ;
+    rdfs:comment "United States Dollar." .
+
+:Days a owl:Class ;
+    rdfs:subClassOf :Quantity ;
+    rdfs:label "Days" ;
+    rdfs:comment "A unit of time measured in days." .
+
+:Years a owl:Class ;
+    rdfs:subClassOf :Quantity ;
+    rdfs:label "Years" ;
+    rdfs:comment "A unit of time measured in years." .
+
+:Months a owl:Class ;
+    rdfs:subClassOf :Quantity ;
+    rdfs:label "Months" ;
+    rdfs:comment "A unit of time measured in months." .
+
+
+:CoverageTerminationEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Coverage Termination Event" ;
+    rdfs:comment "A reified event representing the termination of policy coverage at the end of the term." .
+
+:CoverageStartEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Coverage Start Event" ;
+    rdfs:comment "A reified event representing the start of policy coverage." .
+
+:ReinstatementPeriodStartEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Reinstatement Period Start Event" ;
+    rdfs:comment "A reified event representing the start of the reinstatement period." .
+
+:GracePeriodStartEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Grace Period Start Event" ;
+    rdfs:comment "A reified event representing the start of the grace period." .
+
+:GracePeriodEndEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Grace Period End Event" ;
+    rdfs:comment "A reified event representing the end of the grace period." .
+
+:PolicyTransition a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Policy Transition" ;
+    rdfs:comment "An event that causes a change in the state of a policy." .
+
+:PolicyTransitionFromActiveToGrace a owl:Class ;
+    rdfs:subClassOf :PolicyTransition ;
+    rdfs:label "Policy Transition from Active to Grace Period" ;
+    rdfs:comment "An event that causes a policy to transition from Active to In Grace Period." .
+
+
+:SLAC-2025-001 a :Policy ;
+    :hasInsured :JordanEverettHughes ;
+    :hasBeneficiary :ElaineMHughes ;
+    :hasContingentBeneficiary :MorganLHughes ;
+    :hasRider :AcceleratedDeathBenefitRider ;
+    :hasFaceAmount :FaceAmount500000 ;
+    :hasPremium :MonthlyPremium42 ;
+    :hasCoverageTerm :CoverageTermInterval ;
+    :hasReinstatementPeriod :ReinstatementPeriodInterval ;
+    :hasGracePeriod :GracePeriodInterval ;
+    :hasState :PolicyActive .
+
+:JordanEverettHughes a :Insured ;
+    rdfs:label "Jordan Everett Hughes" .
+
+:ElaineMHughes a :Beneficiary ;
+    rdfs:label "Elaine M. Hughes" .
+
+:MorganLHughes a :Beneficiary ;
+    rdfs:label "Morgan L. Hughes" .
+
+:AcceleratedDeathBenefitRider a :Rider ;
+    rdfs:label "Accelerated Death Benefit Rider" .
+
+:FaceAmount500000 a :FaceAmount ;
+    :hasValue "500000"^^xsd:decimal ;
+    :hasUnit :USD .
+
+:MonthlyPremium42 a :Premium ;
+    :hasValue "42.00"^^xsd:decimal ;
+    :hasUnit :USD .
+
+:CoverageTermInterval a :TimeInterval ;
+    :hasStartTime :CoverageStartDate ;
+    :hasEndTime :CoverageEndDate ;
+    :hasDuration "20"^^xsd:integer ;
+    rdfs:label "Coverage Term Interval" .
+
+:ReinstatementPeriodInterval a :TimeInterval ;
+    :hasStartTime :ReinstatementStartEvent ;
+    :hasEndTime :ReinstatementEndEvent ;
+    :hasDuration "5"^^xsd:integer ;
+    rdfs:label "Reinstatement Period Interval" .
+
+:GracePeriodInterval a :TimeInterval ;
+    :hasStartTime :GracePeriodStartEvent ;
+    :hasEndTime :GracePeriodEndEvent ;
+    :hasDuration "15"^^xsd:integer ;
+    rdfs:label "Grace Period Interval" .
+
+:CoverageStartDate a :Date ;
+    rdfs:label "August 7, 2025" ;
+    :hasValue "2025-08-07"^^xsd:date .
+
+:CoverageEndDate a :Date ;
+    rdfs:label "August 7, 2045" ;
+    :hasValue "2045-08-07"^^xsd:date .
+
+:ReinstatementStartEvent a :ReinstatementPeriodStartEvent ;
+    rdfs:label "Reinstatement Period Start" .
+
+:ReinstatementEndEvent a :PolicyLapsed ;
+    rdfs:label "Reinstatement Period End" .
+
+:GracePeriodStartEvent a :GracePeriodStartEvent ;
+    rdfs:label "Grace Period Start" .
+
+:GracePeriodEndEvent a :GracePeriodEndEvent ;
+    rdfs:label "Grace Period End" .
+
+:CoverageStartEvent a :CoverageStartEvent ;
+    rdfs:label "Coverage Start Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasManner :AutomaticTermination ;
+    :isEventOf :SLAC-2025-001 .
+
+:CoverageTerminationEvent a :CoverageTerminationEvent ;
+    rdfs:label "Coverage Termination Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasManner :AutomaticTermination ;
+    :isEventOf :SLAC-2025-001 .
+
+:PolicyTransitionFromActiveToGraceEvent a :PolicyTransitionFromActiveToGrace ;
+    rdfs:label "Policy Transition from Active to Grace Period" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasManner :MissedPremiumPayment ;
+    :isEventOf :SLAC-2025-001 .
+
+:AutomaticTermination a :PolicyEvent ;
+    rdfs:label "Automatic Termination" ;
+    rdfs:comment "The manner in which coverage is terminated at the end of the term." .
+
+:MissedPremiumPayment a :PolicyEvent .
+:DeathBenefitPaymentEvent a :DeathBenefitPaymentEvent ;
+    rdfs:label "Death Benefit Payment Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :Company ;
+    :hasManner :LumpSumPayment ;
+    :hasDeathBenefit :FaceAmount500000 ;
+    :hasProofOfDeath :CertifiedDeathCertificate ;
+    :hasTimeIntervalForPayment :PaymentInterval ;
+    :hasEventOfDeath :DeathEventInstance ;
+    :hasEventOfPayment :PaymentEventInstance ;
+    :isEventOf :SLAC-2025-001 .
+
+:ChangeOfBeneficiaryEvent a :ChangeOfBeneficiaryEvent ;
+    rdfs:label "Change of Beneficiary Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :PolicyOwner ;
+    :hasMannerOfChange :WrittenRequestInstance ;
+    :hasNewBeneficiary :MorganLHughes ;
+    :isEventOf :SLAC-2025-001 .
+
+:DeathEventInstance a :DeathEvent ;
+    rdfs:label "Death of Jordan Everett Hughes" ;
+    :hasStartTime :DeathDate .
+
+:PaymentEventInstance a :PaymentEvent ;
+    rdfs:label "Payment of Death Benefit" ;
+    :hasStartTime :PaymentDate .
+
+:PaymentInterval a :TimeInterval ;
+    rdfs:label "Payment Interval" ;
+    :hasStartTime :DeathDate ;
+    :hasEndTime :PaymentDate ;
+    :hasDuration "10"^^xsd:integer .
+
+:DeathDate a :Date ;
+    rdfs:label "October 15, 2025" ;
+    :hasValue "2025-10-15"^^xsd:date .
+
+:PaymentDate a :Date ;
+    rdfs:label "October 25, 2025" ;
+    :hasValue "2025-10-25"^^xsd:date .
+
+:CertifiedDeathCertificate a :CertifiedCopy ;
+    rdfs:label "Certified Copy of Death Certificate" ;
+    :hasDocumentType :DeathCertificate .
+
+:WrittenRequestInstance a :WrittenRequest ;
+    rdfs:label "Written Request to Change Beneficiary" ;
+    :hasSubmissionDate :RequestDate .
+
+:RequestDate a :Date ;
+    rdfs:label "October 10, 2025" ;
+    :hasValue "2025-10-10"^^xsd:date .
+
+:Company a :Agent ;
+    rdfs:label "The Insurance Company" .
+
+:PolicyOwner a :Agent ;
+    rdfs:label "The Policy Owner" ;
+    rdfs:comment "The manner in which a policy enters grace period." .
+
+
+:DeathBenefitPayment a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Death Benefit Payment" ;
+    rdfs:comment "An event marking the payment of the death benefit to the beneficiary upon the insured's death." .
+
+:ChangeOfBeneficiary a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Change of Beneficiary" ;
+    rdfs:comment "An event marking the change of the designated beneficiary in a policy." .
+
+:DeathBenefitPaymentEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Death Benefit Payment Event" ;
+    rdfs:comment "A reified event representing the payment of the death benefit to the beneficiary." .
+
+:ChangeOfBeneficiaryEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Change of Beneficiary Event" ;
+    rdfs:comment "A reified event representing the change of the beneficiary designation." .
+
+:hasDeathBenefit a owl:ObjectProperty ;
+    rdfs:domain :DeathBenefitPaymentEvent ;
+    rdfs:range :FaceAmount ;
+    rdfs:label "has Death Benefit" ;
+    rdfs:comment "Relates a Death Benefit Payment event to the face amount paid." .
+
+:hasProofOfDeath a owl:ObjectProperty ;
+    rdfs:domain :DeathBenefitPaymentEvent ;
+    rdfs:range :Document ;
+    rdfs:label "has Proof of Death" ;
+    rdfs:comment "Relates a Death Benefit Payment event to the proof of death submitted." .
+
+:hasTimeIntervalForPayment a owl:ObjectProperty ;
+    rdfs:domain :DeathBenefitPaymentEvent ;
+    rdfs:range :TimeInterval ;
+    rdfs:label "has Time Interval for Payment" ;
+    rdfs:comment "Relates a Death Benefit Payment event to the time interval between death and payment." .
+
+:hasEventOfDeath a owl:ObjectProperty ;
+    rdfs:domain :DeathBenefitPaymentEvent ;
+    rdfs:range :DeathEvent ;
+    rdfs:label "has Event of Death" ;
+    rdfs:comment "Relates a Death Benefit Payment event to the event marking the death of the insured." .
+
+:hasEventOfPayment a owl:ObjectProperty ;
+    rdfs:domain :DeathBenefitPaymentEvent ;
+    rdfs:range :PaymentEvent ;
+    rdfs:label "has Event of Payment" ;
+    rdfs:comment "Relates a Death Benefit Payment event to the event marking the payment of the benefit." .
+
+:hasNewBeneficiary a owl:ObjectProperty ;
+    rdfs:domain :ChangeOfBeneficiaryEvent ;
+    rdfs:range :Beneficiary ;
+    rdfs:label "has New Beneficiary" ;
+    rdfs:comment "Relates a Change of Beneficiary event to the new beneficiary designated." .
+
+:hasMannerOfChange a owl:ObjectProperty ;
+    rdfs:domain :ChangeOfBeneficiaryEvent ;
+    rdfs:range :WrittenRequest ;
+    rdfs:label "has Manner of Change" ;
+    rdfs:comment "Relates a Change of Beneficiary event to the written request submitted." .
+
+:DeathEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Death Event" ;
+    rdfs:comment "An event marking the death of the insured." .
+
+:PaymentEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Payment Event" ;
+    rdfs:comment "An event marking the payment of a benefit." .
+
+:WrittenRequest a owl:Class ;
+    rdfs:subClassOf :Document ;
+    rdfs:label "Written Request" ;
+    rdfs:comment "A document submitted in writing to initiate a change." .
+
+:CertifiedCopy a owl:Class ;
+    rdfs:subClassOf :Document ;
+    rdfs:label "Certified Copy" ;
+    rdfs:comment "A certified copy of a document, such as a death certificate." .
+
+:DeathCertificate a owl:Class ;
+    rdfs:subClassOf :Document ;
+    rdfs:label "Death Certificate" ;
+    rdfs:comment "A document issued by a government authority certifying the death of a person." .
+
+:AssignPolicyEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Assign Policy Event" ;
+    rdfs:comment "A reified event representing the transfer of a policy or interest in it to another party." .
+
+:CancelPolicyEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Cancel Policy Event" ;
+    rdfs:comment "A reified event representing the termination of a policy at the policyowner's request." .
+
+:RequestPolicyInformationEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Request Policy Information Event" ;
+    rdfs:comment "A reified event representing a request by the policyowner for policy-related information." .
+
+:ElectSettlementOptionsEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Elect Settlement Options Event" ;
+    rdfs:comment "A reified event representing the election or change of the method of death benefit payment." .
+
+:hasEffectiveDate a owl:ObjectProperty ;
+    rdfs:domain :PolicyEvent ;
+    rdfs:range :Date ;
+    rdfs:label "has Effective Date" ;
+    rdfs:comment "Relates a policy event to the date on which it takes effect." .
+
+:hasOutcome a owl:ObjectProperty ;
+    rdfs:domain :CancelPolicyEvent ;
+    rdfs:range :String ;
+    rdfs:label "has Outcome" ;
+    rdfs:comment "Relates a Cancel Policy event to the outcome of cancellation, such as termination of coverage and refund of unearned premiums." .
+
+:hasResponseTime a owl:ObjectProperty ;
+    rdfs:domain :RequestPolicyInformationEvent ;
+    rdfs:range :TimeInterval ;
+    rdfs:label "has Response Time" ;
+    rdfs:comment "Relates a Request Policy Information event to the time interval within which the company must respond." .
+
+:hasApprovalCondition a owl:ObjectProperty ;
+    rdfs:domain :ElectSettlementOptionsEvent ;
+    rdfs:range :String ;
+    rdfs:label "has Approval Condition" ;
+    rdfs:comment "Relates an Elect Settlement Options event to the condition under which the company must approve the election." .
+
+:hasSettlementMethod a owl:ObjectProperty ;
+    rdfs:domain :ElectSettlementOptionsEvent ;
+    rdfs:range :String ;
+    rdfs:label "has Settlement Method" ;
+    rdfs:comment "Relates an Elect Settlement Options event to the selected method of death benefit payment." .
+
+:AcceptableProofOfDeath a owl:Class ;
+    rdfs:label "Acceptable Proof of Death" ;
+    rdfs:comment "A document that is acceptable to the company as proof of death." .
+
+:ChangeBeneficiaryEvent a :ChangeOfBeneficiaryEvent ;
+    rdfs:label "Change Beneficiary Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :PolicyOwner ;
+    :hasMannerOfChange :WrittenRequestInstance ;
+    :hasEffectiveDate :RequestDate ;
+    :isEventOf :SLAC-2025-001 .
+
+:AssignPolicyEvent a :AssignPolicyEvent ;
+    rdfs:label "Assign Policy Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :PolicyOwner ;
+    :hasManner :WrittenAssignment ;
+    :isEventOf :SLAC-2025-001 .
+
+:CancelPolicyEvent a :CancelPolicyEvent ;
+    rdfs:label "Cancel Policy Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :PolicyOwner ;
+    :hasManner :WrittenRequest ;
+    :hasOutcome "Termination of coverage and refund of unearned premiums as per law" ;
+    :isEventOf :SLAC-2025-001 .
+
+:RequestPolicyInformationEvent a :RequestPolicyInformationEvent ;
+    rdfs:label "Request Policy Information Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :PolicyOwner ;
+    :hasManner :WrittenRequest ;
+    :hasResponseTime :ResponseInterval ;
+    :isEventOf :SLAC-2025-001 .
+
+:ElectSettlementOptionsEvent a :ElectSettlementOptionsEvent ;
+    rdfs:label "Elect Settlement Options Event" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasAgent :PolicyOwner ;
+    :hasManner :WrittenRequest ;
+    :hasSettlementMethod "Lump Sum" ;
+    :hasApprovalCondition "Approval by the Company and terms of offered settlement options" ;
+    :isEventOf :SLAC-2025-001 .
+
+:WrittenAssignment a :Document ;
+    rdfs:label "Written Assignment" ;
+    rdfs:comment "A document submitted in writing to assign a policy or interest in it." .
+
+:ResponseInterval a :TimeInterval ;
+    rdfs:label "Response Interval" ;
+    :hasStartTime :RequestDate ;
+    :hasEndTime :ResponseDate ;
+    :hasDuration "30"^^xsd:integer .
+
+:ResponseDate a :Date ;
+    rdfs:label "November 10, 2025" ;
+    :hasValue "2025-11-10"^^xsd:date .
+
+
+:PolicyExecutionEvent a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Policy Execution Event" ;
+    rdfs:comment "A reified event representing the execution of a life insurance policy by the company." .
+
+:PolicyEffectiveDate a owl:Class ;
+    rdfs:subClassOf :Date ;
+    rdfs:label "Policy Effective Date" ;
+    rdfs:comment "The date on which the policy becomes effective, as specified in the Schedule of Benefits." .
+
+:PolicyExecutionLocation a owl:Class ;
+    rdfs:subClassOf :Location ;
+    rdfs:label "Policy Execution Location" ;
+    rdfs:comment "The physical location where the policy is executed by the insurance company." .
+
+:PolicyFormNumber a owl:Class ;
+    rdfs:subClassOf :String ;
+    rdfs:label "Policy Form Number" ;
+    rdfs:comment "The unique identifier for the form of the policy, such as SLAC-TL2025-20YR." .
+
+:StateNotice a owl:Class ;
+    rdfs:subClassOf :Document ;
+    rdfs:label "State Notice" ;
+    rdfs:comment "A document containing state-specific notices or provisions required by law." .
+
+:FraudWarning a owl:Class ;
+    rdfs:subClassOf :PolicyEvent ;
+    rdfs:label "Fraud Warning" ;
+    rdfs:comment "A warning statement about fraudulent insurance acts as defined by law." .
+
+:ChiefExecutiveOfficer a owl:Class ;
+    rdfs:subClassOf :Agent ;
+    rdfs:label "Chief Executive Officer" ;
+    rdfs:comment "The highest-ranking executive officer of a company." .
+
+:AuthorizedRepresentative a owl:Class ;
+    rdfs:subClassOf :Agent ;
+    rdfs:label "Authorized Representative" ;
+    rdfs:comment "A person authorized to act on behalf of the company in official matters." .
+
+:hasExecutionLocation a owl:ObjectProperty ;
+    rdfs:domain :PolicyExecutionEvent ;
+    rdfs:range :PolicyExecutionLocation ;
+    rdfs:label "has Execution Location" ;
+    rdfs:comment "Relates a policy execution event to the location where it occurred." .
+
+:hasEffectiveDate a owl:ObjectProperty ;
+    rdfs:domain :PolicyExecutionEvent ;
+    rdfs:range :PolicyEffectiveDate ;
+    rdfs:label "has Effective Date" ;
+    rdfs:comment "Relates a policy execution event to the date on which the policy becomes effective." .
+
+:hasFormNumber a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :PolicyFormNumber ;
+    rdfs:label "has Form Number" ;
+    rdfs:comment "Relates a policy to its form number." .
+
+:hasStateNotice a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :StateNotice ;
+    rdfs:label "has State Notice" ;
+    rdfs:comment "Relates a policy to any attached state-specific notices or provisions." .
+
+:hasFraudWarning a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :FraudWarning ;
+    rdfs:label "has Fraud Warning" ;
+    rdfs:comment "Relates a policy to the fraud warning statement included in the document." .
+
+:hasChiefExecutiveOfficer a owl:ObjectProperty ;
+    rdfs:domain :SentinelLifeAssuranceCompany ;
+    rdfs:range :ChiefExecutiveOfficer ;
+    rdfs:label "has Chief Executive Officer" ;
+    rdfs:comment "Relates the insurance company to its Chief Executive Officer." .
+
+:hasAuthorizedRepresentative a owl:ObjectProperty ;
+    rdfs:domain :SentinelLifeAssuranceCompany ;
+    rdfs:range :AuthorizedRepresentative ;
+    rdfs:label "has Authorized Representative" ;
+    rdfs:comment "Relates the insurance company to its authorized representative." .
+
+:SentinelLifeAssuranceCompany a owl:Class ;
+    rdfs:label "Sentinel Life Assurance Company" ;
+    rdfs:comment "The insurance company that issues and executes the policy." .
+
+:PolicyExecutionEventInstance a :PolicyExecutionEvent ;
+    rdfs:label "Policy Execution Event Instance" ;
+    :hasObjectParticipant :SLAC-2025-001 ;
+    :hasExecutionLocation :HartfordCT ;
+    :hasEffectiveDate :PolicyEffectiveDateInstance ;
+    :isEventOf :SLAC-2025-001 .
+
+:HartfordCT a :PolicyExecutionLocation ;
+    rdfs:label "Hartford, Connecticut" ;
+    rdfs:comment "The home office location of Sentinel Life Assurance Company." .
+
+:PolicyEffectiveDateInstance a :PolicyEffectiveDate ;
+    rdfs:label "August 7, 2025" ;
+    :hasValue "2025-08-07"^^xsd:date .
+
+:SLAC-TL2025-20YR a :PolicyFormNumber ;
+    rdfs:label "SLAC-TL2025-20YR" ;
+    rdfs:comment "The form number of the policy." .
+
+:EleanorBRaynor a :ChiefExecutiveOfficer ;
+    rdfs:label "Eleanor B. Raynor" ;
+    rdfs:comment "Chief Executive Officer of Sentinel Life Assurance Company." .
+
+:AuthorizedRep a :AuthorizedRepresentative ;
+    rdfs:label "Authorized Representative" ;
+    rdfs:comment "The representative authorized to sign the policy on behalf of the company." .
+
+:SLAC-2025-001 :hasFormNumber :SLAC-TL2025-20YR .
+
+:SLAC-2025-001 :hasStateNotice :StateNoticePage1 .
+
+:SLAC-2025-001 :hasFraudWarning :FraudWarningStatement .
+
+:SentinelLifeAssuranceCompany :hasChiefExecutiveOfficer :EleanorBRaynor .
+
+:SentinelLifeAssuranceCompany :hasAuthorizedRepresentative :AuthorizedRep .
+
+:StateNoticePage1 a :StateNotice ;
+    rdfs:label "State Notice Page 1" ;
+    rdfs:comment "A page containing state-specific notices or provisions." .
+
+:FraudWarningStatement a :FraudWarning ;
+    rdfs:label "Fraud Warning Statement" ;
+    rdfs:comment "A statement warning that knowingly providing false information in an application or claim is a fraudulent act." .

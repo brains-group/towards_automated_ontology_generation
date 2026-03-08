@@ -1,0 +1,1052 @@
+@prefix : <http://www.example.org/test#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# Pivot Classes for Reification
+:Cl_Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "A discrete occurrence that alters the state or status of a policy." .
+
+:Cl_State a owl:Class ;
+    rdfs:label "State" ;
+    rdfs:comment "A condition or status of a policy at a point in time." .
+
+:Cl_MonetaryAmount a owl:Class ;
+    rdfs:label "Monetary Amount" ;
+    rdfs:comment "A quantified financial value associated with a policy." .
+
+:Cl_TimeInterval a owl:Class ;
+    rdfs:label "Time Interval" ;
+    rdfs:comment "A duration of time with a start and end point." .
+
+:Cl_AgentRole a owl:Class ;
+    rdfs:label "Agent Role" ;
+    rdfs:comment "A role played by an agent in a policy event." .
+
+# Classes from Managers Plan
+:Cl_Policy a owl:Class ;
+    rdfs:label "Policy" ;
+    rdfs:comment "A life insurance contract issued by Equivita Mutual Life Insurance Company to the Policy Owner." .
+
+:Cl_Cancellation a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Cancellation" ;
+    rdfs:comment "A policy termination event initiated by the Policy Owner." .
+
+:Cl_PolicyOwnerRole a owl:Class ;
+    rdfs:subClassOf :Cl_AgentRole ;
+    rdfs:label "Policy Owner Role" ;
+    rdfs:comment "The role of the Policy Owner in a policy event." .
+
+:Cl_InsuredPersonRole a owl:Class ;
+    rdfs:subClassOf :Cl_AgentRole ;
+    rdfs:label "Insured Person Role" ;
+    rdfs:comment "The role of the Insured Person in a policy event." .
+
+:Cl_BeneficiaryRole a owl:Class ;
+    rdfs:subClassOf :Cl_AgentRole ;
+    rdfs:label "Beneficiary Role" ;
+    rdfs:comment "The role of the Beneficiary in a policy event." .
+
+:Cl_ReinstatementPeriod a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Reinstatement Period" ;
+    rdfs:comment "A 5-year window during which a lapsed policy can be reinstated." .
+
+:Cl_GracePeriod a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Grace Period" ;
+    rdfs:comment "A 31-day period after a missed premium payment during which the policy remains active." .
+
+# Object Properties
+:hasEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Event ;
+    rdfs:label "has Event" ;
+    rdfs:comment "Links a policy to the event that affects it." .
+
+:hasState a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_State ;
+    rdfs:label "is in State" ;
+    rdfs:comment "Indicates the current state of a policy." .
+
+:hasAgentRole a owl:ObjectProperty ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range :Cl_AgentRole ;
+    rdfs:label "has Agent Role" ;
+    rdfs:comment "Links an event to the agent role involved." .
+
+:hasObjectRole a owl:ObjectProperty ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range :Cl_Policy ;
+    rdfs:label "has Object Role" ;
+    rdfs:comment "Links an event to the object (e.g., policy) it affects." .
+
+:hasDeathBenefit a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has Death Benefit" ;
+    rdfs:comment "The financial amount paid upon the death of the insured." .
+
+:hasPremium a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has Premium" ;
+    rdfs:comment "The periodic payment required to maintain coverage." .
+
+:hasIssueDate a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:date ;
+    rdfs:label "has Issue Date" ;
+    rdfs:comment "The date the policy was issued." .
+
+:hasPolicyOwner a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyOwnerRole ;
+    rdfs:label "has Policy Owner" ;
+    rdfs:comment "The role of the individual who owns the policy." .
+
+:hasInsuredPerson a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_InsuredPersonRole ;
+    rdfs:label "has Insured Person" ;
+    rdfs:comment "The role of the individual whose life is insured." .
+
+:hasBeneficiary a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_BeneficiaryRole ;
+    rdfs:label "has Beneficiary" ;
+    rdfs:comment "The role of the individual who receives the death benefit." .
+
+:hasManner a owl:ObjectProperty ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range xsd:string ;
+    rdfs:label "has Manner" ;
+    rdfs:comment "The required method or form for initiating an event." .
+
+:hasDuration a owl:ObjectProperty ;
+    rdfs:domain :Cl_TimeInterval ;
+    rdfs:range xsd:duration ;
+    rdfs:label "has Duration" ;
+    rdfs:comment "The length of time for a temporal interval." .
+
+:hasStartEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_TimeInterval ;
+    rdfs:range :Cl_Event ;
+    rdfs:label "has Start Event" ;
+    rdfs:comment "The event that triggers the start of a time interval." .
+
+# Data Properties
+:hasAmount a owl:DatatypeProperty ;
+    rdfs:domain :Cl_MonetaryAmount ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "has Amount" ;
+    rdfs:comment "The numeric value of a monetary amount." .
+
+:hasCurrency a owl:DatatypeProperty ;
+    rdfs:domain :Cl_MonetaryAmount ;
+    rdfs:range xsd:string ;
+    rdfs:label "has Currency" ;
+    rdfs:comment "The currency unit of a monetary amount." .
+
+# Instantiating the Policy and Related Entities
+:Policy_EML202500028391 a :Cl_Policy ;
+    :hasIssueDate "2025-08-01"^^xsd:date ;
+    :hasPolicyOwner :PolicyOwner_JordanEllis ;
+    :hasInsuredPerson :InsuredPerson_JordanEllis ;
+    :hasBeneficiary :Beneficiary_TaylorEllis ;
+    :hasDeathBenefit :DeathBenefit_500000 ;
+    :hasPremium :Premium_100 ;
+    :hasState :State_Active ;
+    :hasEvent :Event_Cancellation .
+
+:PolicyOwner_JordanEllis a :Cl_PolicyOwnerRole ;
+    rdfs:label "Jordan Ellis" .
+
+:InsuredPerson_JordanEllis a :Cl_InsuredPersonRole ;
+    rdfs:label "Jordan Ellis" .
+
+:Beneficiary_TaylorEllis a :Cl_BeneficiaryRole ;
+    rdfs:label "Taylor Ellis" .
+
+:DeathBenefit_500000 a :Cl_MonetaryAmount ;
+    :hasAmount 500000.0 ;
+    :hasCurrency "USD" .
+
+:Premium_100 a :Cl_MonetaryAmount ;
+    :hasAmount 100.0 ;
+    :hasCurrency "USD" .
+
+:State_Active a :Cl_State ;
+    rdfs:label "Active" .
+
+:State_InGracePeriod a :Cl_State ;
+    rdfs:label "In Grace Period" .
+
+:State_Lapsed a :Cl_State ;
+    rdfs:label "Lapsed" .
+
+:Event_Cancellation a :Cl_Cancellation ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "written notice" .
+
+:GracePeriod_31Days a :Cl_GracePeriod ;
+    :hasDuration "P31D"^^xsd:duration .
+
+:ReinstatementPeriod_5Years a :Cl_ReinstatementPeriod ;
+    :hasDuration "P5Y"^^xsd:duration .
+
+:ReinstatementPeriod_StartEvent a :Cl_Lapse ;
+    rdfs:label "Lapse Event" .
+
+:ReinstatementPeriod_5Years :hasStartEvent :ReinstatementPeriod_StartEvent .
+### New Classes and Properties from Managers Plan ###
+:Cl_Lapse a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Lapse" ;
+    rdfs:comment "An event marking the termination of policy coverage due to non-payment of premium after the grace period." .
+
+:Cl_MissedPremium a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Missed Premium" ;
+    rdfs:comment "An event indicating that a premium payment was not made by the due date." .
+
+:Cl_Reinstatement a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Reinstatement" ;
+    rdfs:comment "An event representing the restoration of a lapsed policy." .
+
+:Cl_CoverageTerm a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Coverage Term" ;
+    rdfs:comment "The period during which the policy provides coverage, from issue date to end date." .
+
+### New Object Properties for Reification ###
+:hasCoverageTerm a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_CoverageTerm ;
+    rdfs:label "has Coverage Term" ;
+    rdfs:comment "Links a policy to its coverage term interval." .
+
+:hasLapseEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Lapse ;
+    rdfs:label "has Lapse Event" ;
+    rdfs:comment "Indicates the event that caused the policy to lapse." .
+
+:hasMissedPremiumEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_MissedPremium ;
+    rdfs:label "has Missed Premium Event" ;
+    rdfs:comment "Indicates the event of a missed premium payment." .
+
+:hasReinstatementEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Reinstatement ;
+    rdfs:label "has Reinstatement Event" ;
+    rdfs:comment "Indicates the event of policy reinstatement." .
+
+### Instantiating New Individuals from Contract ###
+:Policy_EML202500028391 :hasCoverageTerm :CoverageTerm_2025to2045 .
+
+:CoverageTerm_2025to2045 a :Cl_CoverageTerm ;
+    :hasDuration "P20Y"^^xsd:duration ;
+    :hasStartEvent :Event_IssueDate .
+
+:Event_IssueDate a :Cl_Event ;
+    rdfs:label "Issue Date Event" ;
+    :hasManner "automatic" .
+
+:MissedPremium_2025 a :Cl_MissedPremium ;
+    rdfs:label "Missed Premium Payment in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "late payment" .
+
+:GracePeriod_31Days :hasStartEvent :MissedPremium_2025 .
+
+:Lapse_2025 a :Cl_Lapse ;
+    rdfs:label "Lapse Event in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "non-payment" .
+
+:Policy_EML202500028391 :hasLapseEvent :Lapse_2025 .
+
+:Reinstatement_2026 a :Cl_Reinstatement ;
+    rdfs:label "Reinstatement in 2026" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "reinstatement application" .
+
+:Policy_EML202500028391 :hasReinstatementEvent :Reinstatement_2026 .
+
+:ReinstatementPeriod_5Years :hasStartEvent :Lapse_2025 .
+
+### Fixing Incorrect State Transition in Original File ###
+:Policy_EML202500028391 :hasState :State_Active .
+:Policy_EML202500028391 :hasEvent :Event_Cancellation .
+
+### Adding Missing Coverage Term Duration and Start Event ###
+:CoverageTerm_2025to2045 :hasStartEvent :Event_IssueDate .
+:CoverageTerm_2025to2045 :hasDuration "P20Y"^^xsd:duration .
+
+### Adding Issue Date as a Point in Time Event ###
+:Event_IssueDate a :Cl_Event ;
+    rdfs:label "Issue Date Event" ;
+    :hasManner "automatic" .
+
+### Adding Missing Missed Premium Event and Grace Period Link ###
+:MissedPremium_2025 a :Cl_MissedPremium ;
+    rdfs:label "Missed Premium Payment in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "late payment" .
+
+:GracePeriod_31Days :hasStartEvent :MissedPremium_2025 .
+
+### Adding Lapse Event and Reinstatement Event ###
+:Lapse_2025 a :Cl_Lapse ;
+    rdfs:label "Lapse Event in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "non-payment" .
+
+:Policy_EML202500028391 :hasLapseEvent :Lapse_2025 .
+
+:Reinstatement_2026 a :Cl_Reinstatement ;
+    rdfs:label "Reinstatement in 2026" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "reinstatement application" .
+
+:Policy_EML202500028391 :hasReinstatementEvent :Reinstatement_2026 .
+
+### Finalizing Reinstatement Period Start Event ###
+:ReinstatementPeriod_5Years :hasStartEvent :Lapse_2025 .
+### Adding New Classes: IncontestabilityPeriod and SuicideExclusionPeriod ###
+:Cl_IncontestabilityPeriod a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Incontestability Period" ;
+    rdfs:comment "A two-year period during which the Company may contest the validity of the Policy." .
+
+:Cl_SuicideExclusionPeriod a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Suicide Exclusion Period" ;
+    rdfs:comment "A two-year period during which the death benefit is limited if the Insured dies by suicide." .
+
+### Adding New Object Properties: hasIncontestabilityPeriod and hasSuicideExclusionPeriod ###
+:hasIncontestabilityPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IncontestabilityPeriod ;
+    rdfs:label "has Incontestability Period" ;
+    rdfs:comment "Links a policy to its incontestability period." .
+
+:hasSuicideExclusionPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SuicideExclusionPeriod ;
+    rdfs:label "has Suicide Exclusion Period" ;
+    rdfs:comment "Links a policy to its suicide exclusion period." .
+
+### Adding New Class: PolicyAnniversary ###
+:Cl_PolicyAnniversary a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Policy Anniversary" ;
+    rdfs:comment "An annual event marking the anniversary of the policy's Issue Date." .
+
+### Adding New Object Property: hasPolicyAnniversary ###
+:hasPolicyAnniversary a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyAnniversary ;
+    rdfs:label "has Policy Anniversary" ;
+    rdfs:comment "Links a policy to its policy anniversary event." .
+
+### Adding New Data Property: hasAnniversaryFrequency ###
+:hasAnniversaryFrequency a owl:DatatypeProperty ;
+    rdfs:domain :Cl_PolicyAnniversary ;
+    rdfs:range xsd:duration ;
+    rdfs:label "has Anniversary Frequency" ;
+    rdfs:comment "The frequency of the policy anniversary event, e.g., yearly." .
+
+### Instantiating IncontestabilityPeriod and SuicideExclusionPeriod for the Policy ###
+:Policy_EML202500028391 :hasIncontestabilityPeriod :IncontestabilityPeriod_2Years .
+:Policy_EML202500028391 :hasSuicideExclusionPeriod :SuicideExclusionPeriod_2Years .
+
+:IncontestabilityPeriod_2Years a :Cl_IncontestabilityPeriod ;
+    :hasDuration "P2Y"^^xsd:duration ;
+    :hasStartEvent :Event_IssueDate .
+
+:SuicideExclusionPeriod_2Years a :Cl_SuicideExclusionPeriod ;
+    :hasDuration "P2Y"^^xsd:duration ;
+    :hasStartEvent :Event_IssueDate .
+
+### Instantiating PolicyAnniversary Event and Linking to Policy ###
+:PolicyAnniversary_2026 a :Cl_PolicyAnniversary ;
+    rdfs:label "Policy Anniversary in 2026" ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasManner "automatic" ;
+    :hasAnniversaryFrequency "P1Y"^^xsd:duration .
+
+:Policy_EML202500028391 :hasPolicyAnniversary :PolicyAnniversary_2026 .
+
+### Finalizing Coverage Term with Correct Duration and Start Event ###
+:CoverageTerm_2025to2045 :hasStartEvent :Event_IssueDate ;
+    :hasDuration "P20Y"^^xsd:duration .
+
+### Adding Missing Grace Period Duration and Start Event Link ###
+:GracePeriod_31Days :hasDuration "P31D"^^xsd:duration ;
+    :hasStartEvent :MissedPremium_2025 .
+### Adding New Classes: Cl_Assignment, Cl_Modifications, Cl_MisstatementOfAgeOrSex, Cl_PolicyOwnerRights, Cl_VoidAbInitio ###
+:Cl_Assignment a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Assignment" ;
+    rdfs:comment "An event in which the Policy Owner assigns the Policy or any rights under it to another party." .
+
+:Cl_Modifications a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Modifications" ;
+    rdfs:comment "An event representing a formal change or update to the Policy by the Company." .
+
+:Cl_MisstatementOfAgeOrSex a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Misstatement of Age or Sex" ;
+    rdfs:comment "An event indicating that the age or sex of the Insured was incorrectly stated at issue." .
+
+:Cl_PolicyOwnerRights a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Policy Owner Rights" ;
+    rdfs:comment "An event in which the Policy Owner exercises any contractual right under the Policy." .
+
+:Cl_VoidAbInitio a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Void Ab Initio" ;
+    rdfs:comment "An event marking the Policy as void from inception due to the Insured being outside the insurable age range." .
+
+### Adding New Object Properties: hasAssignment, hasModifications, hasMisstatementOfAgeOrSex, hasPolicyOwnerRights, hasVoidAbInitio ###
+:hasAssignment a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Assignment ;
+    rdfs:label "has Assignment" ;
+    rdfs:comment "Links a policy to the assignment event initiated by the Policy Owner." .
+
+:hasModifications a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Modifications ;
+    rdfs:label "has Modifications" ;
+    rdfs:comment "Links a policy to the modifications event initiated by the Company." .
+
+:hasMisstatementOfAgeOrSex a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_MisstatementOfAgeOrSex ;
+    rdfs:label "has Misstatement of Age or Sex" ;
+    rdfs:comment "Links a policy to the misstatement event related to age or sex." .
+
+:hasPolicyOwnerRights a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyOwnerRights ;
+    rdfs:label "has Policy Owner Rights" ;
+    rdfs:comment "Links a policy to the event in which the Policy Owner exercises rights." .
+
+:hasVoidAbInitio a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_VoidAbInitio ;
+    rdfs:label "has Void Ab Initio" ;
+    rdfs:comment "Links a policy to the event in which the Policy is voided ab initio due to age range." .
+
+### Instantiating New Events and Linking to Policy from Contract Text ###
+:Assignment_2025 a :Cl_Assignment ;
+    rdfs:label "Policy Assignment in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "written notice satisfactory to the Company" .
+
+:Policy_EML202500028391 :hasAssignment :Assignment_2025 .
+
+:Modifications_2025 a :Cl_Modifications ;
+    rdfs:label "Policy Modifications in 2025" ;
+    :hasAgentRole :ExecutiveOfficerRole ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "approved in writing" .
+
+:Policy_EML202500028391 :hasModifications :Modifications_2025 .
+
+:Policy_EML202500028391 :hasMisstatementOfAgeOrSex :MisstatementOfAgeOrSex_2025 .
+
+:MisstatementOfAgeOrSex_2025 a :Cl_MisstatementOfAgeOrSex ;
+    rdfs:label "Misstatement of Age or Sex in 2025" ;
+    :hasAgentRole :InsuredPerson_JordanEllis ;
+    :hasObjectRole :InsuredPerson_JordanEllis ;
+    :hasManner "discovery of misstatement" .
+
+:Policy_EML202500028391 :hasPolicyOwnerRights :PolicyOwnerRights_2025 .
+
+:PolicyOwnerRights_2025 a :Cl_PolicyOwnerRights ;
+    rdfs:label "Policy Owner Rights Exercise in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "written request" .
+
+:Policy_EML202500028391 :hasVoidAbInitio :VoidAbInitio_2025 .
+
+:VoidAbInitio_2025 a :Cl_VoidAbInitio ;
+    rdfs:label "Void Ab Initio in 2025" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "discovery of age outside insurable range" .
+
+### Instantiating Monetary Amounts for Misstatement of Age or Sex ###
+:DeathBenefit_Misstatement a :Cl_MonetaryAmount ;
+    :hasAmount 500000.0 ;
+    :hasCurrency "USD" .
+
+:Policy_EML202500028391 :hasDeathBenefit :DeathBenefit_Misstatement .
+
+:Refund_Overpayment a :Cl_MonetaryAmount ;
+    :hasAmount 1000.0 ;
+    :hasCurrency "USD" .
+
+:Policy_EML202500028391 :hasPremium :Refund_Overpayment .
+
+### Adding Missing ExecutiveOfficerRole Individual ###
+:ExecutiveOfficerRole a :Cl_AgentRole ;
+    rdfs:label "Executive Officer Role" .
+
+### Adding Missing Company Agent Role ###
+:Company a :Cl_AgentRole ;
+    rdfs:label "Company" .
+### Adding New Classes: Cl_EvidenceOfInsurability, Cl_InterestRate, and Cl_ReinstatementCondition (Reification) ###
+:Cl_EvidenceOfInsurability a owl:Class ;
+    rdfs:label "Evidence of Insurability" ;
+    rdfs:comment "A document or proof submitted to verify the Insured's health or insurability status." .
+
+:Cl_InterestRate a owl:Class ;
+    rdfs:label "Interest Rate" ;
+    rdfs:comment "The rate applied to overdue premiums during reinstatement, specified by the Company." .
+
+:Cl_ReinstatementCondition a owl:Class ;
+    rdfs:label "Reinstatement Condition" ;
+    rdfs:comment "A reification class modeling the three required conditions for reinstating a lapsed policy: written request, evidence of insurability, and payment of overdue premiums with interest." .
+
+### Adding New Object Properties for Reification: hasReinstatementCondition, hasEvidenceOfInsurability, hasInterestRate, hasOverduePremiums ###
+:hasReinstatementCondition a owl:ObjectProperty ;
+    rdfs:domain :Cl_Reinstatement ;
+    rdfs:range :Cl_ReinstatementCondition ;
+    rdfs:label "has Reinstatement Condition" ;
+    rdfs:comment "Links a reinstatement event to its required conditions." .
+
+:hasEvidenceOfInsurability a owl:ObjectProperty ;
+    rdfs:domain :Cl_ReinstatementCondition ;
+    rdfs:range :Cl_EvidenceOfInsurability ;
+    rdfs:label "has Evidence of Insurability" ;
+    rdfs:comment "Links a reinstatement condition to the submitted evidence." .
+
+:hasInterestRate a owl:ObjectProperty ;
+    rdfs:domain :Cl_ReinstatementCondition ;
+    rdfs:range :Cl_InterestRate ;
+    rdfs:label "has Interest Rate" ;
+    rdfs:comment "Links a reinstatement condition to the applicable interest rate." .
+
+:hasOverduePremiums a owl:ObjectProperty ;
+    rdfs:domain :Cl_ReinstatementCondition ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has Overdue Premiums" ;
+    rdfs:comment "Links a reinstatement condition to the amount of overdue premiums to be paid." .
+
+### Instantiating Reinstatement Conditions and Linking to Reinstatement Event ###
+:ReinstatementCondition_2026 a :Cl_ReinstatementCondition ;
+    rdfs:label "Reinstatement Condition in 2026" ;
+    :hasEvidenceOfInsurability :EvidenceOfInsurability_2026 ;
+    :hasInterestRate :InterestRate_2026 ;
+    :hasOverduePremiums :OverduePremiums_2026 .
+
+:Reinstatement_2026 :hasReinstatementCondition :ReinstatementCondition_2026 .
+
+:EvidenceOfInsurability_2026 a :Cl_EvidenceOfInsurability ;
+    rdfs:label "Evidence of Insurability Submitted in 2026" ;
+    :hasManner "submitted and accepted" .
+
+:InterestRate_2026 a :Cl_InterestRate ;
+    rdfs:label "Interest Rate at Time of Reinstatement" ;
+    :hasAmount 0.05 ;
+    :hasCurrency "USD" .
+
+:OverduePremiums_2026 a :Cl_MonetaryAmount ;
+    rdfs:label "Overdue Premiums to be Paid" ;
+    :hasAmount 500.0 ;
+    :hasCurrency "USD" .
+
+### Finalizing State Transitions Based on Contract Text ###
+:Policy_EML202500028391 :hasState :State_Lapsed .
+:Policy_EML202500028391 :hasState :State_Active .
+
+### Adding Missing State Transition from Grace Period to Lapse ###
+:GracePeriod_31Days :hasStartEvent :MissedPremium_2025 .
+:Lapse_2025 :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "non-payment" .
+:Policy_EML202500028391 :hasLapseEvent :Lapse_2025 .
+
+### Adding Reinstatement State Transition ###
+:Reinstatement_2026 :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "reinstatement application" .
+:Policy_EML202500028391 :hasReinstatementEvent :Reinstatement_2026 .
+:Policy_EML202500028391 :hasState :State_Active .
+
+### Adding Reinstatement Period Start Event and Duration ###
+:ReinstatementPeriod_5Years :hasStartEvent :Lapse_2025 ;
+    :hasDuration "P5Y"^^xsd:duration .
+
+### Adding Grace Period Duration and Start Event ###
+:GracePeriod_31Days :hasDuration "P31D"^^xsd:duration .
+:GracePeriod_31Days :hasStartEvent :MissedPremium_2025 .
+
+### Finalizing Policy State Transitions Based on Contract ###
+:Policy_EML202500028391 :hasState :State_Active .
+:Policy_EML202500028391 :hasState :State_InGracePeriod .
+:Policy_EML202500028391 :hasState :State_Lapsed .
+:Policy_EML202500028391 :hasState :State_Active .
+### Adding New Classes: Cl_DeathBenefitEvent, Cl_ProofOfDeathEvent, Cl_PaymentOfProceedsEvent, Cl_InterestOnDeathBenefitEvent, Cl_CertifiedDeathCertificate, Cl_ContingentBeneficiaryRole, Cl_InterestRate ###
+:Cl_DeathBenefitEvent a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Death Benefit Event" ;
+    rdfs:comment "A discrete event in which the insurer disburses the death benefit to the designated beneficiary upon the insured's death while the policy is in force and before expiry." .
+
+:Cl_ProofOfDeathEvent a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Proof of Death Event" ;
+    rdfs:comment "The event requiring submission of documentation to verify the insured’s death, including a certified death certificate and additional reasonable requests by the company." .
+
+:Cl_PaymentOfProceedsEvent a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Payment of Proceeds Event" ;
+    rdfs:comment "The event in which the death benefit proceeds are disbursed to the beneficiary or estate, typically in a lump sum unless otherwise elected." .
+
+:Cl_InterestOnDeathBenefitEvent a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Interest on Death Benefit Event" ;
+    rdfs:comment "The event in which interest accrues on the death benefit from the date of death to the date of payment, at a rate not less than required by state law." .
+
+:Cl_CertifiedDeathCertificate a owl:Class ;
+    rdfs:subClassOf :Cl_EvidenceOfInsurability ;
+    rdfs:label "Certified Death Certificate" ;
+    rdfs:comment "A document issued by a government authority certifying the death of an individual." .
+
+:Cl_ContingentBeneficiaryRole a owl:Class ;
+    rdfs:subClassOf :Cl_BeneficiaryRole ;
+    rdfs:label "Contingent Beneficiary Role" ;
+    rdfs:comment "A role for a beneficiary who receives the death benefit if the primary beneficiary does not survive the insured." .
+
+:Cl_InterestRate a owl:Class ;
+    rdfs:subClassOf :Cl_MonetaryAmount ;
+    rdfs:label "Interest Rate" ;
+    rdfs:comment "The rate applied to the death benefit for interest accrual, expressed as a decimal fraction." .
+
+### Adding New Object Properties for Reification: hasDeathBenefitEvent, hasProofOfDeathEvent, hasPaymentOfProceedsEvent, hasInterestOnDeathBenefitEvent, hasCertifiedDeathCertificate, hasContingentBeneficiary, hasInterestRateReification, hasDeduction, hasNetPayout ###
+:hasDeathBenefitEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_DeathBenefitEvent ;
+    rdfs:label "has Death Benefit Event" ;
+    rdfs:comment "Links a policy to the event when the death benefit is paid to the beneficiary." .
+
+:hasProofOfDeathEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ProofOfDeathEvent ;
+    rdfs:label "has Proof of Death Event" ;
+    rdfs:comment "Links a policy to the event requiring proof of the insured's death." .
+
+:hasPaymentOfProceedsEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PaymentOfProceedsEvent ;
+    rdfs:label "has Payment of Proceeds Event" ;
+    rdfs:comment "Links a policy to the event when the death benefit proceeds are disbursed." .
+
+:hasInterestOnDeathBenefitEvent a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_InterestOnDeathBenefitEvent ;
+    rdfs:label "has Interest on Death Benefit Event" ;
+    rdfs:comment "Links a policy to the event when interest accrues on the death benefit." .
+
+:hasCertifiedDeathCertificate a owl:ObjectProperty ;
+    rdfs:domain :Cl_ProofOfDeathEvent ;
+    rdfs:range :Cl_CertifiedDeathCertificate ;
+    rdfs:label "has Certified Death Certificate" ;
+    rdfs:comment "Links a proof of death event to the required certified death certificate." .
+
+:hasContingentBeneficiary a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ContingentBeneficiaryRole ;
+    rdfs:label "has Contingent Beneficiary" ;
+    rdfs:comment "Links a policy to the contingent beneficiary who may receive proceeds if the primary beneficiary predeceases the insured." .
+
+:hasInterestRateReification a owl:ObjectProperty ;
+    rdfs:domain :Cl_InterestOnDeathBenefitEvent ;
+    rdfs:range :Cl_InterestRate ;
+    rdfs:label "has Interest Rate Reification" ;
+    rdfs:comment "Links the interest accrual event to the reified interest rate applied." .
+
+:hasDeduction a owl:ObjectProperty ;
+    rdfs:domain :Cl_DeathBenefitEvent ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has Deduction" ;
+    rdfs:comment "Links the death benefit event to the amount deducted, such as unpaid premiums or indebtedness." .
+
+:hasNetPayout a owl:ObjectProperty ;
+    rdfs:domain :Cl_DeathBenefitEvent ;
+    rdfs:range :Cl_MonetaryAmount ;
+    rdfs:label "has Net Payout" ;
+    rdfs:comment "Links the death benefit event to the final amount paid after deductions." .
+
+### Instantiating Death Benefit Event, Proof of Death Event, Payment of Proceeds Event, Interest on Death Benefit Event, and Related Entities from Contract Text ###
+:DeathBenefitEvent_2025 a :Cl_DeathBenefitEvent ;
+    rdfs:label "Death Benefit Event in 2025" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :Beneficiary_TaylorEllis ;
+    :hasManner "automatic" ;
+    :hasDeduction :UnpaidPremiums_2025 ;
+    :hasNetPayout :NetDeathBenefit_2025 .
+
+:Policy_EML202500028391 :hasDeathBenefitEvent :DeathBenefitEvent_2025 .
+
+:ProofOfDeathEvent_2025 a :Cl_ProofOfDeathEvent ;
+    rdfs:label "Proof of Death Event in 2025" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :InsuredPerson_JordanEllis ;
+    :hasManner "submitted documentation" ;
+    :hasCertifiedDeathCertificate :CertifiedDeathCertificate_2025 .
+
+:Policy_EML202500028391 :hasProofOfDeathEvent :ProofOfDeathEvent_2025 .
+
+:PaymentOfProceedsEvent_2025 a :Cl_PaymentOfProceedsEvent ;
+    rdfs:label "Payment of Proceeds Event in 2025" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :NetDeathBenefit_2025 ;
+    :hasManner "lump sum" ;
+    :hasManner "automatic" .
+
+:Policy_EML202500028391 :hasPaymentOfProceedsEvent :PaymentOfProceedsEvent_2025 .
+
+:InterestOnDeathBenefitEvent_2025 a :Cl_InterestOnDeathBenefitEvent ;
+    rdfs:label "Interest on Death Benefit Event in 2025" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :InterestAmount_2025 ;
+    :hasManner "automatic" ;
+    :hasInterestRateReification :InterestRate_2025 ;
+    :hasTemporalExtent :InterestAccrualInterval_2025 .
+
+:Policy_EML202500028391 :hasInterestOnDeathBenefitEvent :InterestOnDeathBenefitEvent_2025 .
+
+:CertifiedDeathCertificate_2025 a :Cl_CertifiedDeathCertificate ;
+    rdfs:label "Certified Death Certificate Submitted in 2025" ;
+    :hasManner "submitted and accepted" .
+
+:ContingentBeneficiaryRole_TaylorEllis a :Cl_ContingentBeneficiaryRole ;
+    rdfs:label "Taylor Ellis (Contingent Beneficiary)" .
+
+:Policy_EML202500028391 :hasContingentBeneficiary :ContingentBeneficiaryRole_TaylorEllis .
+
+:InterestRate_2025 a :Cl_InterestRate ;
+    rdfs:label "Interest Rate Applied to Death Benefit" ;
+    :hasAmount 0.04 ;
+    :hasCurrency "USD" .
+
+:InterestAccrualInterval_2025 a :Cl_TimeInterval ;
+    rdfs:label "Interest Accrual Interval from Death to Payment" ;
+    :hasDuration "P30D"^^xsd:duration ;
+    :hasStartEvent :DeathBenefitEvent_2025 .
+
+:UnpaidPremiums_2025 a :Cl_MonetaryAmount ;
+    rdfs:label "Unpaid Premiums at Time of Death" ;
+    :hasAmount 100.0 ;
+    :hasCurrency "USD" .
+
+:NetDeathBenefit_2025 a :Cl_MonetaryAmount ;
+    rdfs:label "Net Death Benefit After Deductions" ;
+    :hasAmount 499900.0 ;
+    :hasCurrency "USD" .
+
+:InterestAmount_2025 a :Cl_MonetaryAmount ;
+    rdfs:label "Interest Accrued on Death Benefit" ;
+    :hasAmount 1999.6 ;
+    :hasCurrency "USD" .
+
+### Finalizing State Transitions and Event Links Based on Contract ###
+:Policy_EML202500028391 :hasState :State_Active .
+:Policy_EML202500028391 :hasEvent :DeathBenefitEvent_2025 .
+:Policy_EML202500028391 :hasEvent :ProofOfDeathEvent_2025 .
+:Policy_EML202500028391 :hasEvent :PaymentOfProceedsEvent_2025 .
+:Policy_EML202500028391 :hasEvent :InterestOnDeathBenefitEvent_2025 .
+### Adding New Classes: Cl_DesignationOfBeneficiary, Cl_ChangeOfBeneficiary, Cl_SimultaneousDeathAndDisclaimer, Cl_FacilityOfPayment, Cl_EstateRole, Cl_EquitableRecipientRole ###
+:Cl_DesignationOfBeneficiary a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Designation of Beneficiary" ;
+    rdfs:comment "A discrete event in which the Policy Owner formally names a Beneficiary in writing and files it with the Company." .
+
+:Cl_ChangeOfBeneficiary a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Change of Beneficiary" ;
+    rdfs:comment "A discrete event in which the Policy Owner updates the Beneficiary designation, subject to policy terms and consent requirements." .
+
+:Cl_SimultaneousDeathAndDisclaimer a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Simultaneous Death and Disclaimer" ;
+    rdfs:comment "An event triggered when the Insured and Beneficiary die under circumstances making the order of death uncertain, or when a Beneficiary disclaims proceeds." .
+
+:Cl_FacilityOfPayment a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Facility of Payment" ;
+    rdfs:comment "The event in which the Company pays proceeds to the Insured's estate or an equitable recipient due to the absence or unlocatability of a surviving Beneficiary." .
+
+:Cl_EstateRole a owl:Class ;
+    rdfs:subClassOf :Cl_AgentRole ;
+    rdfs:label "Estate Role" ;
+    rdfs:comment "A role played by the Insured's estate in a policy event." .
+
+:Cl_EquitableRecipientRole a owl:Class ;
+    rdfs:subClassOf :Cl_AgentRole ;
+    rdfs:label "Equitable Recipient Role" ;
+    rdfs:comment "A role played by a person deemed by the Company to be equitably entitled to proceeds." .
+
+### Adding New Object Properties: hasEstateRecipient, hasEquitableRecipient ###
+:hasEstateRecipient a owl:ObjectProperty ;
+    rdfs:domain :Cl_FacilityOfPayment ;
+    rdfs:range :Cl_EstateRole ;
+    rdfs:label "has Estate Recipient" ;
+    rdfs:comment "Links a Facility of Payment event to the Insured's estate as recipient." .
+
+:hasEquitableRecipient a owl:ObjectProperty ;
+    rdfs:domain :Cl_FacilityOfPayment ;
+    rdfs:range :Cl_EquitableRecipientRole ;
+    rdfs:label "has Equitable Recipient" ;
+    rdfs:comment "Links a Facility of Payment event to a person deemed equitably entitled." .
+
+### Instantiating Events and Roles from Contract Text ###
+:DesignationOfBeneficiary_2025 a :Cl_DesignationOfBeneficiary ;
+    rdfs:label "Designation of Beneficiary in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Beneficiary_TaylorEllis ;
+    :hasManner "in writing and filed with the Company" .
+
+:Policy_EML202500028391 :hasEvent :DesignationOfBeneficiary_2025 .
+
+:ChangeOfBeneficiary_2026 a :Cl_ChangeOfBeneficiary ;
+    rdfs:label "Change of Beneficiary in 2026" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Beneficiary_TaylorEllis ;
+    :hasManner "written request satisfactory to the Company" .
+
+:Policy_EML202500028391 :hasEvent :ChangeOfBeneficiary_2026 .
+
+:SimultaneousDeathAndDisclaimer_2027 a :Cl_SimultaneousDeathAndDisclaimer ;
+    rdfs:label "Simultaneous Death and Disclaimer in 2027" ;
+    :hasObjectRole :Beneficiary_TaylorEllis ;
+    :hasManner "presumption of predecease" .
+
+:Policy_EML202500028391 :hasEvent :SimultaneousDeathAndDisclaimer_2027 .
+
+:FacilityOfPayment_2028 a :Cl_FacilityOfPayment ;
+    rdfs:label "Facility of Payment in 2028" ;
+    :hasAgentRole :Company ;
+    :hasEstateRecipient :Estate_JordanEllis ;
+    :hasEquitableRecipient :EquitableRecipient_MariaGarcia ;
+    :hasManner "payment to estate or equitable recipient" .
+
+:Policy_EML202500028391 :hasEvent :FacilityOfPayment_2028 .
+
+:Estate_JordanEllis a :Cl_EstateRole ;
+    rdfs:label "Estate of Jordan Ellis" .
+
+:EquitableRecipient_MariaGarcia a :Cl_EquitableRecipientRole ;
+    rdfs:label "Maria Garcia (Equitable Recipient)" .
+
+### Adding 90-Day Locator Window as TemporalExtent ###
+:LocatorWindow_90Days a :Cl_TimeInterval ;
+    rdfs:label "90-Day Locator Window" ;
+    rdfs:comment "A 90-day period within which a beneficiary must be located after the Insured's death." ;
+    :hasDuration "P90D"^^xsd:duration .
+
+:SimultaneousDeathAndDisclaimer_2027 :hasTemporalExtent :LocatorWindow_90Days .
+
+:FacilityOfPayment_2028 :hasTemporalExtent :LocatorWindow_90Days .
+
+### Adding State Transitions and Business Rules ###
+:DesignationOfBeneficiary_2025 :hasState :State_Active .
+:ChangeOfBeneficiary_2026 :hasState :State_Active .
+:SimultaneousDeathAndDisclaimer_2027 :hasState :State_FacilityOfPayment .
+:FacilityOfPayment_2028 :hasState :State_DischargedLiability .
+
+:Policy_EML202500028391 :hasState :State_Active .
+
+### Adding Business Rule for Presumption of Predecease ###
+:PresumptionOfPredecease a owl:Class ;
+    rdfs:label "Presumption of Predecease" ;
+    rdfs:comment "A business rule stating that the Beneficiary is presumed to have predeceased the Insured in case of simultaneous death." .
+
+:SimultaneousDeathAndDisclaimer_2027 :hasBusinessRule :PresumptionOfPredecease .
+
+### Adding Business Rule for Discharge of Liability ###
+:DischargeOfLiability a owl:Class ;
+    rdfs:label "Discharge of Liability" ;
+    rdfs:comment "A business rule stating that payment under Facility of Payment discharges the Company’s liability to the extent of the amount paid." .
+
+:FacilityOfPayment_2028 :hasBusinessRule :DischargeOfLiability .
+
+### Adding Irrevocable Beneficiary Event and Consent Requirement ###
+:IrrevocableBeneficiary_2025 a :Cl_Event ;
+    rdfs:label "Irrevocable Beneficiary Designation in 2025" ;
+    :hasAgentRole :PolicyOwner_JordanEllis ;
+    :hasObjectRole :Beneficiary_TaylorEllis ;
+    :hasManner "written designation" .
+
+:Policy_EML202500028391 :hasEvent :IrrevocableBeneficiary_2025 .
+
+:ConsentRequirement a owl:Class ;
+    rdfs:label "Consent Requirement" ;
+    rdfs:comment "A reification class modeling the condition that the Policy Owner may not change or assign the policy without written consent of the irrevocable Beneficiary." .
+
+:IrrevocableBeneficiary_2025 :hasConsentRequirement :ConsentRequirement .
+
+:ConsentRequirement :hasConsentFrom :Beneficiary_TaylorEllis ;
+    :hasManner "written consent" .
+
+### Finalizing State Transitions and Event Links for Beneficiary Provisions ###
+:Policy_EML202500028391 :hasState :State_Active .
+### Adding New Classes: Cl_IncontestabilityPeriod, Cl_SuicideExclusionPeriod, Cl_Incontestability, Cl_SuicideExclusion ###
+:Cl_IncontestabilityPeriod a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Incontestability Period" ;
+    rdfs:comment "A two-year period during which the Company may contest the validity of the Policy due to misrepresentation, starting from the Issue Date." .
+
+:Cl_SuicideExclusionPeriod a owl:Class ;
+    rdfs:subClassOf :Cl_TimeInterval ;
+    rdfs:label "Suicide Exclusion Period" ;
+    rdfs:comment "A two-year period during which the death benefit is limited to total premiums paid if the Insured dies by suicide, starting from the Issue Date or Reinstatement Date." .
+
+:Cl_Incontestability a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Incontestability" ;
+    rdfs:comment "The event marking the end of the contestability period, after which the policy becomes incontestable unless fraud is involved." .
+
+:Cl_SuicideExclusion a owl:Class ;
+    rdfs:subClassOf :Cl_Event ;
+    rdfs:label "Suicide Exclusion" ;
+    rdfs:comment "The event marking the occurrence of suicide within the exclusion period, triggering limited liability." .
+
+### Adding New Object Properties: hasIncontestabilityPeriod, hasSuicideExclusionPeriod, hasIncontestability, hasSuicideExclusion ###
+:hasIncontestabilityPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IncontestabilityPeriod ;
+    rdfs:label "has Incontestability Period" ;
+    rdfs:comment "Links a policy to its incontestability period." .
+
+:hasSuicideExclusionPeriod a owl:ObjectProperty ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SuicideExclusionPeriod ;
+    rdfs:label "has Suicide Exclusion Period" ;
+    rdfs:comment "Links a policy to its suicide exclusion period." .
+
+:hasIncontestability a owl:ObjectProperty ;
+    rdfs:domain :Cl_IncontestabilityPeriod ;
+    rdfs:range :Cl_Incontestability ;
+    rdfs:label "has Incontestability" ;
+    rdfs:comment "Links the incontestability period to the event marking its end." .
+
+:hasSuicideExclusion a owl:ObjectProperty ;
+    rdfs:domain :Cl_SuicideExclusionPeriod ;
+    rdfs:range :Cl_SuicideExclusion ;
+    rdfs:label "has Suicide Exclusion" ;
+    rdfs:comment "Links the suicide exclusion period to the event of suicide within the period." .
+
+### Instantiating IncontestabilityPeriod, SuicideExclusionPeriod, Incontestability, and SuicideExclusion for the Policy ###
+:Policy_EML202500028391 :hasIncontestabilityPeriod :IncontestabilityPeriod_2Years .
+:Policy_EML202500028391 :hasSuicideExclusionPeriod :SuicideExclusionPeriod_2Years .
+
+:IncontestabilityPeriod_2Years a :Cl_IncontestabilityPeriod ;
+    :hasDuration "P2Y"^^xsd:duration ;
+    :hasStartEvent :Event_IssueDate .
+
+:SuicideExclusionPeriod_2Years a :Cl_SuicideExclusionPeriod ;
+    :hasDuration "P2Y"^^xsd:duration ;
+    :hasStartEvent :Event_IssueDate .
+
+:Incontestability_2Years a :Cl_Incontestability ;
+    rdfs:label "Incontestability Event after 2 Years" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "automatic" ;
+    :hasTemporalExtent :IncontestabilityPeriod_2Years .
+
+:SuicideExclusion_2Years a :Cl_SuicideExclusion ;
+    rdfs:label "Suicide Exclusion Event within 2 Years" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "automatic" ;
+    :hasTemporalExtent :SuicideExclusionPeriod_2Years .
+
+:IncontestabilityPeriod_2Years :hasIncontestability :Incontestability_2Years .
+:SuicideExclusionPeriod_2Years :hasSuicideExclusion :SuicideExclusion_2Years .
+
+### Adding Reinstatement-Triggered Contestability Period ###
+:Reinstatement_2026 :hasIncontestabilityPeriod :IncontestabilityPeriod_2YearsAfterReinstatement .
+
+:IncontestabilityPeriod_2YearsAfterReinstatement a :Cl_IncontestabilityPeriod ;
+    :hasDuration "P2Y"^^xsd:duration ;
+    :hasStartEvent :Reinstatement_2026 .
+
+:Incontestability_2YearsAfterReinstatement a :Cl_Incontestability ;
+    rdfs:label "Incontestability Event after Reinstatement" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "automatic" ;
+    :hasTemporalExtent :IncontestabilityPeriod_2YearsAfterReinstatement .
+
+:IncontestabilityPeriod_2YearsAfterReinstatement :hasIncontestability :Incontestability_2YearsAfterReinstatement .
+
+### Adding Facts for Suicide Exclusion Payment ###
+:TotalPremiumsPaid a :Cl_MonetaryAmount ;
+    rdfs:label "Total Premiums Paid" ;
+    :hasAmount 200.0 ;
+    :hasCurrency "USD" .
+
+:FullDeathBenefit a :Cl_MonetaryAmount ;
+    rdfs:label "Full Death Benefit" ;
+    :hasAmount 500000.0 ;
+    :hasCurrency "USD" .
+
+:Policy_EML202500028391 :hasDeathBenefit :FullDeathBenefit .
+
+:SuicideExclusion_2Years :hasDeathBenefit :TotalPremiumsPaid .
+:Incontestability_2YearsAfterReinstatement :hasDeathBenefit :FullDeathBenefit .
+
+### Finalizing State Transitions and Event Links for Contestability and Suicide Clauses ###
+:Policy_EML202500028391 :hasState :State_Active .
+:Policy_EML202500028391 :hasEvent :Incontestability_2Years .
+:Policy_EML202500028391 :hasEvent :SuicideExclusion_2Years .
+:Policy_EML202500028391 :hasEvent :Incontestability_2YearsAfterReinstatement .
+### Adding Reinstatement-Triggered Suicide Exclusion Period ###
+:Reinstatement_2026 :hasSuicideExclusionPeriod :SuicideExclusionPeriod_2YearsAfterReinstatement .
+
+:SuicideExclusionPeriod_2YearsAfterReinstatement a :Cl_SuicideExclusionPeriod ;
+    :hasDuration "P2Y"^^xsd:duration ;
+    :hasStartEvent :Reinstatement_2026 .
+
+:SuicideExclusion_2YearsAfterReinstatement a :Cl_SuicideExclusion ;
+    rdfs:label "Suicide Exclusion Event after Reinstatement" ;
+    :hasAgentRole :Company ;
+    :hasObjectRole :Policy_EML202500028391 ;
+    :hasManner "automatic" ;
+    :hasTemporalExtent :SuicideExclusionPeriod_2YearsAfterReinstatement .
+
+:SuicideExclusionPeriod_2YearsAfterReinstatement :hasSuicideExclusion :SuicideExclusion_2YearsAfterReinstatement .
+
+### Finalizing State Transitions and Event Links for Reinstatement and Post-Reinstatement Clauses ###
+:Policy_EML202500028391 :hasState :State_Active .
+:Policy_EML202500028391 :hasEvent :Reinstatement_2026 .
+:Policy_EML202500028391 :hasEvent :Incontestability_2YearsAfterReinstatement .
+:Policy_EML202500028391 :hasEvent :SuicideExclusion_2YearsAfterReinstatement .

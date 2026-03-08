@@ -1,0 +1,2275 @@
+@prefix : <http://www.example.org/test#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# --- Classes ---
+
+:Cl_Policy a owl:Class ;
+    rdfs:label "Policy" ;
+    rdfs:comment "A life insurance policy issued by Equivita Mutual Life Insurance Company." .
+
+:Cl_PolicyOwner a owl:Class ;
+    rdfs:label "Policy Owner" ;
+    rdfs:comment "The individual or entity that owns the insurance policy." .
+
+:Cl_InsuredPerson a owl:Class ;
+    rdfs:label "Insured Person" ;
+    rdfs:comment "The person whose life is covered by the insurance policy." .
+
+:Cl_Beneficiary a owl:Class ;
+    rdfs:label "Beneficiary" ;
+    rdfs:comment "The person designated to receive the death benefit upon the insured's death." .
+
+:Cl_PolicyType a owl:Class ;
+    rdfs:label "Policy Type" ;
+    rdfs:comment "The type of life insurance policy, such as Term or Whole Life." .
+
+:Cl_Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "A significant occurrence in the lifecycle of a policy." .
+
+:Cl_Cancellation a owl:Class ;
+    rdfs:label "Cancellation" ;
+    rdfs:comment "An event where a policy is terminated at the request of the policy owner." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ReinstatementPeriod a owl:Class ;
+    rdfs:label "Reinstatement Period" ;
+    rdfs:comment "A time interval during which a lapsed policy can be reinstated." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyState a owl:Class ;
+    rdfs:label "Policy State" ;
+    rdfs:comment "The current status of a policy, such as Active, In Grace Period, or Lapsed." .
+
+:Cl_GracePeriod a owl:Class ;
+    rdfs:label "Grace Period" ;
+    rdfs:comment "A period after a premium is due during which the policy remains active." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_LapsedPolicy a owl:Class ;
+    rdfs:label "Lapsed Policy" ;
+    rdfs:comment "A policy that has expired due to non-payment of premiums." ;
+    rdfs:subClassOf :Cl_Event .
+
+# --- Object Properties ---
+
+:objProp_hasOwner a owl:ObjectProperty ;
+    rdfs:label "hasOwner" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyOwner .
+
+:objProp_hasInsured a owl:ObjectProperty ;
+    rdfs:label "hasInsured" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_InsuredPerson .
+
+:objProp_hasBeneficiary a owl:ObjectProperty ;
+    rdfs:label "hasBeneficiary" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Beneficiary .
+
+:objProp_hasPolicyType a owl:ObjectProperty ;
+    rdfs:label "hasPolicyType" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyType .
+
+:objProp_participatesIn a owl:ObjectProperty ;
+    rdfs:label "participatesIn" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_Event .
+
+:objProp_hasEvent a owl:ObjectProperty ;
+    rdfs:label "hasEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Event .
+:objProp_isInitiatedBy a owl:ObjectProperty ;
+    rdfs:label "isInitiatedBy" ;
+    rdfs:domain :Cl_Cancellation ;
+    rdfs:range :Cl_PolicyOwner .
+
+:objProp_hasInitiationMethod a owl:ObjectProperty ;
+    rdfs:label "hasInitiationMethod" ;
+    rdfs:domain :Cl_Cancellation ;
+    rdfs:range :Cl_InitiationMethod .
+
+:objProp_hasReinstatementPeriod a owl:ObjectProperty ;
+    rdfs:label "hasReinstatementPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ReinstatementPeriod .
+
+:objProp_hasGracePeriod a owl:ObjectProperty ;
+    rdfs:label "hasGracePeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_GracePeriod .
+
+:objProp_hasLapsedState a owl:ObjectProperty ;
+    rdfs:label "hasLapsedState" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_LapsedPolicy .
+
+:objProp_hasState a owl:ObjectProperty ;
+    rdfs:label "hasState" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyState .
+# --- Data Properties ---
+
+:dataProp_faceAmount a owl:DatatypeProperty ;
+    rdfs:label "faceAmount" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:decimal .
+
+:dataProp_currencyUnit a owl:DatatypeProperty ;
+    rdfs:label "currencyUnit" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:string .
+
+:dataProp_issueDate a owl:DatatypeProperty ;
+    rdfs:label "issueDate" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range xsd:dateTime .
+
+:dataProp_durationInDays a owl:DatatypeProperty ;
+    rdfs:label "durationInDays" ;
+    rdfs:domain :Cl_ReinstatementPeriod ;
+    rdfs:range xsd:integer .
+
+:dataProp_durationInDaysGracePeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysGracePeriod" ;
+    rdfs:domain :Cl_GracePeriod ;
+    rdfs:range xsd:integer .
+
+:dataProp_eventStart a owl:DatatypeProperty ;
+    rdfs:label "eventStart" ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range xsd:dateTime .
+
+:dataProp_eventEnd a owl:DatatypeProperty ;
+    rdfs:label "eventEnd" ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range xsd:dateTime .
+
+# --- Individuals ---
+
+:ind_Policy_EML202500028391 a :Cl_Policy ;
+    :objProp_hasOwner :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasInsured :ind_InsuredPerson_JordanEllis ;
+    :objProp_hasBeneficiary :ind_Beneficiary_TaylorEllis ;
+    :objProp_hasPolicyType :ind_PolicyType_Term20Year ;
+    :objProp_hasState :ind_PolicyState_Active ;
+    :objProp_hasGracePeriod :ind_GracePeriod ;
+    :objProp_hasReinstatementPeriod :ind_ReinstatementPeriod ;
+    :objProp_hasLapsedState :ind_LapsedPolicy ;
+    :dataProp_faceAmount "500000"^^xsd:decimal ;
+    :dataProp_currencyUnit "USD" ;
+    :dataProp_issueDate "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_PolicyOwner_JordanEllis a :Cl_PolicyOwner ;
+    rdfs:label "Jordan Ellis" .
+
+:ind_InsuredPerson_JordanEllis a :Cl_InsuredPerson ;
+    rdfs:label "Jordan Ellis" .
+
+:ind_Beneficiary_TaylorEllis a :Cl_Beneficiary ;
+    rdfs:label "Taylor Ellis" .
+
+:ind_PolicyType_Term20Year a :Cl_PolicyType ;
+    rdfs:label "20-Year Level Term" .
+
+:ind_PolicyState_Active a :Cl_PolicyState ;
+    rdfs:label "Active" .
+
+:ind_PolicyState_GracePeriod a :Cl_PolicyState ;
+    rdfs:label "In Grace Period" .
+
+:ind_PolicyState_Lapsed a :Cl_PolicyState ;
+    rdfs:label "Lapsed" .
+
+:ind_Cancellation a :Cl_Cancellation ;
+    rdfs:label "Cancellation" ;
+    :objProp_isInitiatedBy :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasInitiationMethod "Written Request" ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_GracePeriod a :Cl_GracePeriod ;
+    rdfs:label "Grace Period" ;
+    :dataProp_durationInDaysGracePeriod "30"^^xsd:integer ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_ReinstatementPeriod a :Cl_ReinstatementPeriod ;
+    rdfs:label "Reinstatement Period" ;
+    :dataProp_durationInDays "60"^^xsd:integer ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_LapsedPolicy a :Cl_LapsedPolicy ;
+    rdfs:label "Lapsed Policy" ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+
+# --- Additional Axioms and Restrictions ---
+
+# Restriction: A policy must have a face amount
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty :dataProp_faceAmount
+        ]
+    )
+] .
+
+# Restriction: A policy must have a currency unit
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_currencyUnit
+        ]
+    )
+] .
+
+# Restriction: A policy must have a policy type
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_PolicyType ;
+            owl:onProperty :objProp_hasPolicyType
+        ]
+    )
+] .
+
+# Restriction: A policy must have a policy owner
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_hasOwner
+        ]
+    )
+] .
+
+# Restriction: A policy must have an insured person
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_InsuredPerson ;
+            owl:onProperty :objProp_hasInsured
+        ]
+    )
+] .
+
+# Restriction: A policy must have a beneficiary
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_Beneficiary ;
+            owl:onProperty :objProp_hasBeneficiary
+        ]
+    )
+] .
+
+# Restriction: A policy must have a state
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_PolicyState ;
+            owl:onProperty :objProp_hasState
+        ]
+    )
+] .
+
+# Restriction: A cancellation must be initiated by a policy owner
+:Cl_Cancellation owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Cancellation
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_isInitiatedBy
+        ]
+    )
+] .
+
+# Restriction: A grace period must have a duration
+:Cl_GracePeriod owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_GracePeriod
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysGracePeriod
+        ]
+    )
+] .
+
+# Restriction: A reinstatement period must have a duration
+:Cl_ReinstatementPeriod owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ReinstatementPeriod
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDays
+        ]
+    )
+] .
+
+# --- Event Reification and State Transitions ---
+
+# A policy transitions from 'Active' to 'In Grace Period' when a premium is not paid
+:ind_PremiumNotPaidEvent a :Cl_Event ;
+    rdfs:label "Premium Not Paid" ;
+    :objProp_hasEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesIn :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+# The grace period begins when a premium is not paid
+:ind_GracePeriodStartEvent a :Cl_GracePeriod ;
+    rdfs:label "Grace Period Start" ;
+    :objProp_hasEvent :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+# The policy enters 'Lapsed' state if premium is not paid by end of grace period
+:ind_PolicyLapsedEvent a :Cl_LapsedPolicy ;
+    rdfs:label "Policy Lapsed" ;
+    :objProp_hasEvent :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+# The cancellation event is initiated by the policy owner
+:ind_CancellationInitiated a :Cl_Cancellation ;
+    rdfs:label "Cancellation Initiated" ;
+    :objProp_isInitiatedBy :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasInitiationMethod "Written Request" ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+
+# --- New Classes for Events ---
+:Cl_Lapse a owl:Class ;
+    rdfs:label "Lapse" ;
+    rdfs:comment "The event when a policy's coverage is terminated due to nonpayment of premiums after the grace period." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_Reinstatement a owl:Class ;
+    rdfs:label "Reinstatement" ;
+    rdfs:comment "The event when a lapsed policy is restored to active status." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_IncontestabilityPeriod a owl:Class ;
+    rdfs:label "Incontestability Period" ;
+    rdfs:comment "The two-year period during which the company may contest the validity of the policy." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_SuicideExclusionPeriod a owl:Class ;
+    rdfs:label "Suicide Exclusion Period" ;
+    rdfs:comment "The two-year period during which the death benefit is limited if the insured dies by suicide." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_GracePeriodEvent a owl:Class ;
+    rdfs:label "Grace Period Event" ;
+    rdfs:comment "The event when a policy remains in force after a premium due date during which the policy remains in force." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyAnniversary a owl:Class ;
+    rdfs:label "Policy Anniversary" ;
+    rdfs:comment "The event that occurs on each yearly anniversary of the policy's issue date." ;
+    rdfs:subClassOf :Cl_Event .
+
+
+# --- New Object Properties for Event Participants ---
+:objProp_hasLapseEvent a owl:ObjectProperty ;
+    rdfs:label "hasLapseEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Lapse .
+
+:objProp_hasReinstatementEvent a owl:ObjectProperty ;
+    rdfs:label "hasReinstatementEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Reinstatement .
+
+:objProp_hasIncontestabilityPeriod a owl:ObjectProperty ;
+    rdfs:label "hasIncontestabilityPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IncontestabilityPeriod .
+
+:objProp_hasSuicideExclusionPeriod a owl:ObjectProperty ;
+    rdfs:label "hasSuicideExclusionPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SuicideExclusionPeriod .
+
+:objProp_hasGracePeriodEvent a owl:ObjectProperty ;
+    rdfs:label "hasGracePeriodEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_GracePeriodEvent .
+
+:objProp_hasPolicyAnniversary a owl:ObjectProperty ;
+    rdfs:label "hasPolicyAnniversary" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyAnniversary .
+
+:objProp_participatesInLapse a owl:ObjectProperty ;
+    rdfs:label "participatesInLapse" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Lapse .
+
+:objProp_participatesInReinstatement a owl:ObjectProperty ;
+    rdfs:label "participatesInReinstatement" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Reinstatement .
+
+:objProp_participatesInIncontestabilityPeriod a owl:ObjectProperty ;
+    rdfs:label "participatesInIncontestabilityPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IncontestabilityPeriod .
+
+:objProp_participatesInSuicideExclusionPeriod a owl:ObjectProperty ;
+    rdfs:label "participatesInSuicideExclusionPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SuicideExclusionPeriod .
+
+:objProp_participatesInGracePeriodEvent a owl:ObjectProperty ;
+    rdfs:label "participatesInGracePeriodEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_GracePeriodEvent .
+
+:objProp_participatesInPolicyAnniversary a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyAnniversary" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyAnniversary .
+
+
+# --- New Data Properties for Event Durations and Frequencies ---
+:dataProp_durationInDaysIncontestabilityPeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysIncontestabilityPeriod" ;
+    rdfs:domain :Cl_IncontestabilityPeriod ;
+    rdfs:range xsd:integer .
+
+:dataProp_durationInDaysSuicideExclusionPeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysSuicideExclusionPeriod" ;
+    rdfs:domain :Cl_SuicideExclusionPeriod ;
+    rdfs:range xsd:integer .
+
+:dataProp_durationInDaysGracePeriodEvent a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysGracePeriodEvent" ;
+    rdfs:domain :Cl_GracePeriodEvent ;
+    rdfs:range xsd:integer .
+
+:dataProp_frequencyPolicyAnniversary a owl:DatatypeProperty ;
+    rdfs:label "frequencyPolicyAnniversary" ;
+    rdfs:domain :Cl_PolicyAnniversary ;
+    rdfs:range xsd:string .
+
+
+# --- New Individuals for Events ---
+:ind_LapseEvent a :Cl_Lapse ;
+    rdfs:label "Policy Lapse" ;
+    :objProp_hasLapseEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInLapse :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_ReinstatementEvent a :Cl_Reinstatement ;
+    rdfs:label "Policy Reinstatement" ;
+    :objProp_hasReinstatementEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInReinstatement :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_IncontestabilityPeriodEvent a :Cl_IncontestabilityPeriod ;
+    rdfs:label "Incontestability Period" ;
+    :objProp_hasIncontestabilityPeriod :ind_Policy_EML202500028391 ;
+    :objProp_participatesInIncontestabilityPeriod :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysIncontestabilityPeriod "730"^^xsd:integer .
+
+:ind_SuicideExclusionPeriodEvent a :Cl_SuicideExclusionPeriod ;
+    rdfs:label "Suicide Exclusion Period" ;
+    :objProp_hasSuicideExclusionPeriod :ind_Policy_EML202500028391 ;
+    :objProp_participatesInSuicideExclusionPeriod :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysSuicideExclusionPeriod "730"^^xsd:integer .
+
+:ind_GracePeriodEvent a :Cl_GracePeriodEvent ;
+    rdfs:label "Grace Period Event" ;
+    :objProp_hasGracePeriodEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInGracePeriodEvent :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysGracePeriodEvent "31"^^xsd:integer .
+
+:ind_PolicyAnniversaryEvent a :Cl_PolicyAnniversary ;
+    rdfs:label "Policy Anniversary" ;
+    :objProp_hasPolicyAnniversary :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyAnniversary :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_frequencyPolicyAnniversary "Yearly" .
+
+
+# --- New Restrictions for Event Properties ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_Lapse ;
+            owl:onProperty :objProp_hasLapseEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_Reinstatement ;
+            owl:onProperty :objProp_hasReinstatementEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_IncontestabilityPeriod ;
+            owl:onProperty :objProp_hasIncontestabilityPeriod
+        ]
+        [
+            owl:allValuesFrom :Cl_SuicideExclusionPeriod ;
+            owl:onProperty :objProp_hasSuicideExclusionPeriod
+        ]
+        [
+            owl:allValuesFrom :Cl_GracePeriodEvent ;
+            owl:onProperty :objProp_hasGracePeriodEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyAnniversary ;
+            owl:onProperty :objProp_hasPolicyAnniversary
+        ]
+    )
+] .
+
+:Cl_Lapse owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Lapse
+        [
+            owl:allValuesFrom :Cl_Policy ;
+            owl:onProperty :objProp_hasLapseEvent
+        ]
+    )
+] .
+
+:Cl_Reinstatement owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Reinstatement
+        [
+            owl:allValuesFrom :Cl_Policy ;
+            owl:onProperty :objProp_hasReinstatementEvent
+        ]
+    )
+] .
+
+:Cl_IncontestabilityPeriod owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_IncontestabilityPeriod
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysIncontestabilityPeriod
+        ]
+    )
+] .
+
+:Cl_SuicideExclusionPeriod owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_SuicideExclusionPeriod
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysSuicideExclusionPeriod
+        ]
+    )
+] .
+
+:Cl_GracePeriodEvent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_GracePeriodEvent
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysGracePeriodEvent
+        ]
+    )
+] .
+
+:Cl_PolicyAnniversary owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyAnniversary
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_frequencyPolicyAnniversary
+        ]
+    )
+] .
+
+
+# --- New Classes for Events from Page 3 ---
+:Cl_Assignment a owl:Class ;
+    rdfs:label "Assignment" ;
+    rdfs:comment "The event when the Policy Owner assigns the Policy or any rights under it by written notice." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_Modifications a owl:Class ;
+    rdfs:label "Modifications" ;
+    rdfs:comment "The event when the Company modifies the Policy by issuing a change approved in writing by an executive officer." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_MisstatementOfAgeOrSex a owl:Class ;
+    rdfs:label "Misstatement of Age or Sex" ;
+    rdfs:comment "The event when the age or sex of the Insured is misstated at issue, affecting the death benefit." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyVoidAbInitio a owl:Class ;
+    rdfs:label "Policy Void Ab Initio" ;
+    rdfs:comment "The event when the Policy is voided from the beginning due to the Insured being outside of an insurable age range." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ChangeBeneficiary a owl:Class ;
+    rdfs:label "Change Beneficiary" ;
+    rdfs:comment "The event when the Policy Owner exercises the right to change the Beneficiary." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyOwnerRights a owl:Class ;
+    rdfs:label "Policy Owner Rights" ;
+    rdfs:comment "The event when the Policy Owner exercises contractual rights such as changing the beneficiary, assigning the policy, or electing optional forms of benefits." ;
+    rdfs:subClassOf :Cl_Event .
+
+# --- New Object Properties for Event Participants ---
+:objProp_hasAssignmentEvent a owl:ObjectProperty ;
+    rdfs:label "hasAssignmentEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Assignment .
+
+:objProp_hasModificationsEvent a owl:ObjectProperty ;
+    rdfs:label "hasModificationsEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Modifications .
+
+:objProp_hasMisstatementEvent a owl:ObjectProperty ;
+    rdfs:label "hasMisstatementEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_MisstatementOfAgeOrSex .
+
+:objProp_hasVoidAbInitioEvent a owl:ObjectProperty ;
+    rdfs:label "hasVoidAbInitioEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyVoidAbInitio .
+
+:objProp_hasChangeBeneficiaryEvent a owl:ObjectProperty ;
+    rdfs:label "hasChangeBeneficiaryEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ChangeBeneficiary .
+
+:objProp_hasPolicyOwnerRightsEvent a owl:ObjectProperty ;
+    rdfs:label "hasPolicyOwnerRightsEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyOwnerRights .
+
+:objProp_participatesInAssignment a owl:ObjectProperty ;
+    rdfs:label "participatesInAssignment" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_Assignment .
+
+:objProp_participatesInModifications a owl:ObjectProperty ;
+    rdfs:label "participatesInModifications" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_Modifications .
+
+:objProp_participatesInMisstatement a owl:ObjectProperty ;
+    rdfs:label "participatesInMisstatement" ;
+    rdfs:domain :Cl_InsuredPerson ;
+    rdfs:range :Cl_MisstatementOfAgeOrSex .
+
+:objProp_participatesInPolicyVoidAbInitio a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyVoidAbInitio" ;
+    rdfs:domain :Cl_InsuredPerson ;
+    rdfs:range :Cl_PolicyVoidAbInitio .
+
+:objProp_participatesInChangeBeneficiary a owl:ObjectProperty ;
+    rdfs:label "participatesInChangeBeneficiary" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_ChangeBeneficiary .
+
+:objProp_participatesInPolicyOwnerRights a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyOwnerRights" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_PolicyOwnerRights .
+
+# --- New Data Properties for Event Details ---
+:dataProp_effectOnDeathBenefit a owl:DatatypeProperty ;
+    rdfs:label "effectOnDeathBenefit" ;
+    rdfs:domain :Cl_MisstatementOfAgeOrSex ;
+    rdfs:range xsd:string .
+
+:dataProp_effectOnPremiums a owl:DatatypeProperty ;
+    rdfs:label "effectOnPremiums" ;
+    rdfs:domain :Cl_MisstatementOfAgeOrSex ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredManner a owl:DatatypeProperty ;
+    rdfs:label "requiredManner" ;
+    rdfs:domain :Cl_Assignment ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredMannerModifications a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerModifications" ;
+    rdfs:domain :Cl_Modifications ;
+    rdfs:range xsd:string .
+
+# --- New Individuals for Events from Page 3 ---
+:ind_AssignmentEvent a :Cl_Assignment ;
+    rdfs:label "Policy Assignment" ;
+    :objProp_hasAssignmentEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInAssignment :ind_PolicyOwner_JordanEllis ;
+    :dataProp_requiredManner "Written notice satisfactory to the Company" .
+
+:ind_ModificationsEvent a :Cl_Modifications ;
+    rdfs:label "Policy Modifications" ;
+    :objProp_hasModificationsEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInModifications :ind_Company_Equivita ;
+    :dataProp_requiredMannerModifications "Approved in writing by an executive officer of the Company" .
+
+:ind_MisstatementEvent a :Cl_MisstatementOfAgeOrSex ;
+    rdfs:label "Misstatement of Age or Sex" ;
+    :objProp_hasMisstatementEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInMisstatement :ind_InsuredPerson_JordanEllis ;
+    :dataProp_effectOnDeathBenefit "The death benefit is adjusted to the amount the premium paid would have purchased at the correct age and sex" ;
+    :dataProp_effectOnPremiums "If overpayment, refund without interest; if underpayment, reduce death benefit" .
+
+:ind_PolicyVoidAbInitioEvent a :Cl_PolicyVoidAbInitio ;
+    rdfs:label "Policy Void Ab Initio" ;
+    :objProp_hasVoidAbInitioEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyVoidAbInitio :ind_InsuredPerson_JordanEllis ;
+    :dataProp_effectOnPremiums "All premiums shall be refunded" .
+
+:ind_ChangeBeneficiaryEvent a :Cl_ChangeBeneficiary ;
+    rdfs:label "Change Beneficiary" ;
+    :objProp_hasChangeBeneficiaryEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInChangeBeneficiary :ind_PolicyOwner_JordanEllis .
+
+:ind_PolicyOwnerRightsEvent a :Cl_PolicyOwnerRights ;
+    rdfs:label "Policy Owner Rights Exercise" ;
+    :objProp_hasPolicyOwnerRightsEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyOwnerRights :ind_PolicyOwner_JordanEllis .
+
+# --- New Restrictions for Event Properties ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_Assignment ;
+            owl:onProperty :objProp_hasAssignmentEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_Modifications ;
+            owl:onProperty :objProp_hasModificationsEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_MisstatementOfAgeOrSex ;
+            owl:onProperty :objProp_hasMisstatementEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyVoidAbInitio ;
+            owl:onProperty :objProp_hasVoidAbInitioEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ChangeBeneficiary ;
+            owl:onProperty :objProp_hasChangeBeneficiaryEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwnerRights ;
+            owl:onProperty :objProp_hasPolicyOwnerRightsEvent
+        ]
+    )
+] .
+
+:Cl_Assignment owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Assignment
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredManner
+        ]
+    )
+] .
+
+:Cl_Modifications owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Modifications
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerModifications
+        ]
+    )
+] .
+
+:Cl_MisstatementOfAgeOrSex owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_MisstatementOfAgeOrSex
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_effectOnDeathBenefit
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_effectOnPremiums
+        ]
+    )
+] .
+
+:Cl_PolicyVoidAbInitio owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyVoidAbInitio
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_effectOnPremiums
+        ]
+    )
+] .
+
+:Cl_ChangeBeneficiary owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ChangeBeneficiary
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInChangeBeneficiary
+        ]
+    )
+] .
+
+:Cl_PolicyOwnerRights owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyOwnerRights
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInPolicyOwnerRights
+        ]
+    )
+] .
+
+
+# --- New Classes for Page 4: Premiums and Grace Period ---
+:Cl_PremiumPayment a owl:Class ;
+    rdfs:label "Premium Payment" ;
+    rdfs:comment "The event when a premium is paid for the policy." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PremiumNotPaid a owl:Class ;
+    rdfs:label "Premium Not Paid" ;
+    rdfs:comment "The event when a premium payment is delayed beyond the due date." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_GracePeriodEvent a owl:Class ;
+    rdfs:label "Grace Period Event" ;
+    rdfs:comment "The event when a policy remains in force after a premium due date during which the policy remains in force." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_LapseForNonpayment a owl:Class ;
+    rdfs:label "Lapse for Nonpayment" ;
+    rdfs:comment "The event when a policy lapses due to nonpayment of premium after the grace period." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ReinstatementEvent a owl:Class ;
+    rdfs:label "Reinstatement Event" ;
+    rdfs:comment "The event when a lapsed policy is restored to active status." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ReinstatementPeriodInterval a owl:Class ;
+    rdfs:label "Reinstatement Period Interval" ;
+    rdfs:comment "The time interval during which a lapsed policy can be reinstated." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyTermination a owl:Class ;
+    rdfs:label "Policy Termination" ;
+    rdfs:comment "The event when a policy's coverage is terminated at the owner's request." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyRestoration a owl:Class ;
+    rdfs:label "Policy Restoration" ;
+    rdfs:comment "The event when a policy's coverage is restored after lapsing." ;
+    rdfs:subClassOf :Cl_Event .
+
+
+# --- New Object Properties for Page 4 ---
+:objProp_hasPremiumPayment a owl:ObjectProperty ;
+    rdfs:label "hasPremiumPayment" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PremiumPayment .
+
+:objProp_hasPremiumNotPaidEvent a owl:ObjectProperty ;
+    rdfs:label "hasPremiumNotPaidEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PremiumNotPaid .
+
+:objProp_hasGracePeriodEvent a owl:ObjectProperty ;
+    rdfs:label "hasGracePeriodEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_GracePeriodEvent .
+
+:objProp_hasLapseForNonpaymentEvent a owl:ObjectProperty ;
+    rdfs:label "hasLapseForNonpaymentEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_LapseForNonpayment .
+
+:objProp_hasReinstatementEvent a owl:ObjectProperty ;
+    rdfs:label "hasReinstatementEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ReinstatementEvent .
+
+:objProp_hasReinstatementPeriodInterval a owl:ObjectProperty ;
+    rdfs:label "hasReinstatementPeriodInterval" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ReinstatementPeriodInterval .
+
+:objProp_hasPolicyTerminationEvent a owl:ObjectProperty ;
+    rdfs:label "hasPolicyTerminationEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyTermination .
+
+:objProp_hasPolicyRestorationEvent a owl:ObjectProperty ;
+    rdfs:label "hasPolicyRestorationEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyRestoration .
+
+:objProp_participatesInPremiumNotPaid a owl:ObjectProperty ;
+    rdfs:label "participatesInPremiumNotPaid" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_PremiumNotPaid .
+
+:objProp_participatesInLapseForNonpayment a owl:ObjectProperty ;
+    rdfs:label "participatesInLapseForNonpayment" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_LapseForNonpayment .
+
+:objProp_participatesInReinstatementEvent a owl:ObjectProperty ;
+    rdfs:label "participatesInReinstatementEvent" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_ReinstatementEvent .
+
+:objProp_participatesInPolicyTermination a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyTermination" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_PolicyTermination .
+
+:objProp_participatesInPolicyRestoration a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyRestoration" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_PolicyRestoration .
+
+
+# --- New Data Properties for Page 4 ---
+:dataProp_durationInDaysGracePeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysGracePeriod" ;
+    rdfs:domain :Cl_GracePeriodEvent ;
+    rdfs:range xsd:integer .
+
+:dataProp_durationInDaysReinstatementPeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysReinstatementPeriod" ;
+    rdfs:domain :Cl_ReinstatementPeriodInterval ;
+    rdfs:range xsd:integer .
+
+:dataProp_requiredMannerReinstatement a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerReinstatement" ;
+    rdfs:domain :Cl_ReinstatementEvent ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredMannerEvidenceOfInsurability a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerEvidenceOfInsurability" ;
+    rdfs:domain :Cl_ReinstatementEvent ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredMannerOverduePremiums a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerOverduePremiums" ;
+    rdfs:domain :Cl_ReinstatementEvent ;
+    rdfs:range xsd:string .
+
+:dataProp_eventStart a owl:DatatypeProperty ;
+    rdfs:label "eventStart" ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range xsd:dateTime .
+
+:dataProp_eventEnd a owl:DatatypeProperty ;
+    rdfs:label "eventEnd" ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range xsd:dateTime .
+
+
+# --- New Individuals for Page 4 ---
+:ind_PremiumPaymentEvent a :Cl_PremiumPayment ;
+    rdfs:label "Premium Payment" ;
+    :objProp_hasPremiumPayment :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_PremiumNotPaidEvent a :Cl_PremiumNotPaid ;
+    rdfs:label "Premium Not Paid" ;
+    :objProp_hasPremiumNotPaidEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPremiumNotPaid :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_GracePeriodEvent a :Cl_GracePeriodEvent ;
+    rdfs:label "Grace Period Event" ;
+    :objProp_hasGracePeriodEvent :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysGracePeriod "31"^^xsd:integer .
+
+:ind_LapseForNonpaymentEvent a :Cl_LapseForNonpayment ;
+    rdfs:label "Lapse for Nonpayment" ;
+    :objProp_hasLapseForNonpaymentEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInLapseForNonpayment :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_ReinstatementEvent a :Cl_ReinstatementEvent ;
+    rdfs:label "Reinstatement Event" ;
+    :objProp_hasReinstatementEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInReinstatementEvent :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_requiredMannerReinstatement "Written request for reinstatement is received" ;
+    :dataProp_requiredMannerEvidenceOfInsurability "Evidence of insurability is submitted and accepted" ;
+    :dataProp_requiredMannerOverduePremiums "All overdue premiums are paid with interest" .
+
+:ind_ReinstatementPeriodInterval a :Cl_ReinstatementPeriodInterval ;
+    rdfs:label "Reinstatement Period Interval" ;
+    :objProp_hasReinstatementPeriodInterval :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysReinstatementPeriod "1825"^^xsd:integer .
+
+:ind_PolicyTerminationEvent a :Cl_PolicyTermination ;
+    rdfs:label "Policy Termination" ;
+    :objProp_hasPolicyTerminationEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyTermination :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_PolicyRestorationEvent a :Cl_PolicyRestoration ;
+    rdfs:label "Policy Restoration" ;
+    :objProp_hasPolicyRestorationEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyRestoration :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+
+# --- New Restrictions for Page 4 ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_PremiumPayment ;
+            owl:onProperty :objProp_hasPremiumPayment
+        ]
+        [
+            owl:allValuesFrom :Cl_PremiumNotPaid ;
+            owl:onProperty :objProp_hasPremiumNotPaidEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_GracePeriodEvent ;
+            owl:onProperty :objProp_hasGracePeriodEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_LapseForNonpayment ;
+            owl:onProperty :objProp_hasLapseForNonpaymentEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ReinstatementEvent ;
+            owl:onProperty :objProp_hasReinstatementEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ReinstatementPeriodInterval ;
+            owl:onProperty :objProp_hasReinstatementPeriodInterval
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyTermination ;
+            owl:onProperty :objProp_hasPolicyTerminationEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyRestoration ;
+            owl:onProperty :objProp_hasPolicyRestorationEvent
+        ]
+    )
+] .
+
+:Cl_PremiumNotPaid owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PremiumNotPaid
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInPremiumNotPaid
+        ]
+    )
+] .
+
+:Cl_LapseForNonpayment owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_LapseForNonpayment
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInLapseForNonpayment
+        ]
+    )
+] .
+
+:Cl_ReinstatementEvent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ReinstatementEvent
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerReinstatement
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerEvidenceOfInsurability
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerOverduePremiums
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInReinstatementEvent
+        ]
+    )
+] .
+
+:Cl_ReinstatementPeriodInterval owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ReinstatementPeriodInterval
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysReinstatementPeriod
+        ]
+    )
+] .
+
+:Cl_PolicyTermination owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyTermination
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInPolicyTermination
+        ]
+    )
+] .
+
+:Cl_PolicyRestoration owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyRestoration
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInPolicyRestoration
+        ]
+    )
+] .
+
+
+# --- New Classes for Page 5: Death Benefit and Related Events ---
+:Cl_DeathBenefit a owl:Class ;
+    rdfs:label "Death Benefit" ;
+    rdfs:comment "The event when the death benefit is paid to the designated beneficiary upon the insured's death." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ProofOfDeath a owl:Class ;
+    rdfs:label "Proof of Death" ;
+    rdfs:comment "The event when the company requires documentation to verify the insured's death." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PaymentOfProceeds a owl:Class ;
+    rdfs:label "Payment of Proceeds" ;
+    rdfs:comment "The event when the death benefit proceeds are paid to the beneficiary or estate." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_InterestOnDeathBenefit a owl:Class ;
+    rdfs:label "Interest on Death Benefit" ;
+    rdfs:comment "The event when interest accrues on the death benefit from the date of death to the date of payment." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ContingentBeneficiaryConsideration a owl:Class ;
+    rdfs:label "Contingent Beneficiary Consideration" ;
+    rdfs:comment "The event when the policy considers the contingent beneficiary or the estate as the recipient if the primary beneficiary does not survive." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_SimultaneousDeathAssumption a owl:Class ;
+    rdfs:label "Simultaneous Death Assumption" ;
+    rdfs:comment "The event when the company assumes the beneficiary predeceased the insured in the case of simultaneous death." ;
+    rdfs:subClassOf :Cl_Event .
+
+# --- New Object Properties for Page 5 ---
+:objProp_hasDeathBenefitEvent a owl:ObjectProperty ;
+    rdfs:label "hasDeathBenefitEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_DeathBenefit .
+
+:objProp_hasProofOfDeathEvent a owl:ObjectProperty ;
+    rdfs:label "hasProofOfDeathEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ProofOfDeath .
+
+:objProp_hasPaymentOfProceedsEvent a owl:ObjectProperty ;
+    rdfs:label "hasPaymentOfProceedsEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PaymentOfProceeds .
+
+:objProp_hasInterestOnDeathBenefitEvent a owl:ObjectProperty ;
+    rdfs:label "hasInterestOnDeathBenefitEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_InterestOnDeathBenefit .
+
+:objProp_hasContingentBeneficiaryConsiderationEvent a owl:ObjectProperty ;
+    rdfs:label "hasContingentBeneficiaryConsiderationEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ContingentBeneficiaryConsideration .
+
+:objProp_hasSimultaneousDeathAssumptionEvent a owl:ObjectProperty ;
+    rdfs:label "hasSimultaneousDeathAssumptionEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SimultaneousDeathAssumption .
+
+:objProp_participatesInDeathBenefit a owl:ObjectProperty ;
+    rdfs:label "participatesInDeathBenefit" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_DeathBenefit .
+
+:objProp_participatesInProofOfDeath a owl:ObjectProperty ;
+    rdfs:label "participatesInProofOfDeath" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_ProofOfDeath .
+
+:objProp_participatesInPaymentOfProceeds a owl:ObjectProperty ;
+    rdfs:label "participatesInPaymentOfProceeds" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_PaymentOfProceeds .
+
+:objProp_participatesInInterestOnDeathBenefit a owl:ObjectProperty ;
+    rdfs:label "participatesInInterestOnDeathBenefit" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_InterestOnDeathBenefit .
+
+:objProp_participatesInContingentBeneficiaryConsideration a owl:ObjectProperty ;
+    rdfs:label "participatesInContingentBeneficiaryConsideration" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_ContingentBeneficiaryConsideration .
+
+:objProp_participatesInSimultaneousDeathAssumption a owl:ObjectProperty ;
+    rdfs:label "participatesInSimultaneousDeathAssumption" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_SimultaneousDeathAssumption .
+
+:objProp_hasBeneficiaryForDeathBenefit a owl:ObjectProperty ;
+    rdfs:label "hasBeneficiaryForDeathBenefit" ;
+    rdfs:domain :Cl_DeathBenefit ;
+    rdfs:range :Cl_Beneficiary .
+
+:objProp_hasContingentBeneficiaryForDeathBenefit a owl:ObjectProperty ;
+    rdfs:label "hasContingentBeneficiaryForDeathBenefit" ;
+    rdfs:domain :Cl_ContingentBeneficiaryConsideration ;
+    rdfs:range :Cl_Beneficiary .
+
+:objProp_hasEstateForDeathBenefit a owl:ObjectProperty ;
+    rdfs:label "hasEstateForDeathBenefit" ;
+    rdfs:domain :Cl_ContingentBeneficiaryConsideration ;
+    rdfs:range :Cl_PolicyOwner .
+
+# --- New Data Properties for Page 5 ---
+:dataProp_deathBenefitAmount a owl:DatatypeProperty ;
+    rdfs:label "deathBenefitAmount" ;
+    rdfs:domain :Cl_DeathBenefit ;
+    rdfs:range xsd:decimal .
+
+:dataProp_deductionApplied a owl:DatatypeProperty ;
+    rdfs:label "deductionApplied" ;
+    rdfs:domain :Cl_DeathBenefit ;
+    rdfs:range xsd:decimal .
+
+:dataProp_interestRate a owl:DatatypeProperty ;
+    rdfs:label "interestRate" ;
+    rdfs:domain :Cl_InterestOnDeathBenefit ;
+    rdfs:range xsd:decimal .
+
+:dataProp_timeIntervalForInterestAccrual a owl:DatatypeProperty ;
+    rdfs:label "timeIntervalForInterestAccrual" ;
+    rdfs:domain :Cl_InterestOnDeathBenefit ;
+    rdfs:range xsd:duration .
+
+:dataProp_requiredDocumentation a owl:DatatypeProperty ;
+    rdfs:label "requiredDocumentation" ;
+    rdfs:domain :Cl_ProofOfDeath ;
+    rdfs:range xsd:string .
+
+:dataProp_defaultPaymentMethod a owl:DatatypeProperty ;
+    rdfs:label "defaultPaymentMethod" ;
+    rdfs:domain :Cl_PaymentOfProceeds ;
+    rdfs:range xsd:string .
+
+:dataProp_alternativePaymentOptionCondition a owl:DatatypeProperty ;
+    rdfs:label "alternativePaymentOptionCondition" ;
+    rdfs:domain :Cl_PaymentOfProceeds ;
+    rdfs:range xsd:string .
+
+:dataProp_assumptionInSimultaneousDeath a owl:DatatypeProperty ;
+    rdfs:label "assumptionInSimultaneousDeath" ;
+    rdfs:domain :Cl_SimultaneousDeathAssumption ;
+    rdfs:range xsd:string .
+
+# --- New Individuals for Page 5 ---
+:ind_DeathBenefitEvent a :Cl_DeathBenefit ;
+    rdfs:label "Death Benefit Payment" ;
+    :objProp_hasDeathBenefitEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInDeathBenefit :ind_Company_Equivita ;
+    :objProp_hasBeneficiaryForDeathBenefit :ind_Beneficiary_TaylorEllis ;
+    :dataProp_deathBenefitAmount "500000"^^xsd:decimal ;
+    :dataProp_deductionApplied "0"^^xsd:decimal .
+
+:ind_ProofOfDeathEvent a :Cl_ProofOfDeath ;
+    rdfs:label "Proof of Death Required" ;
+    :objProp_hasProofOfDeathEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInProofOfDeath :ind_Company_Equivita ;
+    :dataProp_requiredDocumentation "Certified death certificate and any additional documentation the Company reasonably requires" .
+
+:ind_PaymentOfProceedsEvent a :Cl_PaymentOfProceeds ;
+    rdfs:label "Payment of Proceeds" ;
+    :objProp_hasPaymentOfProceedsEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPaymentOfProceeds :ind_Company_Equivita ;
+    :dataProp_defaultPaymentMethod "Lump sum" ;
+    :dataProp_alternativePaymentOptionCondition "Elected by the Policy Owner during the Insured's lifetime or by the Beneficiary after the Insured’s death" .
+
+:ind_InterestOnDeathBenefitEvent a :Cl_InterestOnDeathBenefit ;
+    rdfs:label "Interest on Death Benefit" ;
+    :objProp_hasInterestOnDeathBenefitEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInInterestOnDeathBenefit :ind_Company_Equivita ;
+    :dataProp_interestRate "0.03"^^xsd:decimal ;
+    :dataProp_timeIntervalForInterestAccrual "P1Y"^^xsd:duration .
+
+:ind_ContingentBeneficiaryConsiderationEvent a :Cl_ContingentBeneficiaryConsideration ;
+    rdfs:label "Contingent Beneficiary Consideration" ;
+    :objProp_hasContingentBeneficiaryConsiderationEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInContingentBeneficiaryConsideration :ind_Company_Equivita ;
+    :objProp_hasContingentBeneficiaryForDeathBenefit :ind_Beneficiary_TaylorEllis ;
+    :objProp_hasEstateForDeathBenefit :ind_PolicyOwner_JordanEllis .
+
+:ind_SimultaneousDeathAssumptionEvent a :Cl_SimultaneousDeathAssumption ;
+    rdfs:label "Simultaneous Death Assumption" ;
+    :objProp_hasSimultaneousDeathAssumptionEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInSimultaneousDeathAssumption :ind_Company_Equivita ;
+    :dataProp_assumptionInSimultaneousDeath "The Beneficiary predeceased the Insured unless otherwise governed by state law" .
+
+# --- New Restrictions for Page 5 ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_DeathBenefit ;
+            owl:onProperty :objProp_hasDeathBenefitEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ProofOfDeath ;
+            owl:onProperty :objProp_hasProofOfDeathEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_PaymentOfProceeds ;
+            owl:onProperty :objProp_hasPaymentOfProceedsEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_InterestOnDeathBenefit ;
+            owl:onProperty :objProp_hasInterestOnDeathBenefitEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ContingentBeneficiaryConsideration ;
+            owl:onProperty :objProp_hasContingentBeneficiaryConsiderationEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_SimultaneousDeathAssumption ;
+            owl:onProperty :objProp_hasSimultaneousDeathAssumptionEvent
+        ]
+    )
+] .
+
+:Cl_DeathBenefit owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_DeathBenefit
+        [
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty :dataProp_deathBenefitAmount
+        ]
+        [
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty :dataProp_deductionApplied
+        ]
+        [
+            owl:allValuesFrom :Cl_Beneficiary ;
+            owl:onProperty :objProp_hasBeneficiaryForDeathBenefit
+        ]
+    )
+] .
+
+:Cl_ProofOfDeath owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ProofOfDeath
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredDocumentation
+        ]
+    )
+] .
+
+:Cl_PaymentOfProceeds owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PaymentOfProceeds
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_defaultPaymentMethod
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_alternativePaymentOptionCondition
+        ]
+    )
+] .
+
+:Cl_InterestOnDeathBenefit owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_InterestOnDeathBenefit
+        [
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty :dataProp_interestRate
+        ]
+        [
+            owl:allValuesFrom xsd:duration ;
+            owl:onProperty :dataProp_timeIntervalForInterestAccrual
+        ]
+    )
+] .
+
+:Cl_ContingentBeneficiaryConsideration owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ContingentBeneficiaryConsideration
+        [
+            owl:allValuesFrom :Cl_Beneficiary ;
+            owl:onProperty :objProp_hasContingentBeneficiaryForDeathBenefit
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_hasEstateForDeathBenefit
+        ]
+    )
+] .
+
+:Cl_SimultaneousDeathAssumption owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_SimultaneousDeathAssumption
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_assumptionInSimultaneousDeath
+        ]
+    )
+] .
+
+
+
+# --- New Classes for Page 6: Beneficiary Provisions ---
+:Cl_DesignationOfBeneficiary a owl:Class ;
+    rdfs:label "Designation of Beneficiary" ;
+    rdfs:comment "The event when the Policy Owner formally designates a Beneficiary to receive the death benefit upon the Insured's death." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ChangeOfBeneficiary a owl:Class ;
+    rdfs:label "Change of Beneficiary" ;
+    rdfs:comment "The event when the Policy Owner changes the designated Beneficiary during the lifetime of the Insured." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_IrrevocableBeneficiaryDesignation a owl:Class ;
+    rdfs:label "Irrevocable Beneficiary Designation" ;
+    rdfs:comment "The event when the Policy Owner designates a Beneficiary as irrevocable, restricting the owner's rights to change or assign the policy without consent." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_SimultaneousDeathAndDisclaimer a owl:Class ;
+    rdfs:label "Simultaneous Death and Disclaimer" ;
+    rdfs:comment "The event when the Insured and the Beneficiary die under circumstances that make the order of death uncertain, or when the Beneficiary disclaims the proceeds." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_FacilityOfPayment a owl:Class ;
+    rdfs:label "Facility of Payment" ;
+    rdfs:comment "The event when no Beneficiary survives the Insured or cannot be located within 90 days, and the Company pays the proceeds to the Insured's estate or another equitably entitled person." ;
+    rdfs:subClassOf :Cl_Event .
+
+# --- New Object Properties for Page 6 ---
+:objProp_hasDesignationEvent a owl:ObjectProperty ;
+    rdfs:label "hasDesignationEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_DesignationOfBeneficiary .
+
+:objProp_hasChangeOfBeneficiaryEvent a owl:ObjectProperty ;
+    rdfs:label "hasChangeOfBeneficiaryEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ChangeOfBeneficiary .
+
+:objProp_hasIrrevocableDesignationEvent a owl:ObjectProperty ;
+    rdfs:label "hasIrrevocableDesignationEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IrrevocableBeneficiaryDesignation .
+
+:objProp_hasSimultaneousDeathEvent a owl:ObjectProperty ;
+    rdfs:label "hasSimultaneousDeathEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SimultaneousDeathAndDisclaimer .
+
+:objProp_hasFacilityOfPaymentEvent a owl:ObjectProperty ;
+    rdfs:label "hasFacilityOfPaymentEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_FacilityOfPayment .
+
+:objProp_participatesInDesignation a owl:ObjectProperty ;
+    rdfs:label "participatesInDesignation" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_DesignationOfBeneficiary .
+
+:objProp_participatesInChangeOfBeneficiary a owl:ObjectProperty ;
+    rdfs:label "participatesInChangeOfBeneficiary" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_ChangeOfBeneficiary .
+
+:objProp_participatesInIrrevocableDesignation a owl:ObjectProperty ;
+    rdfs:label "participatesInIrrevocableDesignation" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_IrrevocableBeneficiaryDesignation .
+
+:objProp_participatesInSimultaneousDeath a owl:ObjectProperty ;
+    rdfs:label "participatesInSimultaneousDeath" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_SimultaneousDeathAndDisclaimer .
+
+:objProp_participatesInFacilityOfPayment a owl:ObjectProperty ;
+    rdfs:label "participatesInFacilityOfPayment" ;
+    rdfs:domain :Cl_Company ;
+    rdfs:range :Cl_FacilityOfPayment .
+
+:objProp_hasBeneficiaryForDesignation a owl:ObjectProperty ;
+    rdfs:label "hasBeneficiaryForDesignation" ;
+    rdfs:domain :Cl_DesignationOfBeneficiary ;
+    rdfs:range :Cl_Beneficiary .
+
+:objProp_hasBeneficiaryForChange a owl:ObjectProperty ;
+    rdfs:label "hasBeneficiaryForChange" ;
+    rdfs:domain :Cl_ChangeOfBeneficiary ;
+    rdfs:range :Cl_Beneficiary .
+
+:objProp_hasIrrevocableBeneficiary a owl:ObjectProperty ;
+    rdfs:label "hasIrrevocableBeneficiary" ;
+    rdfs:domain :Cl_IrrevocableBeneficiaryDesignation ;
+    rdfs:range :Cl_Beneficiary .
+
+:objProp_hasPersonForFacilityOfPayment a owl:ObjectProperty ;
+    rdfs:label "hasPersonForFacilityOfPayment" ;
+    rdfs:domain :Cl_FacilityOfPayment ;
+    rdfs:range :Cl_PolicyOwner .
+
+:objProp_hasEstateForFacilityOfPayment a owl:ObjectProperty ;
+    rdfs:label "hasEstateForFacilityOfPayment" ;
+    rdfs:domain :Cl_FacilityOfPayment ;
+    rdfs:range :Cl_PolicyOwner .
+
+# --- New Data Properties for Page 6 ---
+:dataProp_requiredMannerDesignation a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerDesignation" ;
+    rdfs:domain :Cl_DesignationOfBeneficiary ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredMannerChangeOfBeneficiary a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerChangeOfBeneficiary" ;
+    rdfs:domain :Cl_ChangeOfBeneficiary ;
+    rdfs:range xsd:string .
+
+:dataProp_effectOnPolicyOwnerRights a owl:DatatypeProperty ;
+    rdfs:label "effectOnPolicyOwnerRights" ;
+    rdfs:domain :Cl_IrrevocableBeneficiaryDesignation ;
+    rdfs:range xsd:string .
+
+:dataProp_presumptionInSimultaneousDeath a owl:DatatypeProperty ;
+    rdfs:label "presumptionInSimultaneousDeath" ;
+    rdfs:domain :Cl_SimultaneousDeathAndDisclaimer ;
+    rdfs:range xsd:string .
+
+:dataProp_durationForLocatingBeneficiary a owl:DatatypeProperty ;
+    rdfs:label "durationForLocatingBeneficiary" ;
+    rdfs:domain :Cl_FacilityOfPayment ;
+    rdfs:range xsd:integer .
+
+:dataProp_effectOnCompanyLiability a owl:DatatypeProperty ;
+    rdfs:label "effectOnCompanyLiability" ;
+    rdfs:domain :Cl_FacilityOfPayment ;
+    rdfs:range xsd:string .
+
+# --- New Individuals for Page 6 ---
+:ind_DesignationOfBeneficiaryEvent a :Cl_DesignationOfBeneficiary ;
+    rdfs:label "Designation of Beneficiary" ;
+    :objProp_hasDesignationEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInDesignation :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasBeneficiaryForDesignation :ind_Beneficiary_TaylorEllis ;
+    :dataProp_requiredMannerDesignation "Written request filed with the Company" .
+
+:ind_ChangeOfBeneficiaryEvent a :Cl_ChangeOfBeneficiary ;
+    rdfs:label "Change of Beneficiary" ;
+    :objProp_hasChangeOfBeneficiaryEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInChangeOfBeneficiary :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasBeneficiaryForChange :ind_Beneficiary_TaylorEllis ;
+    :dataProp_requiredMannerChangeOfBeneficiary "Written request satisfactory to the Company" .
+
+:ind_IrrevocableBeneficiaryDesignationEvent a :Cl_IrrevocableBeneficiaryDesignation ;
+    rdfs:label "Irrevocable Beneficiary Designation" ;
+    :objProp_hasIrrevocableDesignationEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInIrrevocableDesignation :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasIrrevocableBeneficiary :ind_Beneficiary_TaylorEllis ;
+    :dataProp_effectOnPolicyOwnerRights "The Policy Owner may not change the Beneficiary or assign the Policy without the written consent of the irrevocable Beneficiary" .
+
+:ind_SimultaneousDeathAndDisclaimerEvent a :Cl_SimultaneousDeathAndDisclaimer ;
+    rdfs:label "Simultaneous Death and Disclaimer" ;
+    :objProp_hasSimultaneousDeathEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInSimultaneousDeath :ind_Company_Equivita ;
+    :dataProp_presumptionInSimultaneousDeath "The Beneficiary shall be presumed to have predeceased the Insured" .
+
+:ind_FacilityOfPaymentEvent a :Cl_FacilityOfPayment ;
+    rdfs:label "Facility of Payment" ;
+    :objProp_hasFacilityOfPaymentEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInFacilityOfPayment :ind_Company_Equivita ;
+    :objProp_hasPersonForFacilityOfPayment :ind_PolicyOwner_JordanEllis ;
+    :objProp_hasEstateForFacilityOfPayment :ind_PolicyOwner_JordanEllis ;
+    :dataProp_durationForLocatingBeneficiary "90"^^xsd:integer ;
+    :dataProp_effectOnCompanyLiability "The Company's liability is discharged to the extent of the amount paid" .
+
+# --- New Restrictions for Page 6 ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_DesignationOfBeneficiary ;
+            owl:onProperty :objProp_hasDesignationEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ChangeOfBeneficiary ;
+            owl:onProperty :objProp_hasChangeOfBeneficiaryEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_IrrevocableBeneficiaryDesignation ;
+            owl:onProperty :objProp_hasIrrevocableDesignationEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_SimultaneousDeathAndDisclaimer ;
+            owl:onProperty :objProp_hasSimultaneousDeathEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_FacilityOfPayment ;
+            owl:onProperty :objProp_hasFacilityOfPaymentEvent
+        ]
+    )
+] .
+
+:Cl_DesignationOfBeneficiary owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_DesignationOfBeneficiary
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerDesignation
+        ]
+        [
+            owl:allValuesFrom :Cl_Beneficiary ;
+            owl:onProperty :objProp_hasBeneficiaryForDesignation
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInDesignation
+        ]
+    )
+] .
+
+:Cl_ChangeOfBeneficiary owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ChangeOfBeneficiary
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerChangeOfBeneficiary
+        ]
+        [
+            owl:allValuesFrom :Cl_Beneficiary ;
+            owl:onProperty :objProp_hasBeneficiaryForChange
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInChangeOfBeneficiary
+        ]
+    )
+] .
+
+:Cl_IrrevocableBeneficiaryDesignation owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_IrrevocableBeneficiaryDesignation
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_effectOnPolicyOwnerRights
+        ]
+        [
+            owl:allValuesFrom :Cl_Beneficiary ;
+            owl:onProperty :objProp_hasIrrevocableBeneficiary
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInIrrevocableDesignation
+        ]
+    )
+] .
+
+:Cl_SimultaneousDeathAndDisclaimer owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_SimultaneousDeathAndDisclaimer
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_presumptionInSimultaneousDeath
+        ]
+        [
+            owl:allValuesFrom :Cl_Company ;
+            owl:onProperty :objProp_participatesInSimultaneousDeath
+        ]
+    )
+] .
+
+:Cl_FacilityOfPayment owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_FacilityOfPayment
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationForLocatingBeneficiary
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_effectOnCompanyLiability
+        ]
+        [
+            owl:allValuesFrom :Cl_Company ;
+            owl:onProperty :objProp_participatesInFacilityOfPayment
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_hasPersonForFacilityOfPayment
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_hasEstateForFacilityOfPayment
+        ]
+    )
+] .
+
+
+# --- New Classes for Page 7: Contestability and Suicide Clause ---
+:Cl_IncontestabilityPeriodEvent a owl:Class ;
+    rdfs:label "Incontestability Period Event" ;
+    rdfs:comment "The event when a policy becomes incontestable after the initial two-year period." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ContestabilityPeriodAfterReinstatement a owl:Class ;
+    rdfs:label "Contestability Period After Reinstatement" ;
+    rdfs:comment "The event when a new two-year contestability period begins after a policy is reinstated." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_SuicideExclusionEvent a owl:Class ;
+    rdfs:label "Suicide Exclusion Event" ;
+    rdfs:comment "The event when the insured dies by suicide within two years of the issue date or reinstatement date." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_SuicideExclusionPeriodEvent a owl:Class ;
+    rdfs:label "Suicide Exclusion Period Event" ;
+    rdfs:comment "The event when the suicide exclusion period begins from the issue date or reinstatement date." ;
+    rdfs:subClassOf :Cl_Event .
+
+# --- New Object Properties for Page 7 ---
+:objProp_hasIncontestabilityPeriodEvent a owl:ObjectProperty ;
+    rdfs:label "hasIncontestabilityPeriodEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IncontestabilityPeriodEvent .
+
+:objProp_hasContestabilityPeriodAfterReinstatement a owl:ObjectProperty ;
+    rdfs:label "hasContestabilityPeriodAfterReinstatement" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ContestabilityPeriodAfterReinstatement .
+
+:objProp_hasSuicideExclusionEvent a owl:ObjectProperty ;
+    rdfs:label "hasSuicideExclusionEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SuicideExclusionEvent .
+
+:objProp_hasSuicideExclusionPeriodEvent a owl:ObjectProperty ;
+    rdfs:label "hasSuicideExclusionPeriodEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_SuicideExclusionPeriodEvent .
+
+:objProp_participatesInIncontestabilityPeriod a owl:ObjectProperty ;
+    rdfs:label "participatesInIncontestabilityPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_IncontestabilityPeriodEvent .
+
+:objProp_participatesInContestabilityPeriodAfterReinstatement a owl:ObjectProperty ;
+    rdfs:label "participatesInContestabilityPeriodAfterReinstatement" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ContestabilityPeriodAfterReinstatement .
+
+:objProp_participatesInSuicideExclusion a owl:ObjectProperty ;
+    rdfs:label "participatesInSuicideExclusion" ;
+    rdfs:domain :Cl_InsuredPerson ;
+    rdfs:range :Cl_SuicideExclusionEvent .
+
+:objProp_participatesInSuicideExclusionPeriod a owl:ObjectProperty ;
+    rdfs:label "participatesInSuicideExclusionPeriod" ;
+    rdfs:domain :Cl_InsuredPerson ;
+    rdfs:range :Cl_SuicideExclusionPeriodEvent .
+
+# --- New Data Properties for Page 7 ---
+:dataProp_durationInDaysIncontestabilityPeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysIncontestabilityPeriod" ;
+    rdfs:domain :Cl_IncontestabilityPeriodEvent ;
+    rdfs:range xsd:integer .
+
+:dataProp_durationInDaysContestabilityAfterReinstatement a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysContestabilityAfterReinstatement" ;
+    rdfs:domain :Cl_ContestabilityPeriodAfterReinstatement ;
+    rdfs:range xsd:integer .
+
+:dataProp_durationInDaysSuicideExclusionPeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysSuicideExclusionPeriod" ;
+    rdfs:domain :Cl_SuicideExclusionPeriodEvent ;
+    rdfs:range xsd:integer .
+
+:dataProp_amountPayableAfterSuicideExclusion a owl:DatatypeProperty ;
+    rdfs:label "amountPayableAfterSuicideExclusion" ;
+    rdfs:domain :Cl_SuicideExclusionEvent ;
+    rdfs:range xsd:decimal .
+
+:dataProp_amountPayableDuringSuicideExclusion a owl:DatatypeProperty ;
+    rdfs:label "amountPayableDuringSuicideExclusion" ;
+    rdfs:domain :Cl_SuicideExclusionEvent ;
+    rdfs:range xsd:decimal .
+
+# --- New Individuals for Page 7 ---
+:ind_IncontestabilityPeriodEvent a :Cl_IncontestabilityPeriodEvent ;
+    rdfs:label "Incontestability Period Event" ;
+    :objProp_hasIncontestabilityPeriodEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInIncontestabilityPeriod :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysIncontestabilityPeriod "730"^^xsd:integer .
+
+:ind_ContestabilityPeriodAfterReinstatementEvent a :Cl_ContestabilityPeriodAfterReinstatement ;
+    rdfs:label "Contestability Period After Reinstatement" ;
+    :objProp_hasContestabilityPeriodAfterReinstatement :ind_Policy_EML202500028391 ;
+    :objProp_participatesInContestabilityPeriodAfterReinstatement :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysContestabilityAfterReinstatement "730"^^xsd:integer .
+
+:ind_SuicideExclusionEvent a :Cl_SuicideExclusionEvent ;
+    rdfs:label "Suicide Exclusion Event" ;
+    :objProp_hasSuicideExclusionEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInSuicideExclusion :ind_InsuredPerson_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_SuicideExclusionPeriodEvent a :Cl_SuicideExclusionPeriodEvent ;
+    rdfs:label "Suicide Exclusion Period Event" ;
+    :objProp_hasSuicideExclusionPeriodEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInSuicideExclusionPeriod :ind_InsuredPerson_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysSuicideExclusionPeriod "730"^^xsd:integer .
+
+# --- New Restrictions for Page 7 ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_IncontestabilityPeriodEvent ;
+            owl:onProperty :objProp_hasIncontestabilityPeriodEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ContestabilityPeriodAfterReinstatement ;
+            owl:onProperty :objProp_hasContestabilityPeriodAfterReinstatement
+        ]
+        [
+            owl:allValuesFrom :Cl_SuicideExclusionEvent ;
+            owl:onProperty :objProp_hasSuicideExclusionEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_SuicideExclusionPeriodEvent ;
+            owl:onProperty :objProp_hasSuicideExclusionPeriodEvent
+        ]
+    )
+] .
+
+:Cl_IncontestabilityPeriodEvent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_IncontestabilityPeriodEvent
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysIncontestabilityPeriod
+        ]
+    )
+] .
+
+:Cl_ContestabilityPeriodAfterReinstatement owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ContestabilityPeriodAfterReinstatement
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysContestabilityAfterReinstatement
+        ]
+    )
+] .
+
+:Cl_SuicideExclusionPeriodEvent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_SuicideExclusionPeriodEvent
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysSuicideExclusionPeriod
+        ]
+    )
+] .
+
+:Cl_SuicideExclusionEvent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_SuicideExclusionEvent
+        [
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty :dataProp_amountPayableDuringSuicideExclusion
+        ]
+        [
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty :dataProp_amountPayableAfterSuicideExclusion
+        ]
+    )
+] .
+
+
+# --- New Classes for Page 8: Reinstatement and Conversion ---
+:Cl_Reinstatement a owl:Class ;
+    rdfs:label "Reinstatement" ;
+    rdfs:comment "The event when a lapsed policy is restored to active status after meeting reinstatement conditions." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ReinstatementPeriodInterval a owl:Class ;
+    rdfs:label "Reinstatement Period Interval" ;
+    rdfs:comment "The time interval during which a lapsed policy can be reinstated, up to five years from the date of lapse." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_Conversion a owl:Class ;
+    rdfs:label "Conversion" ;
+    rdfs:comment "The event when a term policy is converted to a permanent life insurance policy without evidence of insurability." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_ConversionPeriod a owl:Class ;
+    rdfs:label "Conversion Period" ;
+    rdfs:comment "The time interval during which a policy owner may convert a term policy to a permanent policy." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyLapse a owl:Class ;
+    rdfs:label "Policy Lapse" ;
+    rdfs:comment "The event when a policy's coverage is terminated due to nonpayment of premiums after the grace period." ;
+    rdfs:subClassOf :Cl_Event .
+
+:Cl_PolicyRestoration a owl:Class ;
+    rdfs:label "Policy Restoration" ;
+    rdfs:comment "The event when a lapsed policy is restored to active status through reinstatement." ;
+    rdfs:subClassOf :Cl_Event .
+
+# --- New Object Properties for Page 8 ---
+:objProp_hasReinstatementEvent a owl:ObjectProperty ;
+    rdfs:label "hasReinstatementEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Reinstatement .
+
+:objProp_hasReinstatementPeriodInterval a owl:ObjectProperty ;
+    rdfs:label "hasReinstatementPeriodInterval" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ReinstatementPeriodInterval .
+
+:objProp_hasConversionEvent a owl:ObjectProperty ;
+    rdfs:label "hasConversionEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_Conversion .
+
+:objProp_hasConversionPeriod a owl:ObjectProperty ;
+    rdfs:label "hasConversionPeriod" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_ConversionPeriod .
+
+:objProp_participatesInReinstatement a owl:ObjectProperty ;
+    rdfs:label "participatesInReinstatement" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_Reinstatement .
+
+:objProp_participatesInConversion a owl:ObjectProperty ;
+    rdfs:label "participatesInConversion" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_Conversion .
+
+:objProp_hasPolicyLapseEvent a owl:ObjectProperty ;
+    rdfs:label "hasPolicyLapseEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyLapse .
+
+:objProp_hasPolicyRestorationEvent a owl:ObjectProperty ;
+    rdfs:label "hasPolicyRestorationEvent" ;
+    rdfs:domain :Cl_Policy ;
+    rdfs:range :Cl_PolicyRestoration .
+
+:objProp_participatesInPolicyLapse a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyLapse" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_PolicyLapse .
+
+:objProp_participatesInPolicyRestoration a owl:ObjectProperty ;
+    rdfs:label "participatesInPolicyRestoration" ;
+    rdfs:domain :Cl_PolicyOwner ;
+    rdfs:range :Cl_PolicyRestoration .
+
+# --- New Data Properties for Page 8 ---
+:dataProp_durationInDaysReinstatementPeriod a owl:DatatypeProperty ;
+    rdfs:label "durationInDaysReinstatementPeriod" ;
+    rdfs:domain :Cl_ReinstatementPeriodInterval ;
+    rdfs:range xsd:integer .
+
+:dataProp_requiredMannerReinstatement a owl:DatatypeProperty ;
+    rdfs:label "requiredMannerReinstatement" ;
+    rdfs:domain :Cl_Reinstatement ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredEvidenceOfInsurability a owl:DatatypeProperty ;
+    rdfs:label "requiredEvidenceOfInsurability" ;
+    rdfs:domain :Cl_Reinstatement ;
+    rdfs:range xsd:string .
+
+:dataProp_requiredPaymentForReinstatement a owl:DatatypeProperty ;
+    rdfs:label "requiredPaymentForReinstatement" ;
+    rdfs:domain :Cl_Reinstatement ;
+    rdfs:range xsd:string .
+
+:dataProp_newContestabilityPeriodDuration a owl:DatatypeProperty ;
+    rdfs:label "newContestabilityPeriodDuration" ;
+    rdfs:domain :Cl_Reinstatement ;
+    rdfs:range xsd:integer .
+
+:dataProp_newSuicideExclusionPeriodDuration a owl:DatatypeProperty ;
+    rdfs:label "newSuicideExclusionPeriodDuration" ;
+    rdfs:domain :Cl_Reinstatement ;
+    rdfs:range xsd:integer .
+
+:dataProp_maxDurationLapsedState a owl:DatatypeProperty ;
+    rdfs:label "maxDurationLapsedState" ;
+    rdfs:domain :Cl_PolicyLapse ;
+    rdfs:range xsd:integer .
+
+:dataProp_eventStart a owl:DatatypeProperty ;
+    rdfs:label "eventStart" ;
+    rdfs:domain :Cl_Event ;
+    rdfs:range xsd:dateTime .
+
+# --- New Individuals for Page 8 ---
+:ind_ReinstatementEvent a :Cl_Reinstatement ;
+    rdfs:label "Policy Reinstatement" ;
+    :objProp_hasReinstatementEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInReinstatement :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_requiredMannerReinstatement "Written application for reinstatement is submitted" ;
+    :dataProp_requiredEvidenceOfInsurability "Satisfactory evidence of the Insured’s insurability is submitted" ;
+    :dataProp_requiredPaymentForReinstatement "All overdue premiums are paid with interest at a rate determined by the Company, compounded annually" ;
+    :dataProp_newContestabilityPeriodDuration "730"^^xsd:integer ;
+    :dataProp_newSuicideExclusionPeriodDuration "730"^^xsd:integer .
+
+:ind_ReinstatementPeriodInterval a :Cl_ReinstatementPeriodInterval ;
+    rdfs:label "Reinstatement Period Interval" ;
+    :objProp_hasReinstatementPeriodInterval :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_durationInDaysReinstatementPeriod "1825"^^xsd:integer .
+
+:ind_ConversionEvent a :Cl_Conversion ;
+    rdfs:label "Policy Conversion" ;
+    :objProp_hasConversionEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInConversion :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_requiredMannerConversion "Request is made during the conversion period specified in the Policy Specifications" ;
+    :dataProp_requiredAgeLimit "Insured is not older than the maximum conversion age established by the Company" ;
+    :dataProp_requiredPaymentForConversion "Premiums for the new policy are paid in accordance with the terms of the selected product" .
+
+:ind_ConversionPeriod a :Cl_ConversionPeriod ;
+    rdfs:label "Conversion Period" ;
+    :objProp_hasConversionPeriod :ind_Policy_EML202500028391 ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+:ind_PolicyLapseEvent a :Cl_PolicyLapse ;
+    rdfs:label "Policy Lapse" ;
+    :objProp_hasPolicyLapseEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyLapse :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime ;
+    :dataProp_maxDurationLapsedState "1825"^^xsd:integer .
+
+:ind_PolicyRestorationEvent a :Cl_PolicyRestoration ;
+    rdfs:label "Policy Restoration" ;
+    :objProp_hasPolicyRestorationEvent :ind_Policy_EML202500028391 ;
+    :objProp_participatesInPolicyRestoration :ind_PolicyOwner_JordanEllis ;
+    :dataProp_eventStart "2025-08-01T00:00:00"^^xsd:dateTime .
+
+# --- New Restrictions for Page 8 ---
+:Cl_Policy owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Policy
+        [
+            owl:allValuesFrom :Cl_Reinstatement ;
+            owl:onProperty :objProp_hasReinstatementEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ReinstatementPeriodInterval ;
+            owl:onProperty :objProp_hasReinstatementPeriodInterval
+        ]
+        [
+            owl:allValuesFrom :Cl_Conversion ;
+            owl:onProperty :objProp_hasConversionEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_ConversionPeriod ;
+            owl:onProperty :objProp_hasConversionPeriod
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyLapse ;
+            owl:onProperty :objProp_hasPolicyLapseEvent
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyRestoration ;
+            owl:onProperty :objProp_hasPolicyRestorationEvent
+        ]
+    )
+] .
+
+:Cl_Reinstatement owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Reinstatement
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerReinstatement
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredEvidenceOfInsurability
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredPaymentForReinstatement
+        ]
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_newContestabilityPeriodDuration
+        ]
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_newSuicideExclusionPeriodDuration
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInReinstatement
+        ]
+    )
+] .
+
+:Cl_ReinstatementPeriodInterval owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_ReinstatementPeriodInterval
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_durationInDaysReinstatementPeriod
+        ]
+    )
+] .
+
+:Cl_Conversion owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_Conversion
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredMannerConversion
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredAgeLimit
+        ]
+        [
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty :dataProp_requiredPaymentForConversion
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInConversion
+        ]
+    )
+] .
+
+:Cl_PolicyLapse owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyLapse
+        [
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty :dataProp_maxDurationLapsedState
+        ]
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInPolicyLapse
+        ]
+    )
+] .
+
+:Cl_PolicyRestoration owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Cl_PolicyRestoration
+        [
+            owl:allValuesFrom :Cl_PolicyOwner ;
+            owl:onProperty :objProp_participatesInPolicyRestoration
+        ]
+    )
+] .
+
