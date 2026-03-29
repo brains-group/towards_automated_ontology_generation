@@ -2,7 +2,7 @@
 
 This repository contains the code and experimental framework for automating the generation of formal Web Ontology Language (OWL) ontologies from unstructured natural language text, specifically focusing on complex domains like life insurance contracts.
 
-Automatically converting dense legal documents into queryable, formal ontologies is a significant challenge. This project addresses the systematic failures of single-pass Large Language Model (LLM) generation (such as poor Ontology Design Pattern compliance and structural redundancy) by implementing a cooperative multi-agent architecture.
+Automatically converting dense legal documents into queryable, formal ontologies is a significant challenge. This experiment comparisons the advantages and disadvantages of generating ontologies from LLMs through a single pass direct generation approach against a multi-agent approach.
 
 ---
 
